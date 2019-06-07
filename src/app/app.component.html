@@ -1,20 +1,4 @@
-<header class="container-fluid">
-  <div class="row align-items-end">
-    <div class="col-md-6 col-9">
-      <h1 class="pt-2"><span></span><b>NRAO</b> <br/> Archive Access</h1>
-    </div><!--// col -->
-    <div class="col-md-6 col-3 text-right pb-3">
-      <button type="button" class="btn btn-light d-md-none" (click)="showNav = !showNav"><i class="fas fa-bars"></i></button>
-    </div>
-  </div><!-- // row -->
-  <nav id="tool_nav" class="row text-center" *ngIf="showNav" @vslider>
-    <a href="#" class="col-md"><i class="fas fa-home"></i> Home</a>
-    <a href="#" class="col-md"><i class="fas fa-link"></i> Legacy Archive</a>
-    <a href="#" class="col-md"><i class="fas fa-file-alt"></i> About</a>
-    <a href="#" class="col-md"><i class="fas fa-bullhorn"></i> Feedback</a>
-    <a href="#" class="col-md"><i class="fas fa-sign-in-alt"></i> Log In</a>
-  </nav>
-</header>
+<app-header></app-header>
 
 <div class="container-fluid">
   <form class="row bg-light border-bottom">
@@ -22,7 +6,7 @@
       <div class="input-group">
         <label for="search" class="sr-only">Search</label>
         <div class="input-group-prepend">
-          <div class="input-group-text rounded-left"><i class="fas fa-search"></i></div>
+          <button type="button" class="btn btn-primary rounded-left"><i class="fas fa-search"></i></button>
         </div>
         <input type="text" name="search" class="form-control form-control-lg" id="search"
                placeholder="Search for Project Code, Title, Abstract, PI Name, or File Name">
@@ -49,34 +33,10 @@
       <app-filters *ngIf="showFilterList"></app-filters>
     </div><!--// col -->
 
-    <div [ngClass]="showFilterList ? 'col-md-9' : 'col'">
+    <div class="col">
       <app-results></app-results>
     </div><!--// col -->
   </div><!-- // row -->
 </div><!-- // container -->
 
-<footer class="container-fluid border-top bg-light" style="box-shadow: inset 0 100px 100px -100px rgba(0,0,0,0.3);">
-  <div class="row p-5">
-    <div class="col-12 col-md-3">
-      <div class="row align-items-center">
-        <div class="col-3">
-          <img src="../assets/images/NRAO_logo_white_border.png" alt="National Radio Astronomy Observatory" class="img-fluid" />
-        </div>
-        <div class="col-4">
-          <img src="../assets/images/NSF-logo.png" alt="National Science Foundation" class="img-fluid" />
-        </div>
-        <div class="col-5 pl-0">
-          <img src="../assets/images/AUI_logo_color.png" alt="Associated Universities Inc" class="img-fluid" />
-        </div>
-      </div><!--//row -->
-    </div><!--// col -->
-    <div class="col-12 col-md-9">
-      <p>
-        <a href="" class="btn btn-link">Staff</a>
-        <a href="" class="btn btn-link">Policies</a>
-        <a href="" class="btn btn-link">Diversity</a>
-      </p>
-      <p class="small text-muted ml-2">The National Radio Astronomy Observatory is a facility of the National Science Foundation operated under cooperative agreement by Associated Universities, Inc.</p>
-    </div>
-  </div>
-</footer>
+<app-footer></app-footer>

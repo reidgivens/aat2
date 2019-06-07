@@ -1,0 +1,17 @@
+<header class="container-fluid">
+  <div class="row align-items-end">
+    <div class="col-md-6 col-9">
+      <h1 class="pt-2"><span></span><b>NRAO</b> <br/> Archive Access</h1>
+    </div><!--// col -->
+    <div class="col-md-6 col-3 text-right pb-3">
+      <button type="button" class="btn btn-light d-md-none" (click)="showNav = !showNav"><i class="fas fa-bars"></i></button>
+    </div>
+  </div><!-- // row -->
+  <nav id="tool_nav" class="row text-center" *ngIf="showNav" @vslider>
+    <a href="#" class="col-md"><i class="fas fa-home"></i> Home</a>
+    <a href="#" class="col-md"><i class="fas fa-link"></i> Legacy Archive</a>
+    <a href="#" class="col-md"><i class="fas fa-file-alt"></i> About</a>
+    <a href="#" class="col-md"><i class="fas fa-bullhorn"></i> Feedback</a>
+    <a href="#" class="col-md"><i class="fas fa-sign-in-alt"></i> Log In</a>
+  </nav>
+</header>

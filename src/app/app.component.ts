@@ -9,6 +9,6 @@ import {verticleSlide} from "./animations";
 })
 export class AppComponent {
   title = 'archive2';
-  public showNav = true;
+
   public showFilterList = true;
 }

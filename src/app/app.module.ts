@@ -13,6 +13,8 @@ import { ConfigurationsComponent } from './filters/configurations/configurations
 import { ReceiversComponent } from './filters/receivers/receivers.component';
 import { PolarizationsComponent } from './filters/polarizations/polarizations.component';
 import { ResultsComponent } from './results/results.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { ResultsComponent } from './results/results.component';
     ConfigurationsComponent,
     ReceiversComponent,
     PolarizationsComponent,
-    ResultsComponent
+    ResultsComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
