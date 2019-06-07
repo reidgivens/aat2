@@ -1,0 +1,136 @@
+<fieldset>
+  <div class="form-row py-1 border-top" (click)="isCollapsed = !isCollapsed">
+    <legend class="col mb-0 text-uppercase">Source Position</legend>
+    <p class="col-auto mb-0">
+      <!-- fontawesome replaces the <i> tag with an svg for the icon, so we can't show/hide on the <i>
+      so we need to include both and show/hide them based on isCollapsed -->
+      <button type="button" class="btn btn-link" [hidden]="!isCollapsed">
+        <i class="fas fa-chevron-up"></i>
+      </button>
+      <button type="button" class="btn btn-link" [hidden]="isCollapsed">
+        <i class="fas fa-chevron-down"></i>
+      </button>
+    </p>
+  </div>
+  <div *ngIf="!isCollapsed" @vslider>
+    <div class="py-3">
+      <ngb-tabset>
+        <ngb-tab title="Equatorial">
+          <ng-template ngbTabContent>
+            <div class="form-group mt-3">
+              <label for="rightAscension">Right Ascension</label>
+              <div class="input-group">
+                <input type="text" name="rightAscension" id="rightAscension" class="form-control"/>
+                <div class="input-group-append">
+                  <div ngbDropdown>
+                    <button type="button" class="btn btn-secondary" ngbDropdownToggle>HMS</button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                      <a class="dropdown-item" href="#">HMS</a>
+                      <a class="dropdown-item" href="#">DMS</a>
+                      <a class="dropdown-item" href="#">Deg</a>
+                      <a class="dropdown-item" href="#">Rad</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="declination">Declination</label>
+              <div class="input-group">
+                <input type="text" name="declination" id="declination" class="form-control"/>
+                <div class="input-group-append">
+                  <div ngbDropdown>
+                    <button type="button" class="btn btn-secondary" ngbDropdownToggle>DMS</button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                      <a class="dropdown-item" href="#">DMS</a>
+                      <a class="dropdown-item" href="#">Deg</a>
+                      <a class="dropdown-item" href="#">Rad</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Ecliptic">
+          <ng-template ngbTabContent>
+            <div class="form-group mt-3">
+              <label for="eclipticLongitude">Ecliptic Longitude</label>
+              <div class="input-group">
+                <input type="text" name="eclipticLongitude" id="eclipticLongitude" class="form-control"/>
+                <div class="input-group-append">
+                  <div ngbDropdown>
+                    <button type="button" class="btn btn-secondary" ngbDropdownToggle>DMS</button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                      <a class="dropdown-item" href="#">DMS</a>
+                      <a class="dropdown-item" href="#">Deg</a>
+                      <a class="dropdown-item" href="#">Rad</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="eclipticLatitude">Ecliptic Latitude</label>
+              <div class="input-group">
+                <input type="text" name="eclipticLatitude" id="eclipticLatitude" class="form-control"/>
+                <div class="input-group-append">
+                  <div ngbDropdown>
+                    <button type="button" class="btn btn-secondary" ngbDropdownToggle>DMS</button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                      <a class="dropdown-item" href="#">DMS</a>
+                      <a class="dropdown-item" href="#">Deg</a>
+                      <a class="dropdown-item" href="#">Rad</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Galactic">
+          <ng-template ngbTabContent>
+            <div class="form-group mt-3">
+              <label for="galacticLongitude">Galactic Longitude</label>
+              <div class="input-group">
+                <input type="text" name="galacticLongitude" id="galacticLongitude" class="form-control"/>
+                <div class="input-group-append">
+                  <div ngbDropdown>
+                    <button type="button" class="btn btn-secondary" ngbDropdownToggle>DMS</button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                      <a class="dropdown-item" href="#">DMS</a>
+                      <a class="dropdown-item" href="#">Deg</a>
+                      <a class="dropdown-item" href="#">Rad</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="galacticLatitude">Galactic Latitude</label>
+              <div class="input-group">
+                <input type="text" name="galacticLatitude" id="galacticLatitude" class="form-control"/>
+                <div class="input-group-append">
+                  <div ngbDropdown>
+                    <button type="button" class="btn btn-secondary" ngbDropdownToggle>DMS</button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                      <a class="dropdown-item" href="#">DMS</a>
+                      <a class="dropdown-item" href="#">Deg</a>
+                      <a class="dropdown-item" href="#">Rad</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+
+  </div>
+</fieldset>

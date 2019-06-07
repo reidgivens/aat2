@@ -1,0 +1,728 @@
+<div class="row bg-secondary py-3">
+  <div class="col">
+    <button type="button" class="btn btn text-uppercase mr-3 mb-1 mb-md-0"
+            [ngClass]="resultType == 'Observations' ? 'btn-outline-light': 'btn-outline-primary bg-light border-light'"
+            (click)="resultType = 'Observations'">Observations
+    </button>
+    <button type="button" class="btn btn text-uppercase mr-3 mb-1 mb-md-0"
+            [ngClass]="resultType == 'Projects' ? 'btn-outline-light': 'btn-outline-primary bg-light border-light'"
+            (click)="resultType = 'Projects'">Projects
+    </button>
+    <button type="button" class="btn btn text-uppercase mr-3 mb-1 mb-md-0"
+            [ngClass]="resultType == 'Images' ? 'btn-outline-light': 'btn-outline-primary bg-light border-light'"
+            (click)="resultType = 'Images'">Images
+    </button>
+  </div>
+</div>
+
+<div class="row bg-dark text-light py-3 align-items-baseline">
+  <div class="col-xs-12 col-md">
+    <p class="mb-2 mb-md-0">34,652 Observations</p>
+  </div>
+  <div class="col-auto">
+    <div class="form-group m-0">
+      <div class="btn-group">
+        <button id="to-first-page" class="btn btn-outline-light btn-sm"><i class="fas fa-fast-backward"></i>
+        </button>
+        <button id="back-one-page" class="btn btn-outline-light btn-sm"><i class="fas fa-step-backward"></i>
+        </button>
+        <div class="btn-group" ngbDropdown>
+          <button class="btn btn-outline-light btn-sm" type="button" id="page-select" ngbDropdownToggle>Page 1
+          </button>
+          <ul style="height: 200px; overflow-y: scroll;" ngbDropdownMenu>
+            <li ngbDropdownItem><a href="">Page 1</a></li>
+            <li ngbDropdownItem><a href="">Page 2</a></li>
+            <li ngbDropdownItem><a href="">Page 3</a></li>
+            <li ngbDropdownItem><a href="">Page 4</a></li>
+            <li ngbDropdownItem><a href="">Page 5</a></li>
+            <li ngbDropdownItem><a href="">Page 6</a></li>
+            <li ngbDropdownItem><a href="">Page 7</a></li>
+            <li ngbDropdownItem><a href="">Page 8</a></li>
+            <li ngbDropdownItem><a href="">Page 9</a></li>
+            <li ngbDropdownItem><a href="">Page 10</a></li>
+            <li ngbDropdownItem><a href="">Page 11</a></li>
+            <li ngbDropdownItem><a href="">Page 12</a></li>
+            <li ngbDropdownItem><a href="">Page 13</a></li>
+            <li ngbDropdownItem><a href="">Page 14</a></li>
+            <li ngbDropdownItem><a href="">Page 15</a></li>
+            <li ngbDropdownItem><a href="">Page 16</a></li>
+            <li ngbDropdownItem><a href="">Page 17</a></li>
+            <li ngbDropdownItem><a href="">Page 18</a></li>
+            <li ngbDropdownItem><a href="">Page 19</a></li>
+            <li ngbDropdownItem><a href="">Page 20</a></li>
+          </ul>
+        </div>
+        <button id="forward-one-page" class="btn btn-outline-light btn-sm"><i class="fas fa-step-forward"></i>
+        </button>
+        <button id="to-last-page" class="btn btn-outline-light btn-sm"><i class="fas fa-fast-forward"></i>
+        </button>
+      </div>
+    </div>
+  </div><!--// col -->
+
+  <div class="col-auto">
+    <div ngbDropdown>
+      <button class="btn btn-outline-light btn-sm" type="button" ngbDropdownToggle>25 Per Page</button>
+      <div class="scrollable-menu" ngbDropdownMenu>
+        <button ngbDropdownItem>25 Per Page</button>
+        <button ngbDropdownItem>50 Per Page</button>
+        <button ngbDropdownItem>100 Per Page</button>
+      </div>
+    </div>
+  </div><!--// col -->
+
+  <div class="col-xs-12 col-md-auto py-1 pl-1 mt-2 mt-md-0 bg-secondary text-right">
+    <button class="btn btn-outline-light btn-sm mr-1 active" type="button" (click)="expandItems = !expandItems"  [hidden]="!expandItems"><i class="fas fa-chevron-up"></i></button>
+    <button class="btn btn-outline-light btn-sm mr-1" type="button" (click)="expandItems = !expandItems"  [hidden]="expandItems"><i class="fas fa-chevron-down"></i></button>
+    2 Items of 20 <span class="badge badge-dark">166.3 MB of 10.0 TB</span>
+  </div>
+</div><!--// row -->
+
+<div class="row" @vslider *ngIf="expandItems">
+  <div class="col py-3">
+    <div class="row align-items-baseline">
+      <div class="col"><h4 class="m-0">2 Items of 20 <span class="badge badge-light border">166.3 MB of 10.0 TB</span></h4></div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-danger"><i class="fas fa-times-circle"></i> Clear All</button>
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary"><i class="fas fa-download"></i> Download All</button>
+      </div>
+    </div>
+    <ul class="list-unstyled m-0">
+      <li>
+        <button type="button" class="btn text-danger"><i class="fas fa-times-circle"></i></button>
+        VLASS1.1.ql.T17t17.J122441+273000.10.2048.v1.I.iter1.image.pbcor.tt0.subim.fits
+      </li>
+      <li>
+        <button type="button" class="btn text-danger"><i class="fas fa-times-circle"></i></button>
+        VLASS1.1.ql.T17t17.J122012+273000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.fits
+      </li>
+      <li>
+        <button type="button" class="btn text-danger"><i class="fas fa-times-circle"></i></button>
+        15A-421.sb30427439.eb30495599.57102.69239414352
+      </li>
+      <li>
+        <button type="button" class="btn text-danger"><i class="fas fa-times-circle"></i></button>
+        uid___A002_Xd1f23d_X3130
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="row bg-light py-3">
+  <div class="col">
+    <div class="row align-items-baseline">
+      <div class="col">
+        <p class="text-uppercase">Selected Filters</p>
+      </div>
+      <div class="col-auto" ngbDropdown>
+        <button type="button" class="btn btn-sm btn-link" ngbDropdownToggle>Options</button>
+        <ul ngbDropdownMenu>
+          <li ngbDropdownItem><a href="" class="text-danger"><i class="fas fa-times-circle"></i> Clear All Filters</a></li>
+          <li ngbDropdownItem><a href=""><i class="fas fa-save"></i> Save Filter Set</a></li>
+          <li ngbDropdownItem><a href=""><i class="fas fa-folder-open"></i> Load Filter Set</a></li>
+        </ul>
+      </div>
+    </div><!--// row -->
+
+    <ul class="inline-list p-0 mb-2">
+      <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white">
+        <b>From: </b> 2019-02-05
+        <button class="btn btn-sm btn-link p-0 ml-1"><i class="fas fa-times-circle"></i></button>
+      </li>
+      <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white">
+        <b>To: </b> 2019-04-15
+        <button class="btn btn-sm btn-link p-0 ml-1"><i class="fas fa-times-circle"></i></button>
+      </li>
+      <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white">
+        VLA
+        <button class="btn btn-sm btn-link p-0 ml-1"><i class="fas fa-times-circle"></i></button>
+      </li>
+      <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white">
+        VBLA
+        <button class="btn btn-sm btn-link p-0 ml-1"><i class="fas fa-times-circle"></i></button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="results" *ngIf="resultType == 'Observations'">
+  <div class="row bg-info text-light border-bottom table-header">
+    <div class="col-12 col-12 col-md-6 py-3">
+      <h3>Project <i class="text-dark small fas fa-sort-alpha-down"></i></h3>
+      Archive File<br/>
+      Observation Dates
+    </div>
+    <div class="col-6 col-6 col-md-3 py-3">
+      <h4>Instrument</h4>
+      Configuration<br/>
+      Bands
+    </div>
+    <div class="col-6 col-6 col-md-3 py-3">
+      <h4>File Size</h4>
+      Type<br/>
+      Scans
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>VLASS1.1 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> VLASS1.1.sb34434950.eb34484414.58018.13499180556</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">17-09-22 03:14:28</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">17-09-22 07:15:50</span><br/>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> S, X
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>348.6 GB &bull;&bull;&bull;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 215
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>17B-191 <span class="badge badge-dark"><i class="fas fa-lock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> 17B-191.sb34452915.eb34484416.58018.30267133102</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">17-09-22 07:15:52</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">17-09-22 07:55:04</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> C, K, Ka, Ku, L, P, Q, S, X
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>8.6 GB &bull;&bull;&bull;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 12
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>DB192 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> inbeam2ld</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">17-04-25 10:57:53</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">17-04-25 13:23:26</span>
+      <div class="border rounded d-inline-block mt-1 ml-4">
+        <span class="btn">Calibrations</span>
+        <button class="btn btn-sm btn-primary mx-1" type="button">1</button>
+        <button class="btn btn-sm btn-primary mx-1" type="button">2</button>
+      </div>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VBLA</h4>
+      <span class="badge badge-light border">Config</span> -<br/>
+      <span class="badge badge-light border">Bands</span> L
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>1.1 TB &bull;&bull;&bull;&bull; </h4>
+      <span class="badge badge-light border">Type</span> Correlation <br/>
+      <span class="badge badge-light border">Scans</span> 1
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>17B-093 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> 17B-093.sb34052251.eb34484575.58018.32993361111</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">17-09-22 07:55:07</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">17-09-22 10:49:36</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> C, X
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>110.2 GB &bull;&bull;&bull;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 40
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>2013.1.01267.S <span class="badge badge-dark"><i class="fas fa-lock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> uid___A002_X98ed3f_Xb6</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">15-01-05 20:25:11</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">15-01-05 21:48:07</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>ALMA</h4>
+      <span class="badge badge-light border">Config</span> -<br/>
+      <span class="badge badge-light border">Bands</span> 03
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>57.2 MB &bull;&bull;&#9702;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 29
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>17B-115 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> 17B-115.sb34125264.eb34486844.58018.451138993056</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">17-09-22 10:49:39</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">17-09-22 11:19:32</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> L
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>8.809 GB &bull;&bull;&bull;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 7
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>16A-035 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> 16A-035.sb31764314.eb31852188.57433.35509340277</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">16-02-15 08:31:21</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">16-02-15 10:18:20</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> C<br/>
+      <span class="badge badge-light border">Bands</span> Ka, X
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>72.8 kB &bull;&#9702;&#9702;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 58
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>VLASS1.1 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> VLASS1.1.sb34434950.eb34484414.58018.13499180556</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">17-09-22 03:14:28</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">17-09-22 07:15:50</span><br/>
+      <div class="border rounded d-inline-block mt-1 ml-4">
+        <span class="btn">Calibrations</span>
+        <button class="btn btn-sm btn-primary mx-1" type="button">1</button>
+        <button class="btn btn-sm btn-primary mx-1" type="button">2</button>
+      </div>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> S, X
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>348.6 GB &bull;&bull;&bull;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 215
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>17B-191 <span class="badge badge-dark"><i class="fas fa-lock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> 17B-191.sb34452915.eb34484416.58018.30267133102</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">17-09-22 07:15:52</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">17-09-22 07:55:04</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> C, K, Ka, Ku, L, P, Q, S, X
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>8.6 GB &bull;&bull;&bull;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 12
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>DB192 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> inbeam2ld</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">17-04-25 10:57:53</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">17-04-25 13:23:26</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VBLA</h4>
+      <span class="badge badge-light border">Config</span> -<br/>
+      <span class="badge badge-light border">Bands</span> L
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>1.1 TB &bull;&bull;&bull;&bull; </h4>
+      <span class="badge badge-light border">Type</span> Correlation <br/>
+      <span class="badge badge-light border">Scans</span> 1
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>17B-093 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> 17B-093.sb34052251.eb34484575.58018.32993361111</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">17-09-22 07:55:07</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">17-09-22 10:49:36</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> C, X
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>110.2 GB &bull;&bull;&bull;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 40
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>2013.1.01267.S <span class="badge badge-dark"><i class="fas fa-lock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> uid___A002_X98ed3f_Xb6</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">15-01-05 20:25:11</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">15-01-05 21:48:07</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>ALMA</h4>
+      <span class="badge badge-light border">Config</span> -<br/>
+      <span class="badge badge-light border">Bands</span> 03
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>57.2 MB &bull;&bull;&#9702;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 29
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>17B-115 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> 17B-115.sb34125264.eb34486844.58018.451138993056</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">17-09-22 10:49:39</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">17-09-22 11:19:32</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> L
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>8.809 GB &bull;&bull;&bull;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 7
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <h3>16A-035 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> 16A-035.sb31764314.eb31852188.57433.35509340277</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">16-02-15 08:31:21</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">16-02-15 10:18:20</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> C<br/>
+      <span class="badge badge-light border">Bands</span> Ka, X
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>72.8 kB &bull;&#9702;&#9702;&#9702; </h4>
+      <span class="badge badge-light border">Type</span> Visibility <br/>
+      <span class="badge badge-light border">Scans</span> 58
+    </div>
+  </div>
+</div>
+
+<div class="results" *ngIf="resultType == 'Projects'">
+  <div class="row bg-info text-light border-bottom table-header">
+    <div class="col-12 col-md-9 py-3">
+      <h3>Project <i class="text-dark small fas fa-sort-alpha-down"></i></h3>
+      Title<br/>
+      Observation Dates
+    </div>
+    <div class="col-12 col-md-3 py-3">
+      <h4>Instrument</h4>
+      Execution Blocks<br/>
+      Images
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-9 py-3">
+      <h3>14B-234 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> Where are the radio counterparts to the low-z far-infrared-luminous
+        sources?</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">2014-09-21 16:08</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">2015-01-24 13:13</span><br/>
+    </div>
+    <div class="col-12 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Observations</span> 24<br/>
+      <span class="badge badge-light border">Images</span> 0
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-9 py-3">
+      <h3>2017.1.00886.L <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> 100,000 Molecular Clouds Across the Main Sequence: GMCs as the
+        Drivers of Galaxy Evolution</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">2017-10-03 06:11</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">2019-05-12 18:19</span><br/>
+    </div>
+    <div class="col-12 col-md-3 py-3">
+      <h4>ALMA</h4>
+      <span class="badge badge-light border">Observations</span> 1,031<br/>
+      <span class="badge badge-light border">Images</span> 0
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-9 py-3">
+      <h3>14B-254 <span class="badge badge-secondary"><i class="fas fa-lock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> comprehensive Galactic plane radio wavelength star formation survey</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">2014-09-26 22:02</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">2014-10-06 02:11</span><br/>
+    </div>
+    <div class="col-12 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Observations</span> 3<br/>
+      <span class="badge badge-light border">Images</span> 1
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-9 py-3">
+      <h3>14A-434 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> VLA follow-up of iPTF Ib/c SNe: An efficient quest for relativistic
+        explosions</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">2014-02-25 05:05</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">2014-12-10 10:30</span><br/>
+    </div>
+    <div class="col-12 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Observations</span> 19<br/>
+      <span class="badge badge-light border">Images</span> 3
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-9 py-3">
+      <h3>14A-445 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> Joint VLA and NuSTAR observations of the Sun in radio and X-rays</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">2014-09-10 21:06</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">2014-12-11 20:50</span><br/>
+    </div>
+    <div class="col-12 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Observations</span> 4<br/>
+      <span class="badge badge-light border">Images</span> 0
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-9 py-3">
+      <h3>14A-449 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> Effects from Fermi bubbles to the Galactic Magnetic Fields</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">2014-09-01 22:56</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">2016-05-06 10:38</span><br/>
+    </div>
+    <div class="col-12 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Observations</span> 2<br/>
+      <span class="badge badge-light border">Images</span> 0
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-9 py-3">
+      <h3>14A-456 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> Measuring water in Saturn to constrain planetary formation
+        models</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">2014-04-08 07:34</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">2014-09-05 01:12</span><br/>
+    </div>
+    <div class="col-12 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Observations</span> 3<br/>
+      <span class="badge badge-light border">Images</span> 0
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-9 py-3">
+      <h3>14A-463 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> Detecting CO[1-0] in the star-forming galaxies of a z=1.62 galaxy
+        cluster</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">2014-08-05 10:53</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">2014-12-27 05:12</span><br/>
+    </div>
+    <div class="col-12 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Observations</span> 28<br/>
+      <span class="badge badge-light border">Images</span> 3
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-9 py-3">
+      <h3>14B-259 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i> Exploring the dense molecular gas in two high-z lensed
+        ULIRGs</a><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">2014-09-26 15:19</span>
+      <span class="badge badge-light border">End</span> <span class="p-1">2014-10-05 17:42</span><br/>
+    </div>
+    <div class="col-12 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Observations</span> 5<br/>
+      <span class="badge badge-light border">Images</span> 0
+    </div>
+  </div>
+</div>
+
+<div class="results" *ngIf="resultType == 'Images'">
+  <div class="row bg-info text-light border-bottom table-header">
+    <div class="col-12 col-md-6 py-3">
+      <h3>Project <i class="text-dark small fas fa-sort-alpha-down"></i></h3>
+      File Name<br/>
+      Type
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>Instrument</h4>
+      Configuration<br/>
+      Bands<br/>
+      Longitude
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>Collection</h4>
+      Sp Resolution<br/>
+      Beam Axis Ratio<br/>
+      Latitude
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <img
+        src="https://archive-new.nrao.edu/thumbnails/02/49/c3/VLASS1.1.ql.T17t17.J122012_273000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.sky.png"
+        class="img-fluid img-thumbnail float-right mr-2" width="80px"/>
+      <h3>VLASS1.1 <span class="badge badge-light text-muted mr-2"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i>
+        VLASS1.1.ql.T01t10.J043724-363000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.fits</a><br/>
+      quicklook_image-rms
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> BnA<br/>
+      <span class="badge badge-light border">Bands</span> S<br/>
+      <span class="badge badge-light border">Longitude</span> <span class="p-1">4h37m24.984s</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLASS </h4>
+      <span class="badge badge-light border">Sp Resolution</span> 2.383 <br/>
+      <span class="badge badge-light border">Beam Axis Ration</span> 1.466<br/>
+      <span class="badge badge-light border">Latitude</span> <span class="p-1">-36°30'0.000"</span>
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <img
+        src="https://archive-new.nrao.edu/thumbnails/ea/69/5d/VLASS1.1.ql.T18t17.J122524_303000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.sky.png"
+        class="img-fluid img-thumbnail float-right mr-2" width="80px"/>
+      <h3>VLASS1.1 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i>
+        VLASS1.1.ql.T01t10.J043724-363000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.fits</a><br/>
+      quicklook_image
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> S<br/>
+      <span class="badge badge-light border">Longitude</span> <span class="p-1">12h24m41.471s</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLASS </h4>
+      <span class="badge badge-light border">Sp Resolution</span> 2.366 <br/>
+      <span class="badge badge-light border">Beam Axis Ration</span> 1.198<br/>
+      <span class="badge badge-light border">Latitude</span> <span class="p-1">27°30'0.000"</span>
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <img
+        src="https://archive-new.nrao.edu/thumbnails/02/49/c3/VLASS1.1.ql.T17t17.J122012_273000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.sky.png"
+        class="img-fluid img-thumbnail float-right mr-2" width="80px"/>
+      <h3>VLASS1.1 <span class="badge badge-light text-muted mr-2"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i>
+        VLASS1.1.ql.T01t10.J043724-363000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.fits</a><br/>
+      quicklook_image-rms
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> BnA<br/>
+      <span class="badge badge-light border">Bands</span> S<br/>
+      <span class="badge badge-light border">Longitude</span> <span class="p-1">4h37m24.984s</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLASS </h4>
+      <span class="badge badge-light border">Sp Resolution</span> 2.383 <br/>
+      <span class="badge badge-light border">Beam Axis Ration</span> 1.466<br/>
+      <span class="badge badge-light border">Latitude</span> <span class="p-1">-36°30'0.000"</span>
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <img
+        src="https://archive-new.nrao.edu/thumbnails/ea/69/5d/VLASS1.1.ql.T18t17.J122524_303000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.sky.png"
+        class="img-fluid img-thumbnail float-right mr-2" width="80px"/>
+      <h3>VLASS1.1 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i>
+        VLASS1.1.ql.T01t10.J043724-363000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.fits</a><br/>
+      quicklook_image
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> S<br/>
+      <span class="badge badge-light border">Longitude</span> <span class="p-1">12h24m41.471s</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLASS </h4>
+      <span class="badge badge-light border">Sp Resolution</span> 2.366 <br/>
+      <span class="badge badge-light border">Beam Axis Ration</span> 1.198<br/>
+      <span class="badge badge-light border">Latitude</span> <span class="p-1">27°30'0.000"</span>
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <img
+        src="https://archive-new.nrao.edu/thumbnails/02/49/c3/VLASS1.1.ql.T17t17.J122012_273000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.sky.png"
+        class="img-fluid img-thumbnail float-right mr-2" width="80px"/>
+      <h3>VLASS1.1 <span class="badge badge-light text-muted mr-2"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i>
+        VLASS1.1.ql.T01t10.J043724-363000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.fits</a><br/>
+      quicklook_image-rms
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> BnA<br/>
+      <span class="badge badge-light border">Bands</span> S<br/>
+      <span class="badge badge-light border">Longitude</span> <span class="p-1">4h37m24.984s</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLASS </h4>
+      <span class="badge badge-light border">Sp Resolution</span> 2.383 <br/>
+      <span class="badge badge-light border">Beam Axis Ration</span> 1.466<br/>
+      <span class="badge badge-light border">Latitude</span> <span class="p-1">-36°30'0.000"</span>
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col-12 col-md-6 py-3">
+      <img
+        src="https://archive-new.nrao.edu/thumbnails/ea/69/5d/VLASS1.1.ql.T18t17.J122524_303000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.sky.png"
+        class="img-fluid img-thumbnail float-right mr-2" width="80px"/>
+      <h3>VLASS1.1 <span class="badge badge-light text-muted"><i class="fas fa-unlock"></i></span></h3>
+      <a href=""><i class="fas fa-plus-circle"></i>
+        VLASS1.1.ql.T01t10.J043724-363000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.fits</a><br/>
+      quicklook_image
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLA</h4>
+      <span class="badge badge-light border">Config</span> B<br/>
+      <span class="badge badge-light border">Bands</span> S<br/>
+      <span class="badge badge-light border">Longitude</span> <span class="p-1">12h24m41.471s</span>
+    </div>
+    <div class="col-6 col-md-3 py-3">
+      <h4>VLASS </h4>
+      <span class="badge badge-light border">Sp Resolution</span> 2.366 <br/>
+      <span class="badge badge-light border">Beam Axis Ration</span> 1.198<br/>
+      <span class="badge badge-light border">Latitude</span> <span class="p-1">27°30'0.000"</span>
+    </div>
+  </div>
+</div>

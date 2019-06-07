@@ -1,0 +1,53 @@
+<fieldset>
+  <div class="form-row py-1 border-top" (click)="isCollapsed = !isCollapsed">
+    <legend class="col mb-0 text-uppercase">Frequency</legend>
+    <p class="col-auto mb-0">
+      <!-- fontawesome replaces the <i> tag with an svg for the icon, so we can't show/hide on the <i>
+      so we need to include both and show/hide them based on isCollapsed -->
+      <button type="button" class="btn btn-link" [hidden]="!isCollapsed">
+        <i class="fas fa-chevron-up"></i>
+      </button>
+      <button type="button" class="btn btn-link" [hidden]="isCollapsed">
+        <i class="fas fa-chevron-down"></i>
+      </button>
+    </p>
+  </div>
+  <div *ngIf="!isCollapsed" @vslider>
+    <div class="form-row py-3">
+      <div class="form-group col-md">
+        <label for="startFrequency">Start</label>
+        <div class="input-group">
+          <input type="text" name="startFrequency" id="startFrequency" class="form-control"/>
+          <div class="input-group-append">
+            <div ngbDropdown>
+              <button class="btn btn-secondary" type="button" ngbDropdownToggle>GHz</button>
+              <div class="dropdown-menu" ngbDropdownMenu>
+                <a class="dropdown-item" href="#">GHz</a>
+                <a class="dropdown-item" href="#">MHz</a>
+                <a class="dropdown-item" href="#">kHz</a>
+                <a class="dropdown-item" href="#">Hz</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md">
+        <label for="endFrequency">End</label>
+        <div class="input-group">
+          <input type="text" name="endFrequency" id="endFrequency" class="form-control"/>
+          <div class="input-group-append">
+            <div ngbDropdown>
+              <button class="btn btn-secondary" type="button" ngbDropdownToggle>GHz</button>
+              <div class="dropdown-menu" ngbDropdownMenu>
+                <a class="dropdown-item" href="#">GHz</a>
+                <a class="dropdown-item" href="#">MHz</a>
+                <a class="dropdown-item" href="#">kHz</a>
+                <a class="dropdown-item" href="#">Hz</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</fieldset>
