@@ -12,9 +12,12 @@ import { TelescopesComponent } from './filters/telescopes/telescopes.component';
 import { ConfigurationsComponent } from './filters/configurations/configurations.component';
 import { ReceiversComponent } from './filters/receivers/receivers.component';
 import { PolarizationsComponent } from './filters/polarizations/polarizations.component';
-import { ResultsComponent } from './results/results.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { ObservationResultsComponent } from './observation-results/observation-results.component';
+import { ProjectResultsComponent } from './project-results/project-results.component';
+import { ImageResultsComponent } from './image-results/image-results.component';
+import { CollectionComponent } from './filters/collection/collection.component';
 
 @NgModule({
   declarations: [
@@ -27,9 +30,12 @@ import { FooterComponent } from './footer/footer.component';
     ConfigurationsComponent,
     ReceiversComponent,
     PolarizationsComponent,
-    ResultsComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ObservationResultsComponent,
+    ProjectResultsComponent,
+    ImageResultsComponent,
+    CollectionComponent
   ],
   imports: [
     BrowserModule,

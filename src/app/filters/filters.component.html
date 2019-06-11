@@ -1,4 +1,5 @@
 <form id="filters">
+  <app-collection [collection]="collection"></app-collection>
   <app-dates></app-dates>
   <app-frequencies></app-frequencies>
   <app-source-position></app-source-position>
@@ -6,4 +7,14 @@
   <app-configurations></app-configurations>
   <app-polarizations></app-polarizations>
   <app-receivers></app-receivers>
+  <fieldset>
+    <div class="form-row py-1 border-top">
+    <button type="button" class="btn btn-block btn-sm btn-outline-primary text-uppercase" *ngIf="!exposeTertiaryFilters" (click)="exposeTertiaryFilters = !exposeTertiaryFilters">More</button>
+    <button type="button" class="btn btn-block btn-sm btn-outline-primary text-uppercase" *ngIf="exposeTertiaryFilters" (click)="exposeTertiaryFilters = !exposeTertiaryFilters">Less</button>
+    </div>
+  </fieldset>
+  <div *ngIf="exposeTertiaryFilters">
+    <app-polarizations></app-polarizations>
+    <app-receivers></app-receivers>
+  </div>
 </form>
