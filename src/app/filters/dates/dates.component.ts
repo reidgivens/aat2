@@ -9,7 +9,7 @@ import {verticleSlide} from "../../animations";
 })
 export class DatesComponent implements OnInit {
 
-  public isCollapsed = false;
+  public isCollapsed = true;
 
   constructor() { }
 

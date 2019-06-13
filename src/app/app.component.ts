@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {verticleSlide} from "./animations";
-import {Collection} from "./model/collection";
+
+import { Globals} from "./globals";
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,11 @@ import {Collection} from "./model/collection";
 export class AppComponent {
   title = 'archive2';
 
-  collection = Collection.DEFAULT_COLLECTION;
-
   public showFilterList = true;
   public expandItems = false;
-  public activeSearchFilters = [];
+
+  constructor(private globals: Globals){
+
+  }
 
 }

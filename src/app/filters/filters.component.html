@@ -1,20 +1,34 @@
 <form id="filters">
-  <app-collection [collection]="collection"></app-collection>
-  <app-dates></app-dates>
-  <app-frequencies></app-frequencies>
-  <app-source-position></app-source-position>
-  <app-telescopes></app-telescopes>
-  <app-configurations></app-configurations>
-  <app-polarizations></app-polarizations>
-  <app-receivers></app-receivers>
+  <!-- keeping this filter here, rather than in it's own component makes filter loading easier -->
   <fieldset>
-    <div class="form-row py-1 border-top">
-    <button type="button" class="btn btn-block btn-sm btn-outline-primary text-uppercase" *ngIf="!exposeTertiaryFilters" (click)="exposeTertiaryFilters = !exposeTertiaryFilters">More</button>
-    <button type="button" class="btn btn-block btn-sm btn-outline-primary text-uppercase" *ngIf="exposeTertiaryFilters" (click)="exposeTertiaryFilters = !exposeTertiaryFilters">Less</button>
+    <div class="form-row py-1 border-top" (click)="isResultTypeCollapsed = !isResultTypeCollapsed">
+      <legend class="col mb-0 text-uppercase" >Result Type</legend>
+      <p class="col-auto mb-0">
+        <!-- fontawesome replaces the <i> tag with an svg for the icon, so we can't show/hide on the <i>
+        so we need to include both and show/hide them based on isCollapsed -->
+        <button type="button" class="btn btn-link" [hidden]="!isResultTypeCollapsed">
+          <i class="fas fa-chevron-up"></i>
+        </button>
+        <button type="button" class="btn btn-link" [hidden]="isResultTypeCollapsed">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </p>
+    </div>
+    <div *ngIf="!isResultTypeCollapsed" @vslider>
+      <div class="list-group list-group-flush row" role="group">
+        <button type="button" *ngFor="let intent of globals.resultType.getResultTypes()" (click)="setResultType(intent)" class="list-group-item list-group-item-action" [ngClass]="intent == globals.resultType.name ? 'list-group-item-secondary active' : 'list-group-item-light'">{{ intent }}</button>
+      </div>
     </div>
   </fieldset>
-  <div *ngIf="exposeTertiaryFilters">
-    <app-polarizations></app-polarizations>
-    <app-receivers></app-receivers>
-  </div>
+
+
+  <ng-template #primary></ng-template>
+  <ng-template #secondary></ng-template>
+  <fieldset>
+    <div class="form-row py-1 border-top">
+    <button type="button" class="btn btn-block btn-sm btn-outline-primary text-uppercase" *ngIf="!exposeSecondaryFilters" (click)="toggleSecondaryFilters()">More</button>
+    <button type="button" class="btn btn-block btn-sm btn-outline-primary text-uppercase" *ngIf="exposeSecondaryFilters" (click)="toggleSecondaryFilters()">Less</button>
+    </div>
+  </fieldset>
+
 </form>
