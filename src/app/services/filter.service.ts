@@ -15,6 +15,7 @@ import { PolarizationsComponent } from '../filters/polarizations/polarizations.c
 })
 export class FilterService {
 
+  // this service allows for dynamically injected filters into the view, so this tracks were we put something
   rootViewContainer: ViewContainerRef;
 
   // the names given to each component should match the result-type primaryFilter and secondaryFilters

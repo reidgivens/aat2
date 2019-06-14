@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset [formGroup]="telescopeGroup">
   <div class="form-row py-1 border-top" (click)="isCollapsed = !isCollapsed">
     <legend class="col mb-0 text-uppercase" >Telescope</legend>
     <p class="col-auto mb-0">
@@ -15,21 +15,9 @@
   <div *ngIf="!isCollapsed" @vslider>
     <div class="form-row py-3">
       <div class="col">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="vla">
-          <label class="form-check-label" for="vla">VLA</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="vlba">
-          <label class="form-check-label" for="vlba">VLBA</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="alma">
-          <label class="form-check-label" for="alma">ALMA</label>
+        <div class="form-check form-check-inline mr-4" formArrayName="telescopes" *ngFor="let telescope of telescopeGroup.controls.telescopes.controls; let i = index">
+          <input class="form-check-input" type="checkbox" [formControl]="telescope" id="{{validTelescopes[i].name}}">
+          <label class="form-check-label" for="{{validTelescopes[i].name}}">{{validTelescopes[i].name}}</label>
         </div>
       </div>
     </div>

@@ -4,11 +4,7 @@ export class ResultType {
   primaryFilters: Array<string>; // see filter.service for names
   secondaryFilters: Array<string>; // see filter.service for names
 
-  // we need to iterate over what is available to build to UI
-  // I have identifing this list because we already have it in COLLECTIONS
-  // but that is static so I can't iterate over it.
-  //availableTypes = ['Observations','Projects','Images'];
-
+  // add result types here to get them to show in the list
   static RESULT_TYPES = {
     'Observations': new ResultType(
       'Observations',
@@ -17,7 +13,7 @@ export class ResultType {
     ),
     'Images': new ResultType(
       'Images',
-      ['dates', 'frequencies', 'source-position'],
+      ['source-position', 'dates', 'frequencies'],
       ['telescopes', 'configurations', 'polarizations', 'receivers']
     ),
     'Projects': new ResultType(

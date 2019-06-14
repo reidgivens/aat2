@@ -1,4 +1,4 @@
-<form id="filters">
+<form id="filters" [formGroup]=""><!-- we have to have a formGroup on every form tag, even if its empty -->
   <!-- keeping this filter here, rather than in it's own component makes filter loading easier -->
   <fieldset>
     <div class="form-row py-1 border-top" (click)="isResultTypeCollapsed = !isResultTypeCollapsed">

@@ -15,3 +15,19 @@ export const verticleSlide = [
     transition(':leave', [useAnimation(slideUp)])
   ])
 ];
+
+export var fadeOut = animation([
+  animate( '300ms', style({opacity: 0 }))
+]);
+
+export var fadeIn = animation([
+  style({ opacity: 0 }),
+  animate( '300ms', style({opacity: 1 }))
+]);
+
+export const fadeInOut = [
+  trigger('fadeInOut', [
+    transition(':enter', [useAnimation(fadeIn)]),
+    transition(':leave', [useAnimation(fadeOut)])
+  ])
+];

@@ -20,7 +20,7 @@ export class FiltersComponent implements OnInit {
   @ViewChild('primary', {read: ViewContainerRef }) primaryViewContainerRef: ViewContainerRef;
   @ViewChild('secondary', {read: ViewContainerRef }) secondaryViewContainerRef: ViewContainerRef;
 
-  constructor(private globals: Globals, private filterService: FilterService) {
+    constructor(private globals: Globals, private filterService: FilterService) {
     this.resultType = globals.resultType;
   }
 
@@ -31,12 +31,13 @@ export class FiltersComponent implements OnInit {
   private setResultType(name: string){
     this.globals.resultType = this.globals.resultType.setResultType(name);
     this.resultType = this.globals.resultType;
-    this.loadPrimaryFilters();
+    this.primaryViewContainerRef.clear();
+    this.secondaryViewContainerRef.clear();
     this.exposeSecondaryFilters = false;
+    this.loadPrimaryFilters();
   }
 
   loadPrimaryFilters(){
-    this.primaryViewContainerRef.clear();
     for (let v of this.resultType.primaryFilters){
       this.filterService.loadFilter(this.primaryViewContainerRef, v);
     }

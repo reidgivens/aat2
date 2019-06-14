@@ -3,7 +3,7 @@
 <div class="container-fluid">
 
   <!-- the global text search -->
-  <form class="row bg-light border-bottom">
+  <form class="row bg-light border-bottom" [formGroup]="searchControlGroup">
     <div class="form-group col-12 pt-4 pb-2 px-5">
       <div class="input-group">
         <label for="search" class="sr-only">Search</label>
@@ -11,7 +11,7 @@
           <button type="button" class="btn btn-primary rounded-left"><i class="fas fa-search"></i></button>
         </div>
         <input type="text" name="search" class="form-control form-control-lg" id="search"
-               placeholder="Search for Project Code, Title, Abstract, PI Name, or File Name">
+               placeholder="Search for Project Code, Title, Abstract, PI Name, or File Name" formControlName="searchFormControl">
       </div>
     </div>
   </form>
@@ -42,7 +42,7 @@
         </div>
       </div>
       <app-filters *ngIf="showFilterList"></app-filters>
-    </div><
+    </div>
     <!-- // filter side rail -->
 
     <div class="col">
@@ -54,7 +54,7 @@
       </div>-->
 
       <!-- selected filters -->
-      <div class="row bg-light py-3">
+      <div class="row bg-light py-2">
         <div class="col">
           <div class="row align-items-baseline">
             <div class="col">
@@ -71,22 +71,10 @@
             </div>
           </div><!--// row -->
 
-          <ul class="inline-list p-0 mb-2">
-            <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white">
-              <b>From: </b> 2019-02-05
-              <button class="btn btn-sm btn-link p-0 ml-1"><i class="fas fa-times-circle"></i></button>
-            </li>
-            <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white">
-              <b>To: </b> 2019-04-15
-              <button class="btn btn-sm btn-link p-0 ml-1"><i class="fas fa-times-circle"></i></button>
-            </li>
-            <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white">
-              VLA
-              <button class="btn btn-sm btn-link p-0 ml-1"><i class="fas fa-times-circle"></i></button>
-            </li>
-            <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white">
-              VBLA
-              <button class="btn btn-sm btn-link p-0 ml-1"><i class="fas fa-times-circle"></i></button>
+          <ul class="inline-list p-0 m-0">
+            <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white" @fadeInOut *ngFor="let selectedFilter of globals.selectedFilters">
+              <b>{{ selectedFilter.label}}: </b> {{selectedFilter.value}}
+              <button class="btn btn-sm btn-link p-0 ml-1" (click)="removeSelectedFilter(selectedFilter.name, selectedFilter.value)"><i class="fas fa-times-circle"></i></button>
             </li>
           </ul>
         </div>

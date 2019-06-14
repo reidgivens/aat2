@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule} from "@angular/forms";
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -53,6 +54,7 @@ import { ImageResultsComponent } from './image-results/image-results.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     NgbModule
   ],
   providers: [ Globals, FilterService ],

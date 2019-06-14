@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset [formGroup]="frequencyGroup">
   <div class="form-row py-1 border-top" (click)="isCollapsed = !isCollapsed">
     <legend class="col mb-0 text-uppercase">Frequency</legend>
     <p class="col-auto mb-0">
@@ -17,35 +17,35 @@
       <div class="form-group col-md">
         <label for="startFrequency">Start</label>
         <div class="input-group">
-          <input type="text" name="startFrequency" id="startFrequency" class="form-control"/>
+          <input type="text" name="startFrequency" id="startFrequency" class="form-control" formControlName="startFrequency" />
           <div class="input-group-append">
             <div ngbDropdown>
-              <button class="btn btn-secondary" type="button" ngbDropdownToggle>GHz</button>
+              <button class="btn btn-secondary" type="button" ngbDropdownToggle>{{ startHz }}</button>
               <div class="dropdown-menu" ngbDropdownMenu>
-                <a class="dropdown-item" href="#">GHz</a>
-                <a class="dropdown-item" href="#">MHz</a>
-                <a class="dropdown-item" href="#">kHz</a>
-                <a class="dropdown-item" href="#">Hz</a>
+                <button type="button" class="dropdown-item" *ngFor="let hz of validHz" (click)="updateStartHz(hz)">{{hz}}</button>
               </div>
             </div>
           </div>
+        </div>
+        <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="frequencyGroup.get('startFrequency').errors && frequencyGroup.get('startFrequency') && frequencyGroup.get('startFrequency').errors.invalidFrequency">
+          Only enter numbers
         </div>
       </div>
       <div class="form-group col-md">
         <label for="endFrequency">End</label>
         <div class="input-group">
-          <input type="text" name="endFrequency" id="endFrequency" class="form-control"/>
+          <input type="text" name="endFrequency" id="endFrequency" class="form-control" formControlName="endFrequency"/>
           <div class="input-group-append">
             <div ngbDropdown>
-              <button class="btn btn-secondary" type="button" ngbDropdownToggle>GHz</button>
+              <button class="btn btn-secondary" type="button" ngbDropdownToggle>{{ endHz }}</button>
               <div class="dropdown-menu" ngbDropdownMenu>
-                <a class="dropdown-item" href="#">GHz</a>
-                <a class="dropdown-item" href="#">MHz</a>
-                <a class="dropdown-item" href="#">kHz</a>
-                <a class="dropdown-item" href="#">Hz</a>
+                <button type="button" class="dropdown-item" *ngFor="let hz of validHz" (click)="updateEndHz(hz)">{{hz}}</button>
               </div>
             </div>
           </div>
+        </div>
+        <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="frequencyGroup.get('endFrequency').errors && frequencyGroup.get('endFrequency') && frequencyGroup.get('endFrequency').errors.invalidFrequency">
+          Only enter numbers
         </div>
       </div>
     </div>

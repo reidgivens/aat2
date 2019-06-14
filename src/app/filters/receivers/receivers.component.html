@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset [formGroup]="receiverGroup">
   <div class="form-row py-1 border-top" (click)="isCollapsed = !isCollapsed">
     <legend class="col mb-0 text-uppercase" >Receivers</legend>
     <p class="col-auto mb-0">
@@ -14,168 +14,13 @@
   </div>
   <div *ngIf="!isCollapsed" @vslider>
     <div class="form-row py-3">
-      <div class="col">
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">C <span class="badge border ml-1 text-muted">17939</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">K <span class="badge border ml-1 text-muted">7868</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">KA <span class="badge border ml-1 text-muted">5228</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">KU <span class="badge border ml-1 text-muted">4439</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">L <span class="badge border ml-1 text-muted">14859</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">P <span class="badge border ml-1 text-muted">2490</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">S <span class="badge border ml-1 text-muted">7016</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Q <span class="badge border ml-1 text-muted">4068</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">X <span class="badge border ml-1 text-muted">27033</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">06 <span class="badge border ml-1 text-muted">11101</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">03 <span class="badge border ml-1 text-muted">7121</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">07 <span class="badge border ml-1 text-muted">3668</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">04 <span class="badge border ml-1 text-muted">866</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">08 <span class="badge border ml-1 text-muted">590</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">05 <span class="badge border ml-1 text-muted">211</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">09 <span class="badge border ml-1 text-muted">172</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">4 <span class="badge border ml-1 text-muted">50</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">10 <span class="badge border ml-1 text-muted">14</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Unspecified <span class="badge border ml-1 text-muted">1</span></label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:0 <span class="badge border ml-1 text-muted">18463</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:1 <span class="badge border ml-1 text-muted">5780</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:2 <span class="badge border ml-1 text-muted">5595</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:3 <span class="badge border ml-1 text-muted">5571</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:4 <span class="badge border ml-1 text-muted">5206</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:5 <span class="badge border ml-1 text-muted">5158</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:6 <span class="badge border ml-1 text-muted">5089</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:7 <span class="badge border ml-1 text-muted">5073</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:8 <span class="badge border ml-1 text-muted">701</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:9 <span class="badge border ml-1 text-muted">695</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:10 <span class="badge border ml-1 text-muted">692</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">
-            Subband:11 <span class="badge border ml-1 text-muted">691</span></label></div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:12 <span class="badge border ml-1 text-muted">640</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:13 <span class="badge border ml-1 text-muted">640</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:14 <span class="badge border ml-1 text-muted">596</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:15 <span class="badge border ml-1 text-muted">586</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:110 <span class="badge border ml-1 text-muted">1</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:111 <span class="badge border ml-1 text-muted">1</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:112 <span class="badge border ml-1 text-muted">1</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:113 <span class="badge border ml-1 text-muted">1</span></label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">Subband:255 <span class="badge border ml-1 text-muted">6</span></label>
+      <div class="col-6" formArrayName="receivers" *ngFor="let receiver of receiverGroup.controls.receivers.controls; let i = index">
+        <div class="form-check mr-4">
+          <input class="form-check-input" type="checkbox" [formControl]="receiver" id="{{validReceivers[i].name}}">
+          <label class="form-check-label" for="{{validReceivers[i].name}}">
+            {{validReceivers[i].name}}
+            <span class="badge border text-muted ml-1">{{validReceivers[i].count}}</span>
+          </label>
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset [formGroup]="polarizationGroup">
   <div class="form-row py-1 border-top" (click)="isCollapsed = !isCollapsed">
     <legend class="col mb-0 text-uppercase" >Polarizations</legend>
     <p class="col-auto mb-0">
@@ -14,36 +14,13 @@
   </div>
   <div *ngIf="!isCollapsed" @vslider>
     <div class="form-row py-3">
-      <div class="col">
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">RR (36298722)</label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">LL (1060769)</label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">RR, LL (205353)</label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">RR, RL, LR, LL (1041822)</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">XX (629)</label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">XX, YY (204819)</label>
-        </div>
-        <div class="form-check form-check">
-          <input class="form-check-input" type="checkbox" id="">
-          <label class="form-check-label" for="">XX, XY, YX, YY (15875)</label>
+      <div class="col-6" formArrayName="polarizations" *ngFor="let polarization of polarizationGroup.controls.polarizations.controls; let i = index">
+        <div class="form-check mr-4">
+          <input class="form-check-input" type="checkbox" [formControl]="polarization" id="{{validPolarizations[i].name}}">
+          <label class="form-check-label" for="{{validPolarizations[i].name}}">
+            {{validPolarizations[i].name}}
+            <span class="badge border text-muted ml-1">{{validPolarizations[i].count}}</span>
+          </label>
         </div>
       </div>
 
