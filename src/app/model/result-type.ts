@@ -6,6 +6,8 @@ export class ResultType {
 
   // add result types here to get them to show in the list
   // don't forget to specify the results component in app-routing.module.ts
+  // the filters list should reference the components to display for filters, which may have more than input control
+  // these do not refer to individual fields actually pass to the back end
   static RESULT_TYPES = {
     'Observations': new ResultType(
       'Observations',

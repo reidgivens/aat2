@@ -1,13 +1,50 @@
 import { Injectable } from '@angular/core';
 import { SelectedFilter} from "../model/selected-filter";
 import { Globals } from "../globals";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Field } from "../model/fields";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectedFilterService {
 
-  constructor(private globals: Globals) { }
+  private selectedFilters: Array<SelectedFilter> = [];
+
+  constructor(private globals: Globals, private route: ActivatedRoute, private router: Router) {
+    this.loadSelectedFilters();
+  }
+
+  loadSelectedFilters(){
+    // get all the allowable fields as defined in the Field model
+    const fields = Field.getFields();
+    // subscribe to the queryParams
+    this.route.queryParamMap.subscribe(queryParams => {
+      console.log(queryParams);
+      // iterate over the queryParams
+      for (let qp of this.route.snapshot.queryParamMap.keys){
+        // iterate over the fields array
+        // we could do a match to see if it's value, but we need to reference the casing exactly later
+        for(let f of fields){
+          if(f.toLowerCase() == qp.toLowerCase()){
+            // lets get the field so we know if it can hold multiple values
+            let field: Field = Field.getField(f);
+            let val = queryParams.get(qp);
+            if(field.allowMultipleValues){
+              this.addSelectedFilter(field.label, field.name, val);
+            } else {
+              this.addReplaceSelectedFilter(field.label, field.name, val);
+            }
+            break;
+          }
+        }
+      }
+    });
+  }
+
+  getSelectedFilters(){
+    return this.selectedFilters;
+  }
 
   addSelectedFilter(label: string, name: string, value: string){
     let isApplicable: boolean = true; // so we know if this filter is applicable to this result type
@@ -25,10 +62,20 @@ export class SelectedFilterService {
         }
       }
     }
-    // if we didn't thing this, lets add it
+    // if we didn't find this, lets add it
     if(!doesExist) {
       let thisFilter = new SelectedFilter(label, name, value, isApplicable);
       this.globals.selectedFilters.push(thisFilter);
+      // now add it to the path without triggering a navigation event
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: {
+          [name]: [value]
+        },
+        queryParamsHandling: 'merge', // preserve the existing params
+        //replaceUrl: true,
+        skipLocationChange: true // don't trigger the navigation event
+      });
     }
   }
 
@@ -39,6 +86,16 @@ export class SelectedFilterService {
       for(let i in this.globals.selectedFilters){
         if(this.globals.selectedFilters[i].name == name){
           this.globals.selectedFilters.splice(+i,1);
+          // now remove it from the path without triggering a navigation event
+          this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: {
+              [name]: null
+            },
+            queryParamsHandling: 'merge', // preserve the existing params
+            //replaceUrl: true,
+            skipLocationChange: true // don't trigger the navigation event
+          });
         }
       }
     }
@@ -52,6 +109,16 @@ export class SelectedFilterService {
         // match on name and value
         if(this.globals.selectedFilters[i].name == name && this.globals.selectedFilters[i].value == value){
           this.globals.selectedFilters.splice(+i,1);
+          // now remove it from the path without triggering a navigation event
+          this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: {
+              [name]: null
+            },
+            queryParamsHandling: 'merge', // preserve the existing params
+            //replaceUrl: true,
+            skipLocationChange: true // don't trigger the navigation event
+          });
         }
       }
     }
