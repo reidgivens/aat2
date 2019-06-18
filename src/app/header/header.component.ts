@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {verticleSlide} from "../animations";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-header',
@@ -11,8 +12,13 @@ import {verticleSlide} from "../animations";
 export class HeaderComponent implements OnInit {
 
   public showNav = true;
+  public searchControlGroup: FormGroup;
 
-  constructor() { }
+  constructor() {
+    this.searchControlGroup = new FormGroup({
+      searchFormControl: new FormControl('', {updateOn: "change"})
+    });
+  }
 
   ngOnInit() {
   }

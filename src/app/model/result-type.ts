@@ -5,6 +5,7 @@ export class ResultType {
   secondaryFilters: Array<string>; // see filter.service for names
 
   // add result types here to get them to show in the list
+  // don't forget to specify the results component in app-routing.module.ts
   static RESULT_TYPES = {
     'Observations': new ResultType(
       'Observations',
@@ -45,11 +46,11 @@ export class ResultType {
     this.secondaryFilters = secondaryFilters;
   }
 
-  getResultTypes() {
+  static getResultTypes() {
     return Object.keys(ResultType.RESULT_TYPES);
   }
 
-  setResultType(name: string) {
+  static getResultType(name: string) {
     return ResultType.RESULT_TYPES[name];
   }
 }

@@ -1,17 +1,38 @@
 <header class="container-fluid">
+  <nav id="tool_nav" class="row flex-md-row justify-content-md-end text-center" *ngIf="showNav" @vslider>
+    <a href="#" class="col-12 col-md"><i class="fas fa-home"></i> Home</a>
+    <a href="#" class="col-12 col-md"><i class="fas fa-link"></i> Legacy Archive</a>
+    <a href="#" class="col-12 col-md"><i class="fas fa-file-alt"></i> About</a>
+    <a href="#" class="col-12 col-md"><i class="fas fa-bullhorn"></i> Feedback</a>
+    <a href="#" class="col-12 col-md"><i class="fas fa-sign-in-alt"></i> Log In</a>
+  </nav>
   <div class="row align-items-end">
-    <div class="col-md-6 col-9">
+    <div class="col-10 col-md-4">
       <h1 class="pt-2"><span></span><b>NRAO</b> <br/> Archive Access</h1>
     </div><!--// col -->
-    <div class="col-md-6 col-3 text-right pb-3">
+    <div class="col-2 col-md-1 hidden-md-up text-right pb-3">
       <button type="button" class="btn btn-light d-md-none" (click)="showNav = !showNav"><i class="fas fa-bars"></i></button>
     </div>
+    <div class="col-12 col-md-7">
+      <form class="row" [formGroup]="searchControlGroup">
+        <div class="form-group col-12">
+          <div class="input-group">
+            <label for="search" class="sr-only">Search</label>
+            <input type="text" name="search" class="form-control form-control-lg" id="search"
+                   placeholder="Search for Project Code, Title, Abstract, PI Name, or File Name" formControlName="searchFormControl">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-primary rounded-left"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div><!-- // row -->
-  <nav id="tool_nav" class="row text-center" *ngIf="showNav" @vslider>
+  <!--<nav id="tool_nav" class="row text-center" *ngIf="showNav" @vslider>
     <a href="#" class="col-md"><i class="fas fa-home"></i> Home</a>
     <a href="#" class="col-md"><i class="fas fa-link"></i> Legacy Archive</a>
     <a href="#" class="col-md"><i class="fas fa-file-alt"></i> About</a>
     <a href="#" class="col-md"><i class="fas fa-bullhorn"></i> Feedback</a>
     <a href="#" class="col-md"><i class="fas fa-sign-in-alt"></i> Log In</a>
-  </nav>
+  </nav>-->
 </header>

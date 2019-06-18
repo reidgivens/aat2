@@ -15,7 +15,7 @@ export class TelescopesComponent implements OnInit {
   public telescopeGroup: FormGroup;
   public validTelescopes = [
     {id: 'VLA', name: 'VLA', selected: false},
-    {id: 'VBLA', name: 'VBLA', selected: false},
+    {id: 'VLBA', name: 'VLBA', selected: false},
     {id: 'ALMA', name: 'ALMA', selected: false}
   ];
 

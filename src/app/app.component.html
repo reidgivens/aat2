@@ -1,22 +1,6 @@
 <app-header></app-header>
 
 <div class="container-fluid">
-
-  <!-- the global text search -->
-  <form class="row bg-light border-bottom" [formGroup]="searchControlGroup">
-    <div class="form-group col-12 pt-4 pb-2 px-5">
-      <div class="input-group">
-        <label for="search" class="sr-only">Search</label>
-        <div class="input-group-prepend">
-          <button type="button" class="btn btn-primary rounded-left"><i class="fas fa-search"></i></button>
-        </div>
-        <input type="text" name="search" class="form-control form-control-lg" id="search"
-               placeholder="Search for Project Code, Title, Abstract, PI Name, or File Name" formControlName="searchFormControl">
-      </div>
-    </div>
-  </form>
-  <!--// global text search -->
-
   <div class="row">
 
     <!-- the filter side rail -->
@@ -183,9 +167,10 @@
       </div>
       <!--// selected items list -->
 
-      <app-observation-results *ngIf="globals.resultType.name == 'Observations'"></app-observation-results>
+      <router-outlet></router-outlet>
+      <!--<app-observation-results *ngIf="globals.resultType.name == 'Observations'"></app-observation-results>
       <app-project-results *ngIf="globals.resultType.name == 'Projects'"></app-project-results>
-      <app-image-results class="results" *ngIf="globals.resultType.name == 'Images'"></app-image-results>
+      <app-image-results class="results" *ngIf="globals.resultType.name == 'Images'"></app-image-results>-->
 
     </div><!--// col -->
   </div><!-- // row -->

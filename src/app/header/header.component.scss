@@ -13,3 +13,8 @@ header h1 span { display: block; float: left; margin: 0 2% 0 0; width: 75px; hei
 header nav#tool_nav { border-top: 1px solid rgba(255,255,255,0.25); }
 header nav#tool_nav a { font-size: 1.25em; padding: 0.25em 1em; color: rgba(255,255,255,0.7); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.5); }
 header nav#tool_nav a:hover { background: rgba(2,0,36,1); color: rgba(255,255,255,1); }
+
+@media only screen and (max-width: 768px) {
+  header h1 { font-size: 2rem; }
+  header h1 span { width: 60px; height: 75px; }
+}

@@ -24,6 +24,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ObservationResultsComponent } from './observation-results/observation-results.component';
 import { ProjectResultsComponent } from './project-results/project-results.component';
 import { ImageResultsComponent } from './image-results/image-results.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ImageResultsComponent } from './image-results/image-results.component';
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    AppRoutingModule
   ],
   providers: [ Globals, FilterService ],
   bootstrap: [AppComponent]

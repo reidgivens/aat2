@@ -16,7 +16,7 @@
     </div>
     <div *ngIf="!isResultTypeCollapsed" @vslider>
       <div class="list-group list-group-flush row" role="group">
-        <button type="button" *ngFor="let intent of globals.resultType.getResultTypes()" (click)="setResultType(intent)" class="list-group-item list-group-item-action" [ngClass]="intent == globals.resultType.name ? 'list-group-item-secondary active' : 'list-group-item-light'">{{ intent }}</button>
+        <a routerLink="/{{intent}}" *ngFor="let intent of resultTypes" class="text-left p-3" [ngClass]="intent == globals.resultType.name ? 'bg-dark text-white' : 'bg-light'">{{intent}}</a>
       </div>
     </div>
   </fieldset>

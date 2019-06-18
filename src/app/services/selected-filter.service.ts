@@ -38,7 +38,7 @@ export class SelectedFilterService {
     if(this.globals.selectedFilters.length > 0){
       for(let i in this.globals.selectedFilters){
         if(this.globals.selectedFilters[i].name == name){
-          this.globals.selectedFilters.splice(i,1);
+          this.globals.selectedFilters.splice(+i,1);
         }
       }
     }
@@ -51,7 +51,7 @@ export class SelectedFilterService {
       for(let i in this.globals.selectedFilters){
         // match on name and value
         if(this.globals.selectedFilters[i].name == name && this.globals.selectedFilters[i].value == value){
-          this.globals.selectedFilters.splice(i,1);
+          this.globals.selectedFilters.splice(+i,1);
         }
       }
     }
