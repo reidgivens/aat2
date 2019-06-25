@@ -23,7 +23,7 @@ export class FiltersComponent implements OnInit {
   public isResultTypeCollapsed = true; // to control the side rail
   public resultTypes = ResultType.getResultTypes(); // to create the resultType links
   public exposeSecondaryFilters = false; // the secondary form filters show/hide
-  private resultType: ResultType; // the active result type
+  public resultType: ResultType; // the active result type
   private resultTypeSub: Subscription; // subscribtion to the active result type
   public filterForm: FormGroup; // the reference to our form
   public filterFormSub: Subscription; // the subscription to keep our filterForm updated

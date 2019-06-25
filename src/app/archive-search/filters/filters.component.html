@@ -2,7 +2,7 @@
   <!-- keeping this filter here, rather than in it's own component makes filter loading easier -->
   <fieldset class="row">
     <div class="form-row py-1 border-top bg-dark text-light" (click)="isResultTypeCollapsed = !isResultTypeCollapsed">
-      <legend class="col mb-0 pl-3" >{{globals.resultType.name }} Search</legend>
+      <legend class="col mb-0 pl-3" >{{resultType.name }} Search</legend>
       <p class="col-auto mb-0 pr-3">
         <!-- fontawesome replaces the <i> tag with an svg for the icon, so we can't show/hide on the <i>
         so we need to include both and show/hide them based on isCollapsed -->
