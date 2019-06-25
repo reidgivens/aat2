@@ -14,7 +14,7 @@
   </div>
   <div *ngIf="!isCollapsed" @vslider>
     <div class="form-row py-3">
-      <div class="col-6" formArrayName="polarizations" *ngFor="let polarization of polarizationGroup.controls.polarizations.controls; let i = index">
+      <div class="col-6" formArrayName="polarization" *ngFor="let polarization of polarizationGroup.controls.polarization.controls; let i = index">
         <div class="form-check mr-4">
           <input class="form-check-input" type="checkbox" [formControl]="polarization" id="{{validPolarizations[i].name}}">
           <label class="form-check-label" for="{{validPolarizations[i].name}}">

@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {verticleSlide} from "../../animations";
 import { FormGroup, FormControl, FormArray} from "@angular/forms";
 import { SelectedFilterService} from "../../services/selected-filter.service";
+import {Subscription} from "rxjs";
+import {FilterFormService} from "../../services/filter-form.service";
+import {FieldService} from "../../services/field.service";
+import {SelectedFilter} from "../../model/selected-filter";
 
 
 @Component({
@@ -14,61 +18,61 @@ export class ConfigurationsComponent implements OnInit {
 
   public isCollapsed = true;
   public configurationGroup: FormGroup;
-  public validConfigurations = [
-    { name: 'A', count: 14832, selected: false},
-    { name: 'A->D', count: 2283, selected: false},
-    { name: 'B', count: 18603, selected: false},
-    { name: 'B->A', count: 1, selected: false},
-    { name: 'B->BnA', count: 510, selected: false},
-    { name: 'BnA', count: 1826, selected: false},
-    { name: 'BnA->A', count: 1549, selected: false},
-    { name: 'C', count: 15849, selected: false},
-    { name: 'C->B', count: 720, selected: false},
-    { name: 'C->CnB', count: 365, selected: false},
-    { name: 'C->CNB', count: 305, selected: false},
-    { name: 'CnB', count: 1655, selected: false},
-    { name: 'CnB->B', count: 622, selected: false},
-    { name: 'D', count: 17704, selected: false},
-    { name: 'D->C', count: 237, selected: false},
-    { name: 'D->DnC', count: 228, selected: false},
-    { name: 'DnC', count: 1941, selected: false},
-    { name: 'DnC->C', count: 382, selected: false},
-    { name: 'DnC-C', count: 60, selected: false}
-  ];
+  public filterForm: FormGroup; // the reference to our parent form
+  public filterFormSub: Subscription; // the subscription to keep our filterForm updated
+  public validConfigurations: Array<any>;
+  public selectedFilters: Array<SelectedFilter>;
+  public selectedFiltersSub: Subscription;
 
-  constructor(private selectedFilterService: SelectedFilterService) { }
-
-  ngOnInit() {
-    this.configurationGroup = new FormGroup({
-      configurations: new FormArray([], {updateOn: 'change'})
-    });
-    this.addCheckboxes();
+  constructor(private selectedFilterService: SelectedFilterService, private filterFormService: FilterFormService, private fieldService: FieldService) {
+    this.validConfigurations = this.fieldService.getFacets('configuration');
   }
 
-  private addCheckboxes(){
+  ngOnInit() {
+    this.filterFormSub = this.filterFormService.filterForm$.subscribe(filterForm => {
+      this.filterForm = filterForm;
+    });
+
+    this.configurationGroup = new FormGroup({
+      configuration: new FormArray([], {updateOn: 'change'})
+    });
+
     // add a form control for each validTelescope
     this.validConfigurations.map((o) => {
       const control = new FormControl(o.selected);
-      (this.configurationGroup.controls.configurations as FormArray).push(control);
+      (this.configurationGroup.controls.configuration as FormArray).push(control);
     });
-    // now subscribe to changes to any of these
-    (this.configurationGroup.controls.configurations as FormArray).valueChanges.subscribe(values => {
-      for (let i in values){
-        if(values[i]){
-          this.addSelectedFilter('Configuration', 'configuration', this.validConfigurations[i].name);
-        } else {
-          this.removeSelectedFilter('configuration', this.validConfigurations[i].name);
-        }
+
+    this.filterFormService.addFilter(this.configurationGroup);
+
+    this.selectedFiltersSub = this.selectedFilterService.selectedFilters$.subscribe( selectedFilters => {
+      this.selectedFilters = selectedFilters;
+      this.loadFilters();
+    });
+  }
+
+  ngOnDestroy(){
+    this.filterFormService.deleteFilterByHasKey('configuration');
+  }
+
+  loadFilters(){
+    // collect all the filters for this control type
+    let filters: Array<string> = [];
+    for(let filter of this.selectedFilters){
+      if(filter.name == 'configuration'){
+        filters.push(filter.value);
+      }
+    }
+    let fa = this.configurationGroup.get('configuration') as FormArray;
+    // now iterate over the valid options and see if we have a filter it
+    this.validConfigurations.forEach((item, index) => {
+      let fc = fa.at(index);
+      if(filters.indexOf(item.name) !== -1){
+        fc.setValue(true);
+      } else {
+        fc.setValue( false);
       }
     });
-  }
-
-  addSelectedFilter(label: string, name: string, value: string){
-    this.selectedFilterService.addSelectedFilter(label, name, value);
-  }
-
-  removeSelectedFilter(name: string, value: string){
-    this.selectedFilterService.removeSelectedFilter(name, value);
   }
 
 }

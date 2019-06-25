@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {verticleSlide} from "../../animations";
 import { FormGroup, FormControl, FormArray} from "@angular/forms";
 import { SelectedFilterService} from "../../services/selected-filter.service";
+import {Subscription} from "rxjs";
+import {FilterFormService} from "../../services/filter-form.service";
+import {FieldService} from "../../services/field.service";
+import {SelectedFilter} from "../../model/selected-filter";
 
 @Component({
   selector: 'app-polarizations',
@@ -13,48 +17,61 @@ export class PolarizationsComponent implements OnInit {
 
   public isCollapsed = true;
   public polarizationGroup: FormGroup;
-  public validPolarizations = [
-    { name: 'RR', count: 36298722, selected: false },
-    { name: 'LL', count: 1060769, selected: false },
-    { name: 'RR, LL', count: 205353, selected: false },
-    { name: 'RR, RL, LR, LL', count: 1041822, selected: false },
-    { name: 'XX', count: 629, selected: false },
-    { name: 'XX, YY', count: 204819, selected: false },
-    { name: 'XX, XY, YX, YY', count: 15875, selected: false }
-  ];
-  constructor(private selectedFilterService: SelectedFilterService ) { }
+  public filterForm: FormGroup; // the reference to our parent form
+  public filterFormSub: Subscription; // the subscription to keep our filterForm updated
+  public validPolarizations: Array<any>;
+  public selectedFilters: Array<SelectedFilter>;
+  public selectedFiltersSub: Subscription;
 
-  ngOnInit() {
-    this.polarizationGroup = new FormGroup({
-      polarizations: new FormArray([], {updateOn: 'change'})
-    });
-    this.addCheckboxes();
+  constructor(private selectedFilterService: SelectedFilterService, private filterFormService: FilterFormService, private fieldService: FieldService) {
+    this.validPolarizations = this.fieldService.getFacets('polarization');
   }
 
-  private addCheckboxes(){
+  ngOnInit() {
+    this.filterFormSub = this.filterFormService.filterForm$.subscribe(filterForm => {
+      this.filterForm = filterForm;
+    });
+
+    this.polarizationGroup = new FormGroup({
+      polarization: new FormArray([], {updateOn: 'change'})
+    });
+
     // add a form control for each validTelescope
     this.validPolarizations.map((o) => {
       const control = new FormControl(o.selected);
-      (this.polarizationGroup.controls.polarizations as FormArray).push(control);
+      (this.polarizationGroup.controls.polarization as FormArray).push(control);
     });
-    // now subscribe to changes to any of these
-    (this.polarizationGroup.controls.polarizations as FormArray).valueChanges.subscribe(values => {
-      for (let i in values){
-        if(values[i]){
-          this.addSelectedFilter('Polarization', 'polarization', this.validPolarizations[i].name);
-        } else {
-          this.removeSelectedFilter('polarization', this.validPolarizations[i].name);
-        }
+
+    this.filterFormService.addFilter(this.polarizationGroup);
+
+    this.selectedFiltersSub = this.selectedFilterService.selectedFilters$.subscribe( selectedFilters => {
+      this.selectedFilters = selectedFilters;
+      this.loadFilters();
+    });
+  }
+
+  ngOnDestroy(){
+    this.filterFormService.deleteFilterByHasKey('polarization');
+  }
+
+  loadFilters(){
+    // collect all the filters for this control type
+    let filters: Array<string> = [];
+    for(let filter of this.selectedFilters){
+      if(filter.name == 'polarization'){
+        filters.push(filter.value);
+      }
+    }
+    let fa = this.polarizationGroup.get('polarization') as FormArray;
+    // now iterate over the valid options and see if we have a filter it
+    this.validPolarizations.forEach((item, index) => {
+      let fc = fa.at(index);
+      if(filters.indexOf(item.name) !== -1){
+        fc.setValue(true);
+      } else {
+        fc.setValue( false);
       }
     });
-  }
-
-  addSelectedFilter(label: string, name: string, value: string){
-    this.selectedFilterService.addSelectedFilter(label, name, value);
-  }
-
-  removeSelectedFilter(name: string, value: string){
-    this.selectedFilterService.removeSelectedFilter(name, value);
   }
 
 }

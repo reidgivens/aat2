@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { SelectedFilter} from "../model/selected-filter";
-import { Globals } from "../globals";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Field } from "../model/fields";
+import { Field } from "../model/field";
+import { FieldService } from "./field.service";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,40 +11,77 @@ import { Field } from "../model/fields";
 export class SelectedFilterService {
 
   private selectedFilters: Array<SelectedFilter> = [];
+  private _selectedFilters: BehaviorSubject<Array<SelectedFilter>> = new BehaviorSubject(this.selectedFilters);
+  public readonly selectedFilters$: Observable<Array<SelectedFilter>> = this._selectedFilters.asObservable();
 
-  constructor(private globals: Globals, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private fieldService: FieldService) {
+
     this.loadSelectedFilters();
   }
 
   loadSelectedFilters(){
+    this.selectedFilters = [];
     // get all the allowable fields as defined in the Field model
     const fields = Field.getFields();
     // subscribe to the queryParams
-    this.route.queryParamMap.subscribe(queryParams => {
-      console.log(queryParams);
+    this.route.queryParams.subscribe(queryParams => {
       // iterate over the queryParams
-      for (let qp of this.route.snapshot.queryParamMap.keys){
-        // iterate over the fields array
-        // we could do a match to see if it's value, but we need to reference the casing exactly later
-        for(let f of fields){
-          if(f.toLowerCase() == qp.toLowerCase()){
-            // lets get the field so we know if it can hold multiple values
-            let field: Field = Field.getField(f);
-            let val = queryParams.get(qp);
+      for (let qp in queryParams) {
+        let qpv = queryParams[qp];
+        qp = qp.toLowerCase();
+        if(qpv.length > 0){ // first make sure we have anything
+          if(fields.indexOf(qp) !== -1){ // make sure it's a valid field
+            let field = Field.getField(qp);
             if(field.allowMultipleValues){
-              this.addSelectedFilter(field.label, field.name, val);
+              let facets = this.fieldService.getFacets(field.name); // to test for valid value
+              for(let f of facets){
+                if(typeof qpv == "string"){ // for a single value submitted
+                  if(f.name.toLowerCase() == qpv.toLowerCase()){
+                    this.addSelectedFilter(field.label, field.name, f.name);
+                  }
+                } else { // for multiple values submitted
+                  for(let aVal of qpv){
+                    if(f.name.toLowerCase() == aVal.toLowerCase()){
+                      this.addSelectedFilter(field.label, field.name, f.name);
+                    }
+                  }
+                }
+              }
             } else {
-              this.addReplaceSelectedFilter(field.label, field.name, val);
+              this.addReplaceSelectedFilter(field.label, field.name, qpv);
             }
-            break;
           }
         }
       }
-    });
-  }
+      // now sort them so they are always displayed in the same order
+      // having filters jump around on view change is confusing
+      this.selectedFilters.sort((a,b) => {
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
+        const aValue = a.value.toLowerCase();
+        const bValue = b.value.toLowerCase();
 
-  getSelectedFilters(){
-    return this.selectedFilters;
+        let comparison = 0;
+        if(aName > bName){
+          comparison = 1;
+        } else {
+          comparison = -1;
+        }
+        if(comparison == 0){
+          if(aValue > bValue){
+            comparison = 1;
+          } else {
+            comparison = -1;
+          }
+        }
+        return comparison;
+      });
+      // now emit the change
+      this._selectedFilters.next(this.selectedFilters);
+    });
   }
 
   addSelectedFilter(label: string, name: string, value: string){
@@ -51,13 +89,13 @@ export class SelectedFilterService {
     // TODO: eventually we will need to store what filers apply to each result set
     let doesExist: boolean = false; // so we know whether to add a new filter or not
     // first we see if this filter already exists
-    if(this.globals.selectedFilters.length > 0){
-      for(let i in this.globals.selectedFilters){
+    if(this.selectedFilters.length > 0){
+      for(let i in this.selectedFilters){
         // match on name and value
-        if(this.globals.selectedFilters[i].name == name && this.globals.selectedFilters[i].value == value){
+        if(this.selectedFilters[i].name == name && this.selectedFilters[i].value == value){
           doesExist = true; // so we don't make a new one
           // while we are here, lets make sure we have the right flag
-          this.globals.selectedFilters[i].applicable = isApplicable;
+          this.selectedFilters[i].applicable = isApplicable;
           break;
         }
       }
@@ -65,37 +103,17 @@ export class SelectedFilterService {
     // if we didn't find this, lets add it
     if(!doesExist) {
       let thisFilter = new SelectedFilter(label, name, value, isApplicable);
-      this.globals.selectedFilters.push(thisFilter);
-      // now add it to the path without triggering a navigation event
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: {
-          [name]: [value]
-        },
-        queryParamsHandling: 'merge', // preserve the existing params
-        //replaceUrl: true,
-        skipLocationChange: true // don't trigger the navigation event
-      });
+      this.selectedFilters.push(thisFilter);
     }
   }
 
   // for filters that can only have one value, we use addReplaceSelectedFilter
   addReplaceSelectedFilter(label: string, name: string, value: string){
     // if the filter we want to add already exists, we want to remove it
-    if(this.globals.selectedFilters.length > 0){
-      for(let i in this.globals.selectedFilters){
-        if(this.globals.selectedFilters[i].name == name){
-          this.globals.selectedFilters.splice(+i,1);
-          // now remove it from the path without triggering a navigation event
-          this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: {
-              [name]: null
-            },
-            queryParamsHandling: 'merge', // preserve the existing params
-            //replaceUrl: true,
-            skipLocationChange: true // don't trigger the navigation event
-          });
+    if(this.selectedFilters.length > 0){
+      for(let i in this.selectedFilters){
+        if(this.selectedFilters[i].name == name){
+          this.selectedFilters.splice(+i,1);
         }
       }
     }
@@ -104,20 +122,32 @@ export class SelectedFilterService {
   }
 
   removeSelectedFilter(name: string, value: string){
-    if(this.globals.selectedFilters.length > 0){
-      for(let i in this.globals.selectedFilters){
+    if(this.selectedFilters.length > 0){
+      let madeChange = false; // no reason to initiate a navigation change if nothing changed
+      for(let i in this.selectedFilters) {
         // match on name and value
-        if(this.globals.selectedFilters[i].name == name && this.globals.selectedFilters[i].value == value){
-          this.globals.selectedFilters.splice(+i,1);
-          // now remove it from the path without triggering a navigation event
+        if (this.selectedFilters[i].name == name && this.selectedFilters[i].value === value) {
+          this.selectedFilters.splice(+i, 1);
+          madeChange = true;
+        }
+        // now rebuild the queryparams and trigger a navigation change
+        if(madeChange){
+          let queryParams = {};
+          for(let filter of this.selectedFilters) {
+            if(queryParams.hasOwnProperty(filter.name)){
+             if(typeof queryParams[filter.name] == "string"){
+               queryParams[filter.name] = [queryParams[filter.name], filter.value];
+             }  else {
+               queryParams[filter.name].push(filter.value);
+             }
+            } else {
+              queryParams[filter.name] = filter.value;
+            }
+          }
           this.router.navigate([], {
             relativeTo: this.route,
-            queryParams: {
-              [name]: null
-            },
-            queryParamsHandling: 'merge', // preserve the existing params
-            //replaceUrl: true,
-            skipLocationChange: true // don't trigger the navigation event
+            queryParams: queryParams,
+            queryParamsHandling: ""
           });
         }
       }

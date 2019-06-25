@@ -1,7 +1,7 @@
-import { Fields } from './fields';
+import { Field } from './field';
 
 describe('Fields', () => {
   it('should create an instance', () => {
-    expect(new Fields()).toBeTruthy();
+    expect(new Field()).toBeTruthy();
   });
 });

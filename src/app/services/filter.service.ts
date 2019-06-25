@@ -1,4 +1,6 @@
-import {ComponentFactoryResolver, Injectable, ViewContainerRef} from '@angular/core';
+// this service renders the filter components into the side rail
+// the form and fields are dealt with elsewhere - in filter-form.service
+import { ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef} from '@angular/core';
 
 // any filter components imported here, also need to be imported in app.module.ts and be listed in
 // both declarations and entryComponents
@@ -18,6 +20,8 @@ export class FilterService {
   // this service allows for dynamically injected filters into the view, so this tracks were we put something
   rootViewContainer: ViewContainerRef;
 
+  component: ComponentRef<any>;
+
   // the names given to each component should match the result-type primaryFilter and secondaryFilters
   static FILTERS = {
     'dates': DatesComponent,
@@ -34,6 +38,7 @@ export class FilterService {
   loadFilter(viewContainerRef: ViewContainerRef, filterName: string) {
     this.rootViewContainer = viewContainerRef;
     const factory = this.factoryResolver.resolveComponentFactory(FilterService.FILTERS[filterName]);
+    // IJ seems to think this is deprecated, but the docs (v7) don't mention that
     const component = factory.create(this.rootViewContainer.parentInjector);
     this.rootViewContainer.insert(component.hostView);
   }

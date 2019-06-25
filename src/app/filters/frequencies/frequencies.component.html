@@ -15,9 +15,9 @@
   <div *ngIf="!isCollapsed" @vslider>
     <div class="form-row py-3">
       <div class="form-group col-md">
-        <label for="startFrequency">Start</label>
+        <label for="start_frequency">Start</label>
         <div class="input-group">
-          <input type="text" name="startFrequency" id="startFrequency" class="form-control" formControlName="startFrequency" />
+          <input type="text" name="start_frequency" id="start_frequency" class="form-control" formControlName="start_frequency_num" />
           <div class="input-group-append">
             <div ngbDropdown>
               <button class="btn btn-secondary" type="button" ngbDropdownToggle>{{ startHz }}</button>
@@ -27,14 +27,14 @@
             </div>
           </div>
         </div>
-        <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="frequencyGroup.get('startFrequency').errors && frequencyGroup.get('startFrequency') && frequencyGroup.get('startFrequency').errors.invalidFrequency">
+        <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="frequencyGroup.get('start_frequency_num').errors && frequencyGroup.get('start_frequency_num') && frequencyGroup.get('start_frequency_num').errors.invalidFrequency">
           Only enter numbers
         </div>
       </div>
       <div class="form-group col-md">
-        <label for="endFrequency">End</label>
+        <label for="end_frequency">End</label>
         <div class="input-group">
-          <input type="text" name="endFrequency" id="endFrequency" class="form-control" formControlName="endFrequency"/>
+          <input type="text" name="end_frequency" id="end_frequency" class="form-control" formControlName="end_frequency_num"/>
           <div class="input-group-append">
             <div ngbDropdown>
               <button class="btn btn-secondary" type="button" ngbDropdownToggle>{{ endHz }}</button>
@@ -44,7 +44,7 @@
             </div>
           </div>
         </div>
-        <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="frequencyGroup.get('endFrequency').errors && frequencyGroup.get('endFrequency') && frequencyGroup.get('endFrequency').errors.invalidFrequency">
+        <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="frequencyGroup.get('end_frequency_num').errors && frequencyGroup.get('end_frequency_num') && frequencyGroup.get('end_frequency_num').errors.invalidFrequency">
           Only enter numbers
         </div>
       </div>
