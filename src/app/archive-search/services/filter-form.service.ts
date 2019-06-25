@@ -32,11 +32,10 @@ export class FilterFormService {
   deleteFilterByHasKey(key: string){
     const currentFilterForm = this.filterForm.getValue();
     const currentFilters = currentFilterForm.get('filters') as FormArray;
-
     let cflen = currentFilters.controls.length;
     for(let i = 0; i < cflen; i++){
-      let thisFilter = currentFilters.at(+1);
-      if(thisFilter['controls'].hasOwnProperty(key)){
+      let thisFilter = currentFilters.at(+i);
+      if(thisFilter && thisFilter['controls'].hasOwnProperty(key)){
         this.deleteFilter(i);
       }
     }

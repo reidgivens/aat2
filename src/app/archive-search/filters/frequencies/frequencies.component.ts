@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {verticleSlide} from "../../animations";
+import {verticleSlide} from "../../../animations";
 import {FormGroup, FormControl} from "@angular/forms";
 import { SelectedFilterService} from "../../services/selected-filter.service";
 import { ValidateFrequency } from "../../validators/frequency-validator";
@@ -61,10 +61,6 @@ export class FrequenciesComponent implements OnInit {
     this.onChanges();
   }
 
-  ngOnDestroy(){
-    this.filterFormService.deleteFilterByHasKey('end_frequency');
-  }
-
   updateStartHz(hz: string){
     let fc = this.frequencyGroup.get('start_frequency_hz');
     fc.setValue(hz);
@@ -78,6 +74,7 @@ export class FrequenciesComponent implements OnInit {
   loadFilters(): void {
     for(let filter of this.selectedFilters){
       if(filter.name == 'start_frequency'){
+        this.frequencyGroup.get('start_frequency').setValue(filter.value);
         let freqParts = filter.value.split(' ');
         this.frequencyGroup.get('start_frequency_num').setValue(freqParts[0]);
         if(this.validHz.indexOf(freqParts[1]) == -1){
@@ -87,6 +84,7 @@ export class FrequenciesComponent implements OnInit {
           this.frequencyGroup.get('start_frequency_hz').setValue(freqParts[1]);
         }
       } else if (filter.name == 'end_frequency'){
+        this.frequencyGroup.get('end_frequency').setValue(filter.value);
         let freqParts = filter.value.split(' ');
         this.frequencyGroup.get('end_frequency_num').setValue(freqParts[0]);
         if(this.validHz.indexOf(freqParts[1]) == -1){
@@ -135,6 +133,12 @@ export class FrequenciesComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngOnDestroy(){
+    this.filterFormService.deleteFilterByHasKey('end_frequency');
+    if (this.selectedFiltersSub) { this.selectedFiltersSub.unsubscribe(); }
+    if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
   }
 
 }

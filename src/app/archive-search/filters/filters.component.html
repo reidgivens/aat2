@@ -16,7 +16,7 @@
     </div>
     <div *ngIf="!isResultTypeCollapsed" @vslider>
       <div class="list-group list-group-flush" role="group">
-        <a routerLink="/{{intent}}" (click)="isResultTypeCollapsed = true" queryParamsHandling="preserve" *ngFor="let intent of resultTypes" class="h5 text-left p-3" [ngClass]="intent == globals.resultType.name ? 'bg-dark text-white' : 'bg-light'">{{intent}}</a>
+        <a routerLink="/Search/{{intent}}" (click)="isResultTypeCollapsed = true" queryParamsHandling="preserve" *ngFor="let intent of resultTypes" class="h5 text-left p-3" [ngClass]="intent == globals.resultType.name ? 'bg-dark text-white' : 'bg-light'">{{intent}}</a>
       </div>
     </div>
   </fieldset>

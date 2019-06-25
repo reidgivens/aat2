@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { verticleSlide } from "../../animations";
+import { verticleSlide } from "../../../animations";
 import { FormGroup, FormControl } from "@angular/forms";
 import { SelectedFilterService } from "../../services/selected-filter.service";
 import { ValidateDate } from "../../validators/date-validator";
@@ -82,6 +82,8 @@ export class DatesComponent implements OnInit {
 
   ngOnDestroy(){
     this.filterFormService.deleteFilterByHasKey('to_date');
+    if (this.selectedFiltersSub) { this.selectedFiltersSub.unsubscribe(); }
+    if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
   }
 
 }

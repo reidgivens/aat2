@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {verticleSlide} from "../../animations";
+import {verticleSlide} from "../../../animations";
 import { FormGroup, FormControl, FormArray} from "@angular/forms";
 import { SelectedFilterService} from "../../services/selected-filter.service";
 import {Subscription} from "rxjs";
@@ -8,24 +8,23 @@ import {FieldService} from "../../services/field.service";
 import {SelectedFilter} from "../../model/selected-filter";
 
 @Component({
-  selector: 'app-telescopes',
-  templateUrl: './telescopes.component.html',
-  styleUrls: ['./telescopes.component.scss'],
+  selector: 'app-receivers',
+  templateUrl: './receivers.component.html',
+  styleUrls: ['./receivers.component.scss'],
   animations: [verticleSlide]
 })
-export class TelescopesComponent implements OnInit {
+export class ReceiversComponent implements OnInit {
 
   public isCollapsed = true;
-  public telescopeGroup: FormGroup;
+  public receiverGroup: FormGroup;
   public filterForm: FormGroup; // the reference to our parent form
   public filterFormSub: Subscription; // the subscription to keep our filterForm updated
-  public validTelescopes: Array<any>;
+  public validReceivers: Array<any>;
   public selectedFilters: Array<SelectedFilter>;
   public selectedFiltersSub: Subscription;
 
-
   constructor(private selectedFilterService: SelectedFilterService, private filterFormService: FilterFormService, private fieldService: FieldService) {
-    this.validTelescopes = this.fieldService.getFacets('telescope');
+    this.validReceivers = this.fieldService.getFacets('receivers');
   }
 
   ngOnInit() {
@@ -33,17 +32,17 @@ export class TelescopesComponent implements OnInit {
       this.filterForm = filterForm;
     });
 
-    this.telescopeGroup = new FormGroup({
-      telescope: new FormArray([], {updateOn: 'change'})
+    this.receiverGroup = new FormGroup({
+      receivers: new FormArray([], {updateOn: 'change'})
     });
 
     // add a form control for each validTelescope
-    this.validTelescopes.map((o) => {
+    this.validReceivers.map((o) => {
       const control = new FormControl(o.selected);
-      (this.telescopeGroup.controls.telescope as FormArray).push(control);
+      (this.receiverGroup.controls.receivers as FormArray).push(control);
     });
 
-    this.filterFormService.addFilter(this.telescopeGroup);
+    this.filterFormService.addFilter(this.receiverGroup);
 
     this.selectedFiltersSub = this.selectedFilterService.selectedFilters$.subscribe( selectedFilters => {
       this.selectedFilters = selectedFilters;
@@ -51,21 +50,17 @@ export class TelescopesComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(){
-    this.filterFormService.deleteFilterByHasKey('telescope');
-  }
-
   loadFilters(){
     // collect all the filters for this control type
     let filters: Array<string> = [];
     for(let filter of this.selectedFilters){
-      if(filter.name == 'telescope'){
+      if(filter.name == 'receivers'){
         filters.push(filter.value);
       }
     }
-    let fa = this.telescopeGroup.get('telescope') as FormArray;
+    let fa = this.receiverGroup.get('receivers') as FormArray;
     // now iterate over the valid options and see if we have a filter it
-    this.validTelescopes.forEach((item, index) => {
+    this.validReceivers.forEach((item, index) => {
       let fc = fa.at(index);
       if(filters.indexOf(item.name) !== -1){
         fc.setValue(true);
@@ -74,4 +69,11 @@ export class TelescopesComponent implements OnInit {
       }
     });
   }
+
+  ngOnDestroy(){
+    this.filterFormService.deleteFilterByHasKey('receivers');
+    if (this.selectedFiltersSub) { this.selectedFiltersSub.unsubscribe(); }
+    if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
+  }
+
 }

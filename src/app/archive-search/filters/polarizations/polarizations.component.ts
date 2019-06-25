@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {verticleSlide} from "../../animations";
+import {verticleSlide} from "../../../animations";
 import { FormGroup, FormControl, FormArray} from "@angular/forms";
 import { SelectedFilterService} from "../../services/selected-filter.service";
 import {Subscription} from "rxjs";
@@ -50,10 +50,6 @@ export class PolarizationsComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(){
-    this.filterFormService.deleteFilterByHasKey('polarization');
-  }
-
   loadFilters(){
     // collect all the filters for this control type
     let filters: Array<string> = [];
@@ -72,6 +68,12 @@ export class PolarizationsComponent implements OnInit {
         fc.setValue( false);
       }
     });
+  }
+
+  ngOnDestroy(){
+    this.filterFormService.deleteFilterByHasKey('polarization');
+    if (this.selectedFiltersSub) { this.selectedFiltersSub.unsubscribe(); }
+    if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {verticleSlide} from "../../animations";
+import {verticleSlide} from "../../../animations";
 import { FormGroup, FormControl, FormArray} from "@angular/forms";
 import { SelectedFilterService} from "../../services/selected-filter.service";
 import {Subscription} from "rxjs";
@@ -53,6 +53,8 @@ export class ConfigurationsComponent implements OnInit {
 
   ngOnDestroy(){
     this.filterFormService.deleteFilterByHasKey('configuration');
+    if (this.selectedFiltersSub) { this.selectedFiltersSub.unsubscribe(); }
+    if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
   }
 
   loadFilters(){

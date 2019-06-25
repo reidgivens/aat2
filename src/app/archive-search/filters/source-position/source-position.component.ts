@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {verticleSlide} from "../../animations";
+import {verticleSlide} from "../../../animations";
 
 @Component({
   selector: 'app-source-position',

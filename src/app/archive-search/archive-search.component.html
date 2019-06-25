@@ -1,0 +1,175 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- the filter side rail -->
+    <div class="bg-light border-right col-12" [ngClass]="showFilterList ? 'col-md-3' : 'col-md-auto'">
+      <div class="row py-2 align-items-baseline">
+        <div class="col text-uppercase" [ngClass]="showFilterList ? 'col' : 'd-md-none'">
+          <p class="m-0">Filters</p>
+        </div>
+        <div class="col-auto">
+          <!-- fontawesome replaces the <i> tag with an svg for the icon, so we can't show/hide on the <i>
+          so we need to include both state buttons and show/hide them based on isCollapsed
+          in this case, because on mobile screens we need up/down instead of right/left, we need 4 buttons-->
+          <button type="button" class="btn btn-outline-primary btn-sm d-md-none" *ngIf="showFilterList"
+                  (click)="showFilterList = !showFilterList"><i class="fas fa-chevron-up"></i> Hide
+          </button>
+          <button type="button" class="btn btn-primary btn-sm d-md-none" *ngIf="!showFilterList"
+                  (click)="showFilterList = !showFilterList"><i class="fas fa-chevron-down"></i></button>
+          <button type="button" class="btn btn-outline-primary btn-sm d-none d-md-inline-block" *ngIf="showFilterList"
+                  (click)="showFilterList = !showFilterList"><i class="fas fa-chevron-left"></i> Hide
+          </button>
+          <button type="button" class="btn btn-primary btn-sm d-none d-md-inline-block" *ngIf="!showFilterList"
+                  (click)="showFilterList = !showFilterList"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+      <app-filters *ngIf="showFilterList"></app-filters>
+    </div>
+    <!-- // filter side rail -->
+
+    <div class="col">
+
+      <!--<div class="row">
+        <div class="col">
+          <pre>{{ globals.resultType | json }}</pre>
+        </div>
+      </div>-->
+
+      <!-- selected filters -->
+      <div class="row bg-light py-2">
+        <div class="col">
+          <div class="row align-items-baseline">
+            <div class="col">
+              <p class="text-uppercase">Selected Filters</p>
+            </div>
+            <div class="col-auto" ngbDropdown>
+              <button type="button" class="btn btn-sm btn-link" ngbDropdownToggle>Options</button>
+              <ul ngbDropdownMenu>
+                <li ngbDropdownItem><a href="" class="text-danger"><i class="fas fa-times-circle"></i> Clear All Filters</a>
+                </li>
+                <li ngbDropdownItem><a href=""><i class="fas fa-save"></i> Save Filter Set</a></li>
+                <li ngbDropdownItem><a href=""><i class="fas fa-folder-open"></i> Load Filter Set</a></li>
+              </ul>
+            </div>
+          </div><!--// row -->
+
+          <ul class="inline-list p-0 m-0">
+            <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white" *ngFor="let selectedFilter of selectedFilters">
+              <b>{{ selectedFilter.label}}: </b> {{selectedFilter.value}}
+              <button class="btn btn-sm btn-link p-0 ml-1" (click)="removeSelectedFilter(selectedFilter.name, selectedFilter.value)"><i class="fas fa-times-circle"></i></button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!--// selected filters -->
+
+      <!-- results list control -->
+      <div class="row bg-dark text-light py-3 align-items-baseline">
+        <div class="col-xs-12 col-md">
+          <p class="mb-2 mb-md-0">{{globals.resultType.numResults}} {{globals.resultType.name}}</p>
+        </div>
+        <div class="col-auto">
+          <div class="form-group m-0">
+            <div class="btn-group">
+              <button id="to-first-page" class="btn btn-outline-light btn-sm"><i class="fas fa-fast-backward"></i>
+              </button>
+              <button id="back-one-page" class="btn btn-outline-light btn-sm"><i class="fas fa-step-backward"></i>
+              </button>
+              <div class="btn-group" ngbDropdown>
+                <button class="btn btn-outline-light btn-sm" type="button" id="page-select" ngbDropdownToggle>Page 1
+                </button>
+                <ul style="height: 200px; overflow-y: scroll;" ngbDropdownMenu>
+                  <li ngbDropdownItem><a href="">Page 1</a></li>
+                  <li ngbDropdownItem><a href="">Page 2</a></li>
+                  <li ngbDropdownItem><a href="">Page 3</a></li>
+                  <li ngbDropdownItem><a href="">Page 4</a></li>
+                  <li ngbDropdownItem><a href="">Page 5</a></li>
+                  <li ngbDropdownItem><a href="">Page 6</a></li>
+                  <li ngbDropdownItem><a href="">Page 7</a></li>
+                  <li ngbDropdownItem><a href="">Page 8</a></li>
+                  <li ngbDropdownItem><a href="">Page 9</a></li>
+                  <li ngbDropdownItem><a href="">Page 10</a></li>
+                  <li ngbDropdownItem><a href="">Page 11</a></li>
+                  <li ngbDropdownItem><a href="">Page 12</a></li>
+                  <li ngbDropdownItem><a href="">Page 13</a></li>
+                  <li ngbDropdownItem><a href="">Page 14</a></li>
+                  <li ngbDropdownItem><a href="">Page 15</a></li>
+                  <li ngbDropdownItem><a href="">Page 16</a></li>
+                  <li ngbDropdownItem><a href="">Page 17</a></li>
+                  <li ngbDropdownItem><a href="">Page 18</a></li>
+                  <li ngbDropdownItem><a href="">Page 19</a></li>
+                  <li ngbDropdownItem><a href="">Page 20</a></li>
+                </ul>
+              </div>
+              <button id="forward-one-page" class="btn btn-outline-light btn-sm"><i class="fas fa-step-forward"></i>
+              </button>
+              <button id="to-last-page" class="btn btn-outline-light btn-sm"><i class="fas fa-fast-forward"></i>
+              </button>
+            </div>
+          </div>
+        </div><!--// col -->
+
+        <div class="col-auto">
+          <div ngbDropdown>
+            <button class="btn btn-outline-light btn-sm" type="button" ngbDropdownToggle>25 Per Page</button>
+            <div class="scrollable-menu" ngbDropdownMenu>
+              <button ngbDropdownItem>25 Per Page</button>
+              <button ngbDropdownItem>50 Per Page</button>
+              <button ngbDropdownItem>100 Per Page</button>
+            </div>
+          </div>
+        </div><!--// col -->
+
+        <div class="col-xs-12 col-md-auto py-1 pl-1 mt-2 mt-md-0 bg-secondary text-right">
+          <button class="btn btn-outline-light btn-sm mr-1 active" type="button" (click)="expandItems = !expandItems"
+                  [hidden]="!expandItems"><i class="fas fa-chevron-up"></i></button>
+          <button class="btn btn-outline-light btn-sm mr-1" type="button" (click)="expandItems = !expandItems"
+                  [hidden]="expandItems"><i class="fas fa-chevron-down"></i></button>
+          2 Items of 20 <span class="badge badge-dark">166.3 MB of 10.0 TB</span>
+        </div>
+      </div><!--// row -->
+      <!--// results list control -->
+
+      <!-- selected items list -->
+      <div class="row" @vslider *ngIf="expandItems">
+        <div class="col py-3">
+          <div class="row align-items-baseline">
+            <div class="col"><h4 class="m-0">2 Items of 20 <span
+              class="badge badge-light border">166.3 MB of 10.0 TB</span></h4></div>
+            <div class="col-auto">
+              <button type="button" class="btn btn-danger"><i class="fas fa-times-circle"></i> Clear All</button>
+            </div>
+            <div class="col-auto">
+              <button type="button" class="btn btn-primary"><i class="fas fa-download"></i> Download All</button>
+            </div>
+          </div>
+          <ul class="list-unstyled m-0">
+            <li>
+              <button type="button" class="btn text-danger"><i class="fas fa-times-circle"></i></button>
+              VLASS1.1.ql.T17t17.J122441+273000.10.2048.v1.I.iter1.image.pbcor.tt0.subim.fits
+            </li>
+            <li>
+              <button type="button" class="btn text-danger"><i class="fas fa-times-circle"></i></button>
+              VLASS1.1.ql.T17t17.J122012+273000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.fits
+            </li>
+            <li>
+              <button type="button" class="btn text-danger"><i class="fas fa-times-circle"></i></button>
+              15A-421.sb30427439.eb30495599.57102.69239414352
+            </li>
+            <li>
+              <button type="button" class="btn text-danger"><i class="fas fa-times-circle"></i></button>
+              uid___A002_Xd1f23d_X3130
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!--// selected items list -->
+
+      <router-outlet></router-outlet>
+      <!--<app-observation-results *ngIf="globals.resultType.name == 'Observations'"></app-observation-results>
+      <app-project-results *ngIf="globals.resultType.name == 'Projects'"></app-project-results>
+      <app-image-results class="results" *ngIf="globals.resultType.name == 'Images'"></app-image-results>-->
+
+    </div><!--// col -->
+  </div><!-- // row -->
+</div><!-- // container -->
