@@ -26,10 +26,10 @@ export class FiltersComponent implements OnInit {
   public resultType: ResultType; // the active result type
   private resultTypeSub: Subscription; // subscribtion to the active result type
   public filterForm: FormGroup; // the reference to our form
-  public filterFormSub: Subscription; // the subscription to keep our filterForm updated
+  private filterFormSub: Subscription; // the subscription to keep our filterForm updated
   public filters: FormArray;
   public selectedFilters: Array<SelectedFilter>;
-  public selectedFiltersSub: Subscription;
+  private selectedFiltersSub: Subscription;
 
   @ViewChild('primary', {read: ViewContainerRef}) primaryViewContainerRef: ViewContainerRef;
   @ViewChild('secondary', {read: ViewContainerRef}) secondaryViewContainerRef: ViewContainerRef;

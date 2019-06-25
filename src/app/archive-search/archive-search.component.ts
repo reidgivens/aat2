@@ -5,6 +5,7 @@ import {Globals} from "./globals";
 import {SelectedFilterService} from "./services/selected-filter.service";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {fadeInOut, verticleSlide} from "../animations";
+import {ResultType} from "./model/result-type";
 
 @Component({
   selector: 'app-archive-search',
@@ -18,6 +19,8 @@ export class ArchiveSearchComponent implements OnInit {
   public expandItems = false;
   public selectedFilters: Array<SelectedFilter>;
   public selectedFiltersSub: Subscription;
+  public resultType: ResultType; // the active result type
+  private resultTypeSub: Subscription; // subscribtion to the active result type
 
   constructor(
     private globals: Globals,
@@ -32,6 +35,10 @@ export class ArchiveSearchComponent implements OnInit {
           this.globals.updateResultType(resultType);
         }
       }
+    });
+
+    this.resultTypeSub = this.globals.resultType$.subscribe( resultType => {
+      this.resultType = resultType;
     });
 
     this.selectedFiltersSub = this.selectedFilterService.selectedFilters$.subscribe(selectedFilters => {
