@@ -21,6 +21,9 @@ import { ImageResultsComponent } from './image-results/image-results.component';
 
 import { ArchiveSearchRoutingModule } from './archive-search-routing.module';
 import { ArchiveSearchComponent } from './archive-search.component';
+import { SelectedFiltersComponent } from './selected-filters/selected-filters.component';
+import { SaveFiltersComponent } from './selected-filters/save-filters/save-filters.component';
+import { LoadFiltersComponent } from './selected-filters/load-filters/load-filters.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { ArchiveSearchComponent } from './archive-search.component';
     ObservationResultsComponent,
     ProjectResultsComponent,
     ImageResultsComponent,
-    ArchiveSearchComponent
+    ArchiveSearchComponent,
+    SelectedFiltersComponent,
+    SaveFiltersComponent,
+    LoadFiltersComponent
   ],
   providers: [ Globals, FilterService ],
   entryComponents: [
@@ -45,7 +51,9 @@ import { ArchiveSearchComponent } from './archive-search.component';
     TelescopesComponent,
     ConfigurationsComponent,
     ReceiversComponent,
-    PolarizationsComponent
+    PolarizationsComponent,
+    SaveFiltersComponent,
+    LoadFiltersComponent
   ],
   imports: [
     CommonModule,

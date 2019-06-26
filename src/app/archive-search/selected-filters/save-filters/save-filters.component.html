@@ -1,0 +1,28 @@
+<div class="modal-header bg-light">
+  <h4 class="modal-title">Save Filters</h4>
+  <button type="button" class="close" (click)="activeModal.dismiss()">&times;</button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="saveForm" *ngIf="selectedFilters.length > 0">
+    <div class="form-group">
+      <label for="filterSetName">Name</label>
+      <div class="input-group">
+        <input id="filterSetName" type="text" class="form-control" placeholder="" name="filterSetName" formControlName="name" ngbAutofocus>
+      </div>
+      <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="saveForm.get('name').errors && saveForm.get('name').dirty">
+        Enter a name for this set of filters using only letters, numbers, and spaces
+      </div>
+    </div>
+    <p>Filters</p>
+    <ul class="inline-list p-0 m-0">
+      <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white" *ngFor="let selectedFilter of selectedFilters">
+        <b>{{ selectedFilter.label}}: </b> {{selectedFilter.value}}
+      </li>
+    </ul>
+  </form>
+  <p class="text-danger" *ngIf="selectedFilters.length < 1">Cannot save. No filters selected. </p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cancel')">Cancel</button>
+  <button type="button" class="btn btn-primary" (click)="saveFilters()" *ngIf="selectedFilters.length > 0" [disabled]="!saveForm.valid">Save</button>
+</div>

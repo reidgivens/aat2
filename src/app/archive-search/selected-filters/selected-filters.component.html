@@ -1,0 +1,25 @@
+<div class="row bg-light py-2">
+  <div class="col">
+    <div class="row align-items-baseline">
+      <div class="col">
+        <p class="text-uppercase">Selected Filters</p>
+      </div>
+      <div class="col-auto" ngbDropdown>
+        <button type="button" class="btn btn-sm btn-link" ngbDropdownToggle>Options</button>
+        <ul ngbDropdownMenu>
+          <li ngbDropdownItem><button class="btn p-0 text-danger" (click)="clearAllFilters()"><i class="fas fa-times-circle"></i> Clear All Filters</button>
+          </li>
+          <li ngbDropdownItem><button class="btn p-0 text-primary" (click)="openSaveFilters()"><i class="fas fa-save"></i> Save Filter Set</button></li>
+          <li ngbDropdownItem><button class="btn p-0 text-primary" (click)="openLoadFilters()"><i class="fas fa-folder-open"></i> Load Filter Set</button></li>
+        </ul>
+      </div>
+    </div><!--// row -->
+
+    <ul class="inline-list p-0 m-0">
+      <li class="list-inline-item border rounded p-1 px-2 mb-1 bg-white" *ngFor="let selectedFilter of selectedFilters">
+        <b>{{ selectedFilter.label}}: </b> {{selectedFilter.value}}
+        <button class="btn btn-sm btn-link p-0 ml-1" (click)="removeSelectedFilter(selectedFilter.name, selectedFilter.value)"><i class="fas fa-times-circle"></i></button>
+      </li>
+    </ul>
+  </div>
+</div>

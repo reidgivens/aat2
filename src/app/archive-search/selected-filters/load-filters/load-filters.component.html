@@ -1,0 +1,21 @@
+<div class="modal-header bg-light">
+  <h4 class="modal-title">Load Filters</h4>
+  <button type="button" class="close" (click)="activeModal.dismiss()">&times;</button>
+</div>
+<div class="modal-body p-0">
+  <ul class="list-group list-group-flush" *ngIf="savedFilters.length > 0">
+    <li class="list-group-item" *ngFor="let savedFilter of savedFilters">
+      <div class="row">
+        <div class="col">{{ savedFilter.name }}</div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-primary" (click)="loadFilters(savedFilter.name)">Load</button>
+          <button type="button" class="btn btn-outline-danger ml-3" (click)="deleteFilters(savedFilter.name)"><i class="fas fa-times-circle"></i></button>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <p class="text-danger" *ngIf="savedFilters.length < 1">No saved filters found.</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')" ngbAutofocus>Close</button>
+</div>

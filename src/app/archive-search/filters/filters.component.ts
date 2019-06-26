@@ -156,7 +156,7 @@ export class FiltersComponent implements OnInit {
     }
     // lets trigger a navigation
     this.router.navigate([], { relativeTo: this.route, queryParams: paramsForUrl, queryParamsHandling: "" });
-    return false;
+    return true;
   }
 
   ngOnDestroy() {

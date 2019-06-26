@@ -14,12 +14,17 @@ export class SelectedFilterService {
   private _selectedFilters: BehaviorSubject<Array<SelectedFilter>> = new BehaviorSubject(this.selectedFilters);
   public readonly selectedFilters$: Observable<Array<SelectedFilter>> = this._selectedFilters.asObservable();
 
+  private savedFilters: Array<any> = [];
+  private _savedFilters: BehaviorSubject<Array<any>> = new BehaviorSubject(this.savedFilters);
+  public readonly savedFilters$: Observable<Array<any>> = this._savedFilters.asObservable();
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private fieldService: FieldService) {
 
     this.loadSelectedFilters();
+    this.getSavedFilters();
   }
 
   loadSelectedFilters(){
@@ -153,4 +158,79 @@ export class SelectedFilterService {
       }
     }
   }
+
+  clearFilters(){
+    this.selectedFilters = [];
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {},
+      queryParamsHandling: ""
+    });
+  }
+
+  saveFilters(name: string){
+    if(this.selectedFilters.length < 1){
+      return {state: 'failed', message: 'No filters selected to save.'};
+    }
+    if(this.savedFilters.length > 0){
+      for(let sf of this.savedFilters){
+        if(sf.name.toLowerCase() == name.toLowerCase()){
+          return {state: 'failed', message: 'A saved filter set already has this name. Please use a different name'};
+        }
+      }
+    }
+    this.savedFilters.push({name: name, filters: this.selectedFilters});
+    localStorage.setItem('savedFilters', JSON.stringify(this.savedFilters));
+    this._savedFilters.next(this.savedFilters);
+  }
+
+  getSavedFilters(){
+    this.savedFilters = [];
+    let localStore = localStorage.getItem('savedFilters');
+    if(localStore){
+      this.savedFilters = JSON.parse(localStore);
+    }
+    this._savedFilters.next(this.savedFilters);
+  }
+
+  loadFilters(name: string){
+    for(let savedFilter of this.savedFilters){
+      if(savedFilter.name.toLowerCase() == name.toLowerCase()){
+        let paramsForUrl = {}; // this is what we will ultimately submit
+        savedFilter.filters.forEach((item, index) => {
+          // have we already stated adding the values yet
+          if(paramsForUrl.hasOwnProperty(item.name)){
+            // if we have seem this before and the value is a string, we need to turn it into an array before we can add to it
+            if(typeof paramsForUrl[item.name] == 'string'){
+              paramsForUrl[item.name] = [paramsForUrl[item.name]];
+            }
+            paramsForUrl[item.name].push(item.value);
+          } else { // we haven't seen this yet, so just add it
+            paramsForUrl[item.name] = item.value;
+          }
+        });
+        this.router.navigate([], { relativeTo: this.route, queryParams: paramsForUrl, queryParamsHandling: "" }).then((result) => {
+          this._selectedFilters.next(this.selectedFilters);
+        }, (reason) => {
+          //
+        });
+        this.selectedFilters = savedFilter.filters;
+
+        return true;
+      }
+    }
+    return false;
+  }
+
+  deleteSavedFilters(name: string){
+    for(let i in this.savedFilters){
+      if(this.savedFilters[i].name.toLowerCase() == name.toLowerCase()){
+        this.savedFilters.splice(+i,1);
+        this._selectedFilters.next(this.selectedFilters);
+        localStorage.setItem('savedFilters', JSON.stringify(this.savedFilters));
+        return true;
+      }
+    }
+  }
+
 }
