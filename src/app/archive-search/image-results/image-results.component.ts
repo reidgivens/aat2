@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-image-results',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./image-results.component.scss']
 })
 export class ImageResultsComponent implements OnInit {
+
+  @Input() searchResults: Array<any> = [];
 
   constructor() { }
 

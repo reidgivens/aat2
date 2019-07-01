@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SelectedFilter} from "../model/selected-filter";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Field } from "../model/field";
-import { FieldService } from "./field.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -18,75 +16,36 @@ export class SelectedFilterService {
   private _savedFilters: BehaviorSubject<Array<any>> = new BehaviorSubject(this.savedFilters);
   public readonly savedFilters$: Observable<Array<any>> = this._savedFilters.asObservable();
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private fieldService: FieldService) {
-
-    this.loadSelectedFilters();
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.getSavedFilters();
   }
 
-  loadSelectedFilters(){
-    this.selectedFilters = [];
-    // get all the allowable fields as defined in the Field model
-    const fields = Field.getFields();
-    // subscribe to the queryParams
-    this.route.queryParams.subscribe(queryParams => {
-      // iterate over the queryParams
-      for (let qp in queryParams) {
-        let qpv = queryParams[qp];
-        qp = qp.toLowerCase();
-        if(qpv.length > 0){ // first make sure we have anything
-          if(fields.indexOf(qp) !== -1){ // make sure it's a valid field
-            let field = Field.getField(qp);
-            if(field.allowMultipleValues){
-              let facets = this.fieldService.getFacets(field.name); // to test for valid value
-              for(let f of facets){
-                if(typeof qpv == "string"){ // for a single value submitted
-                  if(f.name.toLowerCase() == qpv.toLowerCase()){
-                    this.addSelectedFilter(field.label, field.name, f.name);
-                  }
-                } else { // for multiple values submitted
-                  for(let aVal of qpv){
-                    if(f.name.toLowerCase() == aVal.toLowerCase()){
-                      this.addSelectedFilter(field.label, field.name, f.name);
-                    }
-                  }
-                }
-              }
-            } else {
-              this.addReplaceSelectedFilter(field.label, field.name, qpv);
-            }
-          }
-        }
-      }
-      // now sort them so they are always displayed in the same order
-      // having filters jump around on view change is confusing
-      this.selectedFilters.sort((a,b) => {
-        const aName = a.name.toLowerCase();
-        const bName = b.name.toLowerCase();
-        const aValue = a.value.toLowerCase();
-        const bValue = b.value.toLowerCase();
+  sortSelectedFilters(){
+    // sort them so they are always displayed in the same order
+    // having filters jump around on view change is confusing
+    this.selectedFilters.sort((a,b) => {
+      const aName = a.name.toLowerCase();
+      const bName = b.name.toLowerCase();
+      const aValue = a.value.toLowerCase();
+      const bValue = b.value.toLowerCase();
 
-        let comparison = 0;
-        if(aName > bName){
+      let comparison = 0;
+      if(aName > bName){
+        comparison = 1;
+      } else if(bName > aName) {
+        comparison = -1;
+      }
+      if(comparison == 0){
+        if(aValue > bValue){
           comparison = 1;
-        } else {
+        } else if(bValue > aValue) {
           comparison = -1;
         }
-        if(comparison == 0){
-          if(aValue > bValue){
-            comparison = 1;
-          } else {
-            comparison = -1;
-          }
-        }
-        return comparison;
-      });
-      // now emit the change
-      this._selectedFilters.next(this.selectedFilters);
+      }
+      return comparison;
     });
+    // now emit the change
+    this._selectedFilters.next(this.selectedFilters);
   }
 
   addSelectedFilter(label: string, name: string, value: string){
@@ -197,7 +156,7 @@ export class SelectedFilterService {
     for(let savedFilter of this.savedFilters){
       if(savedFilter.name.toLowerCase() == name.toLowerCase()){
         let paramsForUrl = {}; // this is what we will ultimately submit
-        savedFilter.filters.forEach((item, index) => {
+        savedFilter.filters.forEach((item) => {
           // have we already stated adding the values yet
           if(paramsForUrl.hasOwnProperty(item.name)){
             // if we have seem this before and the value is a string, we need to turn it into an array before we can add to it

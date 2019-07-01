@@ -1,14 +1,13 @@
-import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
-import {Globals} from "../globals";
+import {Component, ViewChild, ViewContainerRef, OnInit, Input} from '@angular/core';
+import { ResultTypeService } from "../services/result-type.service";
 import {ResultType} from "../model/result-type";
 import {FilterService} from "../services/filter.service";
 import {verticleSlide} from "../../animations";
-import {Subscription} from "rxjs";
+import {BehaviorSubject, Subscription} from "rxjs";
 import {FormGroup, FormArray} from "@angular/forms";
 import {FilterFormService} from "../services/filter-form.service";
 import {SelectedFilterService} from "../services/selected-filter.service";
 import {Field} from "../model/field";
-import {FieldService} from "../services/field.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SelectedFilter} from "../model/selected-filter";
 
@@ -21,35 +20,42 @@ import {SelectedFilter} from "../model/selected-filter";
 export class FiltersComponent implements OnInit {
 
   public isResultTypeCollapsed = true; // to control the side rail
-  public resultTypes = ResultType.getResultTypes(); // to create the resultType links
   public exposeSecondaryFilters = false; // the secondary form filters show/hide
-  public resultType: ResultType; // the active result type
-  private resultTypeSub: Subscription; // subscribtion to the active result type
+  public resultTypes = ResultType.getResultTypes(); // to create the resultType links
+  public _resultType = new BehaviorSubject<ResultType>(null);
   public filterForm: FormGroup; // the reference to our form
   private filterFormSub: Subscription; // the subscription to keep our filterForm updated
   public filters: FormArray;
   public selectedFilters: Array<SelectedFilter>;
   private selectedFiltersSub: Subscription;
+  private facets: any;
+
+  @Input()
+  set resultType(value){
+    this._resultType.next(value);
+  }
+
+  get resultType(){
+    return this._resultType.getValue();
+  }
 
   @ViewChild('primary', {read: ViewContainerRef}) primaryViewContainerRef: ViewContainerRef;
   @ViewChild('secondary', {read: ViewContainerRef}) secondaryViewContainerRef: ViewContainerRef;
 
   constructor(
-    private globals: Globals,
+    private resultTypeService: ResultTypeService,
     private filterService: FilterService,
     private filterFormService: FilterFormService,
     private selectedFilterService: SelectedFilterService,
-    private fieldService: FieldService,
     private router: Router,
     private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.resultTypeSub = this.globals.resultType$.subscribe( resultType => {
-      this.resultType = resultType;
+    this._resultType.subscribe(x => {
       this.loadFilters();
+      this.facets = this.resultTypeService.getFacets();
     });
-
     this.filterFormSub = this.filterFormService.filterForm$.subscribe(filterForm => {
       this.filterForm = filterForm;
       this.filters = this.filterForm.get('filters') as FormArray;
@@ -63,12 +69,14 @@ export class FiltersComponent implements OnInit {
   private loadFilters() {
     // remove all of the formControls
     this.filterFormService.clearFilters();
+    this.exposeSecondaryFilters = false;
     // now clear the UI components
+    // make sure they exist - if we are waiting for the resultType to load, it won't
     this.primaryViewContainerRef.clear();
     this.secondaryViewContainerRef.clear();
-    this.exposeSecondaryFilters = false;
     // now add the primary ones back in
     this.loadPrimaryFilters();
+
   }
 
   loadPrimaryFilters() {
@@ -91,6 +99,7 @@ export class FiltersComponent implements OnInit {
   }
 
   onSubmit(){
+    console.log('submitting form');
     let paramsForUrl = {}; // this is what we will ultimately submit
     // our current list of selected filter - so we can see what hasn't been addressed in
     // this form submit (due to things like hidden filters) that we want to keep in the URL
@@ -118,16 +127,21 @@ export class FiltersComponent implements OnInit {
         }
         // see if we are single or multi value items
         if(thisControl.hasOwnProperty('controls')){ // if true, we have a multiselect
-          let facets = this.fieldService.getFacets(control); // we need the faces - facet.name = value
-          let valuesToKeep = []; // to store the values we want (control.value = true)
-          for(let facet in facets){ // iterate over the facets
-            if(thisControl.at(facet).value){ // if this value is true, it was checked
-              valuesToKeep.push(facets[facet].name);
+          if(this.facets.hasOwnProperty(control)){
+            let facets = this.facets[control]; // we need the faces - facet.name = value
+            let valuesToKeep = []; // to store the values we want (control.value = true)
+            for(let facet in facets){ // iterate over the facets
+              if(thisControl.at(facet).value){ // if this value is true, it was checked
+                valuesToKeep.push(facets[facet].name);
+              }
             }
+            if(valuesToKeep.length > 0) { // if we have any to keep, store it
+              paramsForUrl[thisField.name] = valuesToKeep;
+            }
+          } else {
+            console.warn('No facets found for ' + control);
           }
-          if(valuesToKeep.length > 0) { // if we have any to keep, store it
-            paramsForUrl[thisField.name] = valuesToKeep;
-          }
+
         } else { // we have a single input
           if(thisControl.value) { // not need to store empty values
             paramsForUrl[thisField.name] = thisControl.value;
@@ -138,7 +152,7 @@ export class FiltersComponent implements OnInit {
     // see if we have any selected filters left - if we do, we want to add them back
     if(sflist.length > 0){
       // iterate over the filters and add any we want to keep back into the paramsForUrl list
-      this.selectedFilters.forEach((item, index) => {
+      this.selectedFilters.forEach((item) => {
         // do we need to keep this item
         if(sflist.indexOf(item.name) !== -1){
           // have we already stated adding the values yet
@@ -154,6 +168,7 @@ export class FiltersComponent implements OnInit {
         }
       });
     }
+    console.warn(paramsForUrl);
     // lets trigger a navigation
     this.router.navigate([], { relativeTo: this.route, queryParams: paramsForUrl, queryParamsHandling: "" });
     return true;
@@ -161,7 +176,7 @@ export class FiltersComponent implements OnInit {
 
   ngOnDestroy() {
     this.filterFormService.clearFilters();
-    if (this.resultTypeSub) { this.resultTypeSub.unsubscribe(); }
+    if (this._resultType) { this._resultType.unsubscribe(); }
     if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
   }
 

@@ -4,8 +4,8 @@ import { FormGroup, FormControl, FormArray} from "@angular/forms";
 import { SelectedFilterService} from "../../services/selected-filter.service";
 import {Subscription} from "rxjs";
 import {FilterFormService} from "../../services/filter-form.service";
-import {FieldService} from "../../services/field.service";
 import {SelectedFilter} from "../../model/selected-filter";
+import {ResultTypeService} from "../../services/result-type.service";
 
 @Component({
   selector: 'app-receivers',
@@ -23,8 +23,11 @@ export class ReceiversComponent implements OnInit {
   public selectedFilters: Array<SelectedFilter>;
   public selectedFiltersSub: Subscription;
 
-  constructor(private selectedFilterService: SelectedFilterService, private filterFormService: FilterFormService, private fieldService: FieldService) {
-    this.validReceivers = this.fieldService.getFacets('receivers');
+  constructor(
+    private selectedFilterService: SelectedFilterService,
+    private filterFormService: FilterFormService,
+    private resultTypeService: ResultTypeService) {
+    this.validReceivers = this.resultTypeService.getFacets().obs_band;
   }
 
   ngOnInit() {
@@ -33,13 +36,13 @@ export class ReceiversComponent implements OnInit {
     });
 
     this.receiverGroup = new FormGroup({
-      receivers: new FormArray([], {updateOn: 'change'})
+      obs_band: new FormArray([], {updateOn: 'change'})
     });
 
     // add a form control for each validTelescope
     this.validReceivers.map((o) => {
       const control = new FormControl(o.selected);
-      (this.receiverGroup.controls.receivers as FormArray).push(control);
+      (this.receiverGroup.controls.obs_band as FormArray).push(control);
     });
 
     this.filterFormService.addFilter(this.receiverGroup);
@@ -54,11 +57,11 @@ export class ReceiversComponent implements OnInit {
     // collect all the filters for this control type
     let filters: Array<string> = [];
     for(let filter of this.selectedFilters){
-      if(filter.name == 'receivers'){
+      if(filter.name == 'obs_band'){
         filters.push(filter.value);
       }
     }
-    let fa = this.receiverGroup.get('receivers') as FormArray;
+    let fa = this.receiverGroup.get('obs_band') as FormArray;
     // now iterate over the valid options and see if we have a filter it
     this.validReceivers.forEach((item, index) => {
       let fc = fa.at(index);
@@ -71,7 +74,7 @@ export class ReceiversComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.filterFormService.deleteFilterByHasKey('receivers');
+    this.filterFormService.deleteFilterByHasKey('obs_band');
     if (this.selectedFiltersSub) { this.selectedFiltersSub.unsubscribe(); }
     if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
   }

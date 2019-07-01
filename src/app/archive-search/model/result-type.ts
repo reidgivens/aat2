@@ -1,8 +1,9 @@
 export class ResultType {
   name: string;
-  numResults: number; // the number of search results
   primaryFilters: Array<string>; // see filter.service for names
   secondaryFilters: Array<string>; // see filter.service for names
+  resultsEndPoint: string; // where to get search results from
+  facetsEndPoint: string; // where to get facets from
 
   // add result types here to get them to show in the list
   // don't forget to specify the results component in app-routing.module.ts
@@ -12,40 +13,53 @@ export class ResultType {
     'Observations': new ResultType(
       'Observations',
       ['dates', 'frequencies', 'source-position', 'telescopes', 'configurations'],
-      [ 'polarizations', 'receivers']
+      [ 'polarizations', 'receivers'],
+      'restapi_get_paged_exec_blocks',
+      'restapi_get_execution_block_facets'
     ),
     'Images': new ResultType(
       'Images',
       ['source-position', 'dates', 'frequencies'],
-      ['telescopes', 'configurations', 'polarizations', 'receivers']
+      ['telescopes', 'configurations', 'polarizations', 'receivers'],
+      'restapi_get_paged_images',
+      'restapi_get_image_facets'
     ),
     'Projects': new ResultType(
       'Projects',
       ['dates', 'frequencies'],
-      ['source-position', 'telescopes', 'configurations', 'polarizations', 'receivers']
+      ['source-position', 'telescopes', 'configurations', 'polarizations', 'receivers'],
+      'restapi_get_paged_exec_blocks',
+      'restapi_get_execution_block_facets'
     ),
     'VLASS': new ResultType(
       'VLASS',
       ['dates', 'frequencies', 'source-position'],
-      ['telescopes', 'configurations', 'polarizations', 'receivers']
+      ['telescopes', 'configurations', 'polarizations', 'receivers'],
+      'restapi_get_paged_exec_blocks',
+      'restapi_get_execution_block_facets'
     ),
     'RealFast': new ResultType(
       'RealFast',
       ['dates', 'frequencies', 'source-position'],
-      ['telescopes', 'configurations', 'polarizations', 'receivers']
+      ['telescopes', 'configurations', 'polarizations', 'receivers'],
+      'restapi_get_paged_exec_blocks',
+      'restapi_get_execution_block_facets'
     ),
     'Pulsars': new ResultType(
       'Pulsars',
       ['dates', 'frequencies', 'source-position'],
-      ['telescopes', 'configurations', 'polarizations', 'receivers']
+      ['telescopes', 'configurations', 'polarizations', 'receivers'],
+      'restapi_get_paged_exec_blocks',
+      'restapi_get_execution_block_facets'
     )
   };
 
-  constructor(name: string, primaryFilters: Array<string>, secondaryFilters: Array<string>) {
+  constructor(name: string, primaryFilters: Array<string>, secondaryFilters: Array<string>, resultsEndPoint: string, facetsEndPoint: string) {
     this.name = name;
-    this.numResults = 0;
     this.primaryFilters = primaryFilters;
     this.secondaryFilters = secondaryFilters;
+    this.resultsEndPoint = resultsEndPoint;
+    this.facetsEndPoint = facetsEndPoint
   }
 
   static getResultTypes() {

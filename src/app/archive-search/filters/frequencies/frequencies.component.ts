@@ -34,15 +34,15 @@ export class FrequenciesComponent implements OnInit {
     });
 
     this.frequencyGroup = new FormGroup({
-      start_frequency_num: new FormControl('', { validators: ValidateFrequency, updateOn: "blur"}),
-      end_frequency_num: new FormControl('', { validators: ValidateFrequency, updateOn: "blur"}),
-      start_frequency_hz: new FormControl('GHz'),
-      end_frequency_hz: new FormControl('GHz'),
-      start_frequency: new FormControl(''),
-      end_frequency: new FormControl('')
+      startfreq_num: new FormControl('', { validators: ValidateFrequency, updateOn: "blur"}),
+      endfreq_num: new FormControl('', { validators: ValidateFrequency, updateOn: "blur"}),
+      startfreq_hz: new FormControl('GHz'),
+      endfreq_hz: new FormControl('GHz'),
+      startfreq: new FormControl(''),
+      endfreq: new FormControl('')
     });
 
-    // start_frequency and end_frequency is what gets submitted
+    // startfreq and endfreq is what gets submitted
     // the other four are parts just for the UI so we have controls for them
     // when any of the four 'fake' ones change, we glue it together in the real ones
     // the fake ones are filtered out on form submit
@@ -51,10 +51,10 @@ export class FrequenciesComponent implements OnInit {
 
     this.selectedFiltersSub = this.selectedFilterService.selectedFilters$.subscribe( selectedFilters => {
       this.selectedFilters = selectedFilters;
-      this.frequencyGroup.get('start_frequency_num').reset();
-      this.frequencyGroup.get('end_frequency_num').reset();
-      this.frequencyGroup.get('start_frequency_hz').setValue(this.validHz[0]);
-      this.frequencyGroup.get('end_frequency_hz').setValue(this.validHz[0]);
+      this.frequencyGroup.get('startfreq_num').reset();
+      this.frequencyGroup.get('endfreq_num').reset();
+      this.frequencyGroup.get('startfreq_hz').setValue(this.validHz[0]);
+      this.frequencyGroup.get('endfreq_hz').setValue(this.validHz[0]);
       this.loadFilters();
     });
 
@@ -62,36 +62,36 @@ export class FrequenciesComponent implements OnInit {
   }
 
   updateStartHz(hz: string){
-    let fc = this.frequencyGroup.get('start_frequency_hz');
+    let fc = this.frequencyGroup.get('startfreq_hz');
     fc.setValue(hz);
   }
 
   updateEndHz(hz: string){
-    let fc = this.frequencyGroup.get('end_frequency_hz');
+    let fc = this.frequencyGroup.get('endfreq_hz');
     fc.setValue(hz);
   }
 
   loadFilters(): void {
     for(let filter of this.selectedFilters){
-      if(filter.name == 'start_frequency'){
-        this.frequencyGroup.get('start_frequency').setValue(filter.value);
+      if(filter.name == 'startfreq'){
+        this.frequencyGroup.get('startfreq').setValue(filter.value);
         let freqParts = filter.value.split(' ');
-        this.frequencyGroup.get('start_frequency_num').setValue(freqParts[0]);
+        this.frequencyGroup.get('startfreq_num').setValue(freqParts[0]);
         if(this.validHz.indexOf(freqParts[1]) == -1){
           this.startHz = this.validHz[0];
-          this.frequencyGroup.get('start_frequency_hz').setValue(this.validHz[0]);
+          this.frequencyGroup.get('startfreq_hz').setValue(this.validHz[0]);
         } else {
-          this.frequencyGroup.get('start_frequency_hz').setValue(freqParts[1]);
+          this.frequencyGroup.get('startfreq_hz').setValue(freqParts[1]);
         }
-      } else if (filter.name == 'end_frequency'){
-        this.frequencyGroup.get('end_frequency').setValue(filter.value);
+      } else if (filter.name == 'endfreq'){
+        this.frequencyGroup.get('endfreq').setValue(filter.value);
         let freqParts = filter.value.split(' ');
-        this.frequencyGroup.get('end_frequency_num').setValue(freqParts[0]);
+        this.frequencyGroup.get('endfreq_num').setValue(freqParts[0]);
         if(this.validHz.indexOf(freqParts[1]) == -1){
           this.endHz = this.validHz[0];
-          this.frequencyGroup.get('end_frequency_hz').setValue(this.validHz[0]);
+          this.frequencyGroup.get('endfreq_hz').setValue(this.validHz[0]);
         } else {
-          this.frequencyGroup.get('end_frequency_hz').setValue(freqParts[1]);
+          this.frequencyGroup.get('endfreq_hz').setValue(freqParts[1]);
         }
       }
     }
@@ -99,44 +99,44 @@ export class FrequenciesComponent implements OnInit {
 
   onChanges(): void {
     // from object in UI control to the submittable fields
-    this.frequencyGroup.get('start_frequency_num').valueChanges.subscribe(val => {
-      if(this.frequencyGroup.get('start_frequency_num').valid && val !== null) {
-        let fc = this.frequencyGroup.get('start_frequency_hz');
-        this.frequencyGroup.get('start_frequency').setValue(val + ' ' + fc.value);
+    this.frequencyGroup.get('startfreq_num').valueChanges.subscribe(val => {
+      if(this.frequencyGroup.get('startfreq_num').valid && val !== null) {
+        let fc = this.frequencyGroup.get('startfreq_hz');
+        this.frequencyGroup.get('startfreq').setValue(val + ' ' + fc.value);
       }
     });
-    this.frequencyGroup.get('end_frequency_num').valueChanges.subscribe(val => {
-      if(this.frequencyGroup.get('end_frequency_num').valid && val !== null) {
-        let fc = this.frequencyGroup.get('end_frequency_hz');
-        this.frequencyGroup.get('end_frequency').setValue(val + ' ' + fc.value);
+    this.frequencyGroup.get('endfreq_num').valueChanges.subscribe(val => {
+      if(this.frequencyGroup.get('endfreq_num').valid && val !== null) {
+        let fc = this.frequencyGroup.get('endfreq_hz');
+        this.frequencyGroup.get('endfreq').setValue(val + ' ' + fc.value);
       }
     });
-    this.frequencyGroup.get('start_frequency_hz').valueChanges.subscribe(val => {
-      if(this.frequencyGroup.get('start_frequency_hz').valid && val !== null) {
+    this.frequencyGroup.get('startfreq_hz').valueChanges.subscribe(val => {
+      if(this.frequencyGroup.get('startfreq_hz').valid && val !== null) {
         this.startHz = val;
-        let fc = this.frequencyGroup.get('start_frequency_num');
+        let fc = this.frequencyGroup.get('startfreq_num');
         if(fc.value !== null) {
-          this.frequencyGroup.get('start_frequency').setValue(fc.value + ' ' + val);
+          this.frequencyGroup.get('startfreq').setValue(fc.value + ' ' + val);
         } else {
-          this.frequencyGroup.get('start_frequency').reset();
+          this.frequencyGroup.get('startfreq').reset();
         }
       }
     });
-    this.frequencyGroup.get('end_frequency_hz').valueChanges.subscribe(val => {
-      if(this.frequencyGroup.get('end_frequency_hz').valid && val !== null) {
+    this.frequencyGroup.get('endfreq_hz').valueChanges.subscribe(val => {
+      if(this.frequencyGroup.get('endfreq_hz').valid && val !== null) {
         this.endHz = val;
-        let fc = this.frequencyGroup.get('end_frequency_num');
+        let fc = this.frequencyGroup.get('endfreq_num');
         if(fc.value !== null) {
-          this.frequencyGroup.get('end_frequency').setValue(fc.value + ' ' + val);
+          this.frequencyGroup.get('endfreq').setValue(fc.value + ' ' + val);
         } else {
-          this.frequencyGroup.get('end_frequency').reset();
+          this.frequencyGroup.get('endfreq').reset();
         }
       }
     });
   }
 
   ngOnDestroy(){
-    this.filterFormService.deleteFilterByHasKey('end_frequency');
+    this.filterFormService.deleteFilterByHasKey('endfreq');
     if (this.selectedFiltersSub) { this.selectedFiltersSub.unsubscribe(); }
     if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
   }

@@ -1,8 +1,8 @@
 <form id="filters" [formGroup]="filterForm" (ngSubmit)="onSubmit()"><!-- we have to have a formGroup on every form tag, even if its empty -->
   <!-- keeping this filter here, rather than in it's own component makes filter loading easier -->
-  <fieldset class="row">
+  <fieldset class="row" *ngIf="resultType">
     <div class="form-row py-1 border-top bg-dark text-light" (click)="isResultTypeCollapsed = !isResultTypeCollapsed">
-      <legend class="col mb-0 pl-3" >{{resultType.name }} Search</legend>
+      <legend class="col mb-0 pl-3" >{{ resultType.name }} Search</legend>
       <p class="col-auto mb-0 pr-3">
         <!-- fontawesome replaces the <i> tag with an svg for the icon, so we can't show/hide on the <i>
         so we need to include both and show/hide them based on isCollapsed -->
@@ -16,7 +16,7 @@
     </div>
     <div *ngIf="!isResultTypeCollapsed" @vslider>
       <div class="list-group list-group-flush" role="group">
-        <a routerLink="/Search/{{intent}}" (click)="isResultTypeCollapsed = true" queryParamsHandling="preserve" *ngFor="let intent of resultTypes" class="h5 text-left p-3" [ngClass]="intent == globals.resultType.name ? 'bg-dark text-white' : 'bg-light'">{{intent}}</a>
+        <a routerLink="/Search/{{intent}}" (click)="isResultTypeCollapsed = true" queryParamsHandling="preserve" *ngFor="let intent of resultTypes" class="h5 text-left p-3" [ngClass]="intent == resultType.name ? 'bg-dark text-white' : 'bg-light'">{{intent}}</a>
       </div>
     </div>
   </fieldset>

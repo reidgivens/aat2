@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-project-results',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectResultsComponent implements OnInit {
 
+  @Input() searchResults: Array<any>;
   constructor() { }
 
   ngOnInit() {

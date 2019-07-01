@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule} from "@angular/forms";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {HttpClientModule} from "@angular/common/http";
 
-import { Globals } from './globals';
+import  { ResultTypeService } from "./services/result-type.service";
 import { FiltersComponent } from './filters/filters.component';
 import { FilterService} from "./services/filter.service";
 
@@ -43,7 +44,7 @@ import { LoadFiltersComponent } from './selected-filters/load-filters/load-filte
     SaveFiltersComponent,
     LoadFiltersComponent
   ],
-  providers: [ Globals, FilterService ],
+  providers: [ ResultTypeService, FilterService ],
   entryComponents: [
     DatesComponent,
     FrequenciesComponent,
@@ -59,7 +60,8 @@ import { LoadFiltersComponent } from './selected-filters/load-filters/load-filte
     CommonModule,
     ReactiveFormsModule,
     NgbModule,
-    ArchiveSearchRoutingModule
+    ArchiveSearchRoutingModule,
+    HttpClientModule
   ]
 })
 export class ArchiveSearchModule { }

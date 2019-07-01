@@ -14,7 +14,7 @@
   </div>
   <div *ngIf="!isCollapsed" @vslider>
     <div class="form-row py-3">
-      <div class="col-6" formArrayName="receivers" *ngFor="let receiver of receiverGroup.controls.receivers.controls; let i = index">
+      <div class="col-6" formArrayName="obs_band" *ngFor="let receiver of receiverGroup.controls.obs_band.controls; let i = index">
         <div class="form-check mr-4">
           <input class="form-check-input" type="checkbox" [formControl]="receiver" id="{{validReceivers[i].name}}">
           <label class="form-check-label" for="{{validReceivers[i].name}}">

@@ -4,8 +4,8 @@ import { FormGroup, FormControl, FormArray} from "@angular/forms";
 import { SelectedFilterService} from "../../services/selected-filter.service";
 import {Subscription} from "rxjs";
 import {FilterFormService} from "../../services/filter-form.service";
-import {FieldService} from "../../services/field.service";
 import {SelectedFilter} from "../../model/selected-filter";
+import {ResultTypeService} from "../../services/result-type.service";
 
 
 @Component({
@@ -24,8 +24,11 @@ export class ConfigurationsComponent implements OnInit {
   public selectedFilters: Array<SelectedFilter>;
   public selectedFiltersSub: Subscription;
 
-  constructor(private selectedFilterService: SelectedFilterService, private filterFormService: FilterFormService, private fieldService: FieldService) {
-    this.validConfigurations = this.fieldService.getFacets('configuration');
+  constructor(
+    private selectedFilterService: SelectedFilterService,
+    private filterFormService: FilterFormService,
+    private resultTypeService: ResultTypeService) {
+    this.validConfigurations = this.resultTypeService.getFacets().vla_configuration;
   }
 
   ngOnInit() {
@@ -34,13 +37,13 @@ export class ConfigurationsComponent implements OnInit {
     });
 
     this.configurationGroup = new FormGroup({
-      configuration: new FormArray([], {updateOn: 'change'})
+      vla_configuration: new FormArray([], {updateOn: 'change'})
     });
 
     // add a form control for each validTelescope
     this.validConfigurations.map((o) => {
       const control = new FormControl(o.selected);
-      (this.configurationGroup.controls.configuration as FormArray).push(control);
+      (this.configurationGroup.controls.vla_configuration as FormArray).push(control);
     });
 
     this.filterFormService.addFilter(this.configurationGroup);
@@ -52,7 +55,7 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.filterFormService.deleteFilterByHasKey('configuration');
+    this.filterFormService.deleteFilterByHasKey('vla_configuration');
     if (this.selectedFiltersSub) { this.selectedFiltersSub.unsubscribe(); }
     if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
   }
@@ -61,11 +64,11 @@ export class ConfigurationsComponent implements OnInit {
     // collect all the filters for this control type
     let filters: Array<string> = [];
     for(let filter of this.selectedFilters){
-      if(filter.name == 'configuration'){
+      if(filter.name == 'vla_configuration'){
         filters.push(filter.value);
       }
     }
-    let fa = this.configurationGroup.get('configuration') as FormArray;
+    let fa = this.configurationGroup.get('vla_configuration') as FormArray;
     // now iterate over the valid options and see if we have a filter it
     this.validConfigurations.forEach((item, index) => {
       let fc = fa.at(index);

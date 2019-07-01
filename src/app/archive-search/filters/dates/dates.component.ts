@@ -30,14 +30,14 @@ export class DatesComponent implements OnInit {
     });
 
     this.dateGroup = new FormGroup({
-      toDate: new FormControl('', { validators: ValidateDate, updateOn: "blur"}),
-      fromDate: new FormControl('', { validators: ValidateDate, updateOn: "blur"}),
-      to_date: new FormControl(''),
-      from_date: new FormControl(''),
+      maxDate: new FormControl('', { validators: ValidateDate, updateOn: "blur"}),
+      minDate: new FormControl('', { validators: ValidateDate, updateOn: "blur"}),
+      maxdate: new FormControl(''),
+      mindate: new FormControl(''),
     });
 
-    // to_date and from_date are the real fields that get submitted as filter
-    // toDate and fromDate are just there for the UI controls
+    // maxdate and mindate are the real fields that get submitted as filter
+    // maxDate and minDate are just there for the UI controls
     // they are different because angular bootstraps deals with the control values as objects, not strings
     // the two sets of fields are to switch from objects to strings and back
     // we will filter out the fake ones on form submit
@@ -46,8 +46,8 @@ export class DatesComponent implements OnInit {
 
     this.selectedFiltersSub = this.selectedFilterService.selectedFilters$.subscribe( selectedFilters => {
       this.selectedFilters = selectedFilters;
-      this.dateGroup.get('toDate').reset();
-      this.dateGroup.get('fromDate').reset();
+      this.dateGroup.get('maxDate').reset();
+      this.dateGroup.get('minDate').reset();
       this.loadFilters();
     });
 
@@ -56,32 +56,32 @@ export class DatesComponent implements OnInit {
 
   loadFilters(): void {
     for(let filter of this.selectedFilters){
-      if(filter.name == 'to_date'){
+      if(filter.name == 'maxdate'){
         let dateObj = filter.value.split('-');
-        this.dateGroup.get('toDate').setValue({ year: parseInt(dateObj[0]), month: parseInt(dateObj[1]), day: parseInt(dateObj[2])});
-      } else if (filter.name == 'from_date'){
+        this.dateGroup.get('maxDate').setValue({ year: parseInt(dateObj[0]), month: parseInt(dateObj[1]), day: parseInt(dateObj[2])});
+      } else if (filter.name == 'mindate'){
         let dateObj = filter.value.split('-');
-        this.dateGroup.get('fromDate').setValue({ year: parseInt(dateObj[0]), month: parseInt(dateObj[1]), day: parseInt(dateObj[2])});
+        this.dateGroup.get('minDate').setValue({ year: parseInt(dateObj[0]), month: parseInt(dateObj[1]), day: parseInt(dateObj[2])});
       }
     }
   }
 
   onChanges(): void {
     // from object in UI control to the submittable fields
-    this.dateGroup.get('toDate').valueChanges.subscribe(val => {
-      if(this.dateGroup.get('toDate').valid && val !== null) {
-        this.dateGroup.get('to_date').setValue(val.year + '-' + (val.month < 10 ? '0' : '') + val.month + '-' + (val.day < 10 ? '0' : '') + val.day);
+    this.dateGroup.get('maxDate').valueChanges.subscribe(val => {
+      if(this.dateGroup.get('maxDate').valid && val !== null) {
+        this.dateGroup.get('maxdate').setValue(val.year + '-' + (val.month < 10 ? '0' : '') + val.month + '-' + (val.day < 10 ? '0' : '') + val.day);
       }
     });
-    this.dateGroup.get('fromDate').valueChanges.subscribe(val => {
-      if(this.dateGroup.get('fromDate').valid && val !== null) {
-        this.dateGroup.get('from_date').setValue(val.year + '-' + (val.month < 10 ? '0' : '') + val.month + '-' + (val.day < 10 ? '0' : '') + val.day);
+    this.dateGroup.get('minDate').valueChanges.subscribe(val => {
+      if(this.dateGroup.get('minDate').valid && val !== null) {
+        this.dateGroup.get('mindate').setValue(val.year + '-' + (val.month < 10 ? '0' : '') + val.month + '-' + (val.day < 10 ? '0' : '') + val.day);
       }
     });
   }
 
   ngOnDestroy(){
-    this.filterFormService.deleteFilterByHasKey('to_date');
+    this.filterFormService.deleteFilterByHasKey('maxdate');
     if (this.selectedFiltersSub) { this.selectedFiltersSub.unsubscribe(); }
     if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
   }

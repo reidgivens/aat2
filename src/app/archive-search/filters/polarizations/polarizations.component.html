@@ -1,4 +1,4 @@
-<fieldset [formGroup]="polarizationGroup">
+<fieldset [formGroup]="polarizationsGroup">
   <div class="form-row py-1 border-top" (click)="isCollapsed = !isCollapsed">
     <legend class="col mb-0 text-uppercase" >Polarizations</legend>
     <p class="col-auto mb-0">
@@ -14,9 +14,9 @@
   </div>
   <div *ngIf="!isCollapsed" @vslider>
     <div class="form-row py-3">
-      <div class="col-6" formArrayName="polarization" *ngFor="let polarization of polarizationGroup.controls.polarization.controls; let i = index">
+      <div class="col-6" formArrayName="polarizations" *ngFor="let polarizations of polarizationsGroup.controls.polarizations.controls; let i = index">
         <div class="form-check mr-4">
-          <input class="form-check-input" type="checkbox" [formControl]="polarization" id="{{validPolarizations[i].name}}">
+          <input class="form-check-input" type="checkbox" [formControl]="polarizations" id="{{validPolarizations[i].name}}">
           <label class="form-check-label" for="{{validPolarizations[i].name}}">
             {{validPolarizations[i].name}}
             <span class="badge border text-muted ml-1">{{validPolarizations[i].count}}</span>

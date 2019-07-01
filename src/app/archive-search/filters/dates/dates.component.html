@@ -17,26 +17,26 @@
       <div class="col-md form-group">
         <label for="from-date">From</label>
         <div class="input-group">
-          <input type="text" name="from-date" id="from-date" class="form-control" placeholder="YYYY-MM-DD" ngbDatepicker #fd="ngbDatepicker" formControlName="fromDate"  />
+          <input type="text" name="from-date" id="from-date" class="form-control" placeholder="YYYY-MM-DD" ngbDatepicker #fd="ngbDatepicker" formControlName="minDate"  />
           <div class="input-group-append">
-            <button class="btn btn-secondary" type="button" id="from_datePicker" (click)="fd.toggle()"><i class="fas fa-calendar"></i>
+            <button class="btn btn-secondary" type="button" id="mindatePicker" (click)="fd.toggle()"><i class="fas fa-calendar"></i>
             </button>
           </div>
         </div>
-        <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="dateGroup.get('fromDate').errors && dateGroup.get('fromDate').dirty && dateGroup.get('fromDate').errors.invalidDate">
+        <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="dateGroup.get('minDate').errors && dateGroup.get('minDate').dirty && dateGroup.get('minDate').errors.invalidDate">
           Dates should be in the YYYY-MM-DD format
         </div>
       </div>
       <div class="col-md form-group">
         <label for="to-date">To</label>
         <div class="input-group">
-          <input type="text" name="to-date" id="to-date" class="form-control" placeholder="YYYY-MM-DD" ngbDatepicker #td="ngbDatepicker" formControlName="toDate" />
+          <input type="text" name="to-date" id="to-date" class="form-control" placeholder="YYYY-MM-DD" ngbDatepicker #td="ngbDatepicker" formControlName="maxDate" />
           <div class="input-group-append">
-            <button class="btn btn-secondary" type="button" id="to_datePciker" (click)="td.toggle()"><i class="fas fa-calendar"></i>
+            <button class="btn btn-secondary" type="button" id="maxdatePciker" (click)="td.toggle()"><i class="fas fa-calendar"></i>
             </button>
           </div>
         </div>
-        <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="dateGroup.get('toDate').errors && dateGroup.get('toDate').dirty && dateGroup.get('toDate').errors.invalidDate">
+        <div class="border rounded border-danger text-danger mt-1 p-1" *ngIf="dateGroup.get('maxDate').errors && dateGroup.get('maxDate').dirty && dateGroup.get('maxDate').errors.invalidDate">
           Dates should be in the YYYY-MM-DD format
         </div>
       </div>
