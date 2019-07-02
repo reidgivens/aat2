@@ -130,9 +130,12 @@ export class ArchiveSearchComponent implements OnInit {
     this.searchResults = [];
     this.pages = 1;
     this.spinner = true;
-    this.searchResultsService.getResults(this.resultType.resultsEndPoint, this.resultsPerPage * (this.currentPage - 1), this.resultsPerPage).subscribe((searchResults: string) => {
-      let jsonSearchResults = JSON.parse(searchResults);
-      console.log(jsonSearchResults.data);
+    this.searchResultsService.getResults(this.resultType.resultsEndPoint, this.resultsPerPage * (this.currentPage - 1), this.resultsPerPage).subscribe((searchResults) => {
+      const keys = searchResults.headers.keys();
+      let headers = keys.map(key => `${key}: ${searchResults.headers.get(key)}`);
+      console.log(headers);
+      let jsonSearchResults = JSON.parse(searchResults.body);
+      console.log(jsonSearchResults);
       this.searchResults = jsonSearchResults.data;
       this.numResults = jsonSearchResults.n_results;
       this.pages = Math.ceil(this.numResults / this.resultsPerPage);

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FieldService } from './field.service';
+import { EnvService } from './env.service';
 
-describe('FieldService', () => {
+describe('EnvService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: FieldService = TestBed.get(FieldService);
+    const service: EnvService = TestBed.get(EnvService);
     expect(service).toBeTruthy();
   });
 });

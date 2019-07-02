@@ -6,6 +6,7 @@ import {HttpClientModule} from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EnvServiceProvider} from "./env/env.service.provider";
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -29,6 +30,7 @@ import { SplashComponent } from './splash/splash.component';
     AppRoutingModule,
     HttpClientModule
   ],
+  providers: [EnvServiceProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule {

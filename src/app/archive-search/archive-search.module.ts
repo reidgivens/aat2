@@ -25,6 +25,7 @@ import { ArchiveSearchComponent } from './archive-search.component';
 import { SelectedFiltersComponent } from './selected-filters/selected-filters.component';
 import { SaveFiltersComponent } from './selected-filters/save-filters/save-filters.component';
 import { LoadFiltersComponent } from './selected-filters/load-filters/load-filters.component';
+import { ProjectComponent } from './filters/project/project.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { LoadFiltersComponent } from './selected-filters/load-filters/load-filte
     ArchiveSearchComponent,
     SelectedFiltersComponent,
     SaveFiltersComponent,
-    LoadFiltersComponent
+    LoadFiltersComponent,
+    ProjectComponent
   ],
   providers: [ ResultTypeService, FilterService ],
   entryComponents: [
@@ -53,6 +55,7 @@ import { LoadFiltersComponent } from './selected-filters/load-filters/load-filte
     ConfigurationsComponent,
     ReceiversComponent,
     PolarizationsComponent,
+    ProjectComponent,
     SaveFiltersComponent,
     LoadFiltersComponent
   ],

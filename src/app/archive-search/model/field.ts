@@ -5,6 +5,7 @@ export class Field {
   allowMultipleValues: boolean;
 
   // add fields here to get them to show in the list
+  // the name of the field should match the param expected in the backend
   static FIELDS = {
     'mindate': new Field('From', 'mindate', 'Observations made after this date (YYYY-MM-DD)', false),
     'maxdate': new Field('To', 'maxdate', 'Observations made before this date (YYYY-MM-DD)', false),

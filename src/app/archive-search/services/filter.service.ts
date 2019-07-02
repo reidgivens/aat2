@@ -11,6 +11,7 @@ import { TelescopesComponent } from '../filters/telescopes/telescopes.component'
 import { ConfigurationsComponent } from '../filters/configurations/configurations.component';
 import { ReceiversComponent } from '../filters/receivers/receivers.component';
 import { PolarizationsComponent } from '../filters/polarizations/polarizations.component';
+import { ProjectComponent} from "../filters/project/project.component";
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,8 @@ export class FilterService {
     'telescopes': TelescopesComponent,
     'configurations': ConfigurationsComponent,
     'receivers': ReceiversComponent,
-    'polarizations': PolarizationsComponent
+    'polarizations': PolarizationsComponent,
+    'project': ProjectComponent
   };
 
   constructor(private factoryResolver: ComponentFactoryResolver) {}
@@ -49,6 +51,6 @@ export class FilterService {
 1) Create the filter component under app.filters e.g. ng generate component filters/[name of filter]
 2) import that filter here, and add it to the static filters prop above with a name
     make the name the same as the folder that stores the component - not that is has to, but lets be consistent
-3) import the filter component into the app.module and add it to both declarations and entryComponents
+3) import the filter component into the module and add it to both declarations and entryComponents
 4) add the name of the filter to any result-type's primary or secondary filter list
  */

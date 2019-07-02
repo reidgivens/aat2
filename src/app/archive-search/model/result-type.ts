@@ -13,13 +13,13 @@ export class ResultType {
     'Observations': new ResultType(
       'Observations',
       ['dates', 'frequencies', 'source-position', 'telescopes', 'configurations'],
-      [ 'polarizations', 'receivers'],
+      [ 'polarizations', 'receivers','project'],
       'restapi_get_paged_exec_blocks',
       'restapi_get_execution_block_facets'
     ),
     'Images': new ResultType(
       'Images',
-      ['source-position', 'dates', 'frequencies'],
+      ['source-position', 'dates', 'frequencies', 'project'],
       ['telescopes', 'configurations', 'polarizations', 'receivers'],
       'restapi_get_paged_images',
       'restapi_get_image_facets'

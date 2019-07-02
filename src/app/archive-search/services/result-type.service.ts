@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {ResultType} from "../model/result-type";
 import {BehaviorSubject, Observable} from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { EnvService } from "../../env/env.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,10 @@ export class ResultTypeService {
 
   private facets: any;
 
-  // TODO: this should probably be put in some kind of config
-  private serverAddress: string = 'https://webtest.aoc.nrao.edu/archiveIface/';
+  private serverAddress: string = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private env: EnvService) {
+    this.serverAddress = env.apiUrl;
   }
 
   updateResultType(name: string){

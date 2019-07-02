@@ -10,7 +10,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot( routes,{ enableTracing: false, preloadingStrategy: PreloadAllModules } ) // <-- debugging purposes only
+    RouterModule.forRoot( routes,{ preloadingStrategy: PreloadAllModules } )
   ],
   exports: [
     RouterModule

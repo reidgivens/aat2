@@ -1,45 +1,58 @@
 import { Injectable } from '@angular/core';
-import {HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, Subscription} from "rxjs";
 import {SelectedFilter} from "../model/selected-filter";
 import {SelectedFilterService} from "./selected-filter.service";
+import {EnvService } from "../../env/env.service";
+import {Field} from "../model/field";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchResultsService {
 
-  // TODO: this should probably be put in some kind of config
-  private serverAddress: string = 'https://webtest.aoc.nrao.edu/archiveIface/';
+  private serverAddress: string = '';
 
   private selectedFilters: Array<SelectedFilter> = [];
   private selectedFiltersSub: Subscription;
 
-  constructor(private http: HttpClient, private selectedFilterService: SelectedFilterService) {
+  constructor(private http: HttpClient, private selectedFilterService: SelectedFilterService, private env: EnvService) {
+    this.serverAddress = env.apiUrl;
     this.selectedFiltersSub = this.selectedFilterService.selectedFilters$.subscribe(selectedFilters => {
       this.selectedFilters = selectedFilters;
     });
   }
 
   getResults(endPoint: string, start: number, rows: number): Observable<any> {
-    let params = '?start=' + start + '&rows=' + rows;
-    // the selected filters store each name value pair indivdually, and we need to collapse the multiselects
-    let filterParams = {};
+    let params = {start: start, rows: rows};
+
     for(let sf of this.selectedFilters){
-      if(filterParams.hasOwnProperty(sf.name)){
-        filterParams[sf.name] += ','+ sf.value;
-      } else {
-        filterParams[sf.name] = sf.value;
+      let field = Field.getField(sf.name);
+      if(field){
+        if(field.allowMultipleValues){
+          if(!params.hasOwnProperty(sf.name)){
+            params[sf.name] = [];
+          }
+          params[sf.name].push(sf.value);
+        } else {
+          params[sf.name] = sf.value;
+        }
       }
     }
-    for(let key in filterParams){
-      if(filterParams.hasOwnProperty(key)){
-        params += '&' + key + '=' + filterParams[key];
+    /*for(let p in params){
+      if(typeof params[p] == 'object'){
+        params[p] = JSON.stringify(params[p]);
       }
-    }
-    params = encodeURI(params);
-    console.log('Searching: ' + endPoint + params);
-    return this.http.get(this.serverAddress + endPoint + params, {responseType: "json"});
+      console.warn(params[p]);
+      console.log(typeof params[p]);
+    }*/
+    console.log('Searching: ' + endPoint);
+    console.log(params);
+
+    const httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // return this.http.get(this.serverAddress + endPoint + params, {responseType: "json", observe: 'response'});
+    return this.http.post(this.serverAddress + endPoint, params, {headers: httpHeaders, observe: 'response', responseType: 'json'});
   }
 
 }
