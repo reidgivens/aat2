@@ -47,12 +47,13 @@ export class ArchiveSearchComponent implements OnInit {
 
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
-        // swap the result type to the one in the path
         let resultType = this.route.snapshot.firstChild.url[0].path;
         if (!this.resultType || resultType !== this.resultType.name) {
           this.spinner = true;
           this.spinnerText = 'Loading Search Type';
           this.resultTypeService.updateResultType(resultType);
+        } else if (this.resultType){
+          this.loadUrlParams();
         }
       }
     });
