@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {verticleSlide} from "../../../animations";
 import { FormGroup, FormControl, FormArray} from "@angular/forms";
 import { SelectedFilterService} from "../../services/selected-filter.service";
@@ -6,6 +6,7 @@ import {Subscription} from "rxjs";
 import {FilterFormService} from "../../services/filter-form.service";
 import {SelectedFilter} from "../../model/selected-filter";
 import {ResultTypeService} from "../../services/result-type.service";
+import { FacetsService } from "../../services/facets.service";
 
 
 @Component({
@@ -25,10 +26,11 @@ export class ConfigurationsComponent implements OnInit {
   public selectedFiltersSub: Subscription;
 
   constructor(
+    private facetService: FacetsService,
     private selectedFilterService: SelectedFilterService,
     private filterFormService: FilterFormService,
     private resultTypeService: ResultTypeService) {
-    this.validConfigurations = this.resultTypeService.getFacets().vla_configuration;
+    this.validConfigurations = this.facetService.getFacet('vla_configuration');
   }
 
   ngOnInit() {

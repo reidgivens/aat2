@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable, Subscription} from "rxjs";
 import {SelectedFilter} from "../model/selected-filter";
 import {SelectedFilterService} from "./selected-filter.service";
@@ -24,35 +24,18 @@ export class SearchResultsService {
   }
 
   getResults(endPoint: string, start: number, rows: number): Observable<any> {
-    let params = {start: start, rows: rows};
+    let params = new HttpParams();
 
-    for(let sf of this.selectedFilters){
-      let field = Field.getField(sf.name);
+    params = params.append('start', start.toString());
+    params = params.append('rows', rows.toString());
+
+    for (const key of this.selectedFilters) {
+      let field = Field.getField(key.name);
       if(field){
-        if(field.allowMultipleValues){
-          if(!params.hasOwnProperty(sf.name)){
-            params[sf.name] = [];
-          }
-          params[sf.name].push(sf.value);
-        } else {
-          params[sf.name] = sf.value;
-        }
+        params = params.append(key.name, JSON.stringify(key.value));
       }
     }
-    /*for(let p in params){
-      if(typeof params[p] == 'object'){
-        params[p] = JSON.stringify(params[p]);
-      }
-      console.warn(params[p]);
-      console.log(typeof params[p]);
-    }*/
-    console.log('Searching: ' + endPoint);
-    console.log(params);
-
-    const httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
-
-    // return this.http.get(this.serverAddress + endPoint + params, {responseType: "json", observe: 'response'});
-    return this.http.post(this.serverAddress + endPoint, params, {headers: httpHeaders, observe: 'response', responseType: 'json'});
+    return this.http.get(this.serverAddress + endPoint, {observe: 'response', params: params});
   }
 
 }

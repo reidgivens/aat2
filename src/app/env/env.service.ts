@@ -5,7 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class EnvService {
 
-  public apiUrl = '';
+  public apiUrl: string = '';
 
-  constructor() { }
+  constructor() {
+  }
+
+
 }

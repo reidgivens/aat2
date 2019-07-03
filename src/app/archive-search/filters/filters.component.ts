@@ -1,4 +1,5 @@
 import {Component, ViewChild, ViewContainerRef, OnInit, Input} from '@angular/core';
+import { FacetsService } from "../services/facets.service";
 import { ResultTypeService } from "../services/result-type.service";
 import {ResultType} from "../model/result-type";
 import {FilterService} from "../services/filter.service";
@@ -28,7 +29,9 @@ export class FiltersComponent implements OnInit {
   public filters: FormArray;
   public selectedFilters: Array<SelectedFilter>;
   private selectedFiltersSub: Subscription;
-  private facets: any;
+  private facets;
+
+
 
   @Input()
   set resultType(value){
@@ -43,19 +46,21 @@ export class FiltersComponent implements OnInit {
   @ViewChild('secondary', {read: ViewContainerRef}) secondaryViewContainerRef: ViewContainerRef;
 
   constructor(
+    private facetService: FacetsService,
     private resultTypeService: ResultTypeService,
     private filterService: FilterService,
     private filterFormService: FilterFormService,
     private selectedFilterService: SelectedFilterService,
     private router: Router,
     private route: ActivatedRoute) {
+    this.facets = this.facetService.getFacets();
   }
 
   ngOnInit() {
     this._resultType.subscribe(x => {
       this.loadFilters();
-      this.facets = this.resultTypeService.getFacets();
     });
+
     this.filterFormSub = this.filterFormService.filterForm$.subscribe(filterForm => {
       this.filterForm = filterForm;
       this.filters = this.filterForm.get('filters') as FormArray;
@@ -67,41 +72,34 @@ export class FiltersComponent implements OnInit {
   }
 
   private loadFilters() {
-    // remove all of the formControls
-    this.filterFormService.clearFilters();
-    this.exposeSecondaryFilters = false;
-    // now clear the UI components
-    // make sure they exist - if we are waiting for the resultType to load, it won't
-    this.primaryViewContainerRef.clear();
+    this.filterFormService.clearFilters(); // remove all of the formControls
+    this.exposeSecondaryFilters = false; // hide the secondaryFilters
+    this.primaryViewContainerRef.clear(); // now clear the UI components
     this.secondaryViewContainerRef.clear();
-    // now add the primary ones back in
-    this.loadPrimaryFilters();
-
+    this.loadPrimaryFilters(); // now add the primary ones back in
   }
 
   loadPrimaryFilters() {
-    // iterate over the list of filters for this resultType
     for (let v of this.resultType.primaryFilters) {
       this.filterService.loadFilter(this.primaryViewContainerRef, v);
     }
   }
 
   toggleSecondaryFilters() {
-    // see if we are opening or closing it
     this.exposeSecondaryFilters = !this.exposeSecondaryFilters;
-    if (this.exposeSecondaryFilters) {
+    if (!this.exposeSecondaryFilters) {
+      this.secondaryViewContainerRef.clear(); // its closed, so clear it out
+    } else { // its open, load em up
       for (let v of this.resultType.secondaryFilters) {
         this.filterService.loadFilter(this.secondaryViewContainerRef, v);
       }
-    } else {
-      this.secondaryViewContainerRef.clear();
     }
   }
 
   onSubmit(){
     console.log('submitting form');
     let paramsForUrl = {}; // this is what we will ultimately submit
-    // our current list of selected filter - so we can see what hasn't been addressed in
+    // get our current list of selected filters - so we can see what hasn't been addressed in
     // this form submit (due to things like hidden filters) that we want to keep in the URL
     let sflist: Array<string> = this.selectedFilters.reduce((result, item) => {
       if(result.indexOf(item.name) == -1){
@@ -110,25 +108,19 @@ export class FiltersComponent implements OnInit {
       return result;
     },[]);
 
-    let formFilters = this.filterForm.get('filters');
-    for(let formGroup of formFilters['controls']){ // iterate over the filter components
-      for(let control in formGroup['controls']){ // iterate over the controls for this component
+    let formFilters = this.filterForm.get('filters'); // all the filters are here in a formArray
+    for(let formGroup of formFilters['controls']){ // iterate over each filter components
+      for(let control in formGroup['controls']){ // iterate over the fields for this filter component
         let thisControl = formGroup.get(control);
-        let thisField = Field.getField(control); // so we can name this properly
-        // if we didn't find the field in the model list, skip this one
-        // this is how we filter out UI controls that don't map to accepted filters
-        if(thisField === undefined){
-          continue;
-        }
+        let thisField = Field.getField(control); // see if there is a field defined for this control
+        if(thisField === undefined){ continue; } // skip any control that isn't defined
         // remove any fields we have seen from the list of selected filters (sflist)
-        let sflistpos = sflist.indexOf(thisField.name);
-        if(sflistpos !== -1){
-          sflist.splice(sflistpos, 1);
-        }
+        let sflistpos = sflist.indexOf(thisField.name); // see if this control is in the last list of filters
+        if(sflistpos !== -1){ sflist.splice(sflistpos, 1); } // if so, remove it so we can overwrite it
         // see if we are single or multi value items
         if(thisControl.hasOwnProperty('controls')){ // if true, we have a multiselect
           if(this.facets.hasOwnProperty(control)){
-            let facets = this.facets[control]; // we need the faces - facet.name = value
+            let facets = this.facets[control]; // we need the facets - facet.name = value
             let valuesToKeep = []; // to store the values we want (control.value = true)
             for(let facet in facets){ // iterate over the facets
               if(thisControl.at(facet).value){ // if this value is true, it was checked
@@ -141,7 +133,6 @@ export class FiltersComponent implements OnInit {
           } else {
             console.warn('No facets found for ' + control);
           }
-
         } else { // we have a single input
           if(thisControl.value) { // not need to store empty values
             paramsForUrl[thisField.name] = thisControl.value;

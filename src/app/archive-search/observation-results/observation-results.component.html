@@ -24,8 +24,8 @@
         <span class="badge badge-dark" *ngIf="searchResult.data_rights != 'PUBLIC'"><i class="fas fa-lock"></i></span>
       </h3>
       <a href=""><i class="fas fa-plus-circle"></i> {{searchResult.id}}</a><br/>
-      <span class="badge badge-light border">Start</span> <span class="p-1">{{searchResult.obs_start}}</span>
-      <span class="badge badge-light border">End</span> <span class="p-1">{{searchResult.obs_stop}}</span><br/>
+      <span class="badge badge-light border">Start</span> <span class="p-1">{{searchResult.obs_start | date:'mediumDate'}}</span>
+      <span class="badge badge-light border ml-2">End</span> <span class="p-1">{{searchResult.obs_stop | date:'mediumDate'}}</span><br/>
     </div>
     <div class="col-6 col-md-3 py-3">
       <h4>{{searchResult.instrument_name}}</h4>
@@ -33,9 +33,9 @@
       <span class="badge badge-light border">Bands</span> {{searchResult.obs_bands}}
     </div>
     <div class="col-6 col-md-3 py-3">
-      <h4>{{searchResult.access_estsize}} &bull;&bull;&bull;&#9702; </h4>
-      <span class="badge badge-light border">Type</span> {{searchResult.dataproduct_type}} <br/>
-      <span class="badge badge-light border">Scans</span> {{ searchResult.num_scans}}
+      <h4>{{searchResult.access_estsize | fileSize}}</h4>
+      <span class="badge badge-light border">Type</span> {{searchResult.dataproduct_type | titlecase}} <br/>
+      <span class="badge badge-light border">Scans</span> {{ searchResult.num_scans | number:'1.0-0'}}
     </div>
   </div>
 

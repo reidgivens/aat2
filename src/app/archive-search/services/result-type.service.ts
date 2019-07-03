@@ -13,8 +13,6 @@ export class ResultTypeService {
   private _resultType: BehaviorSubject<ResultType> = new BehaviorSubject(this.resultType);
   public readonly resultType$: Observable<ResultType> = this._resultType.asObservable();
 
-  private facets: any;
-
   private serverAddress: string = '';
 
   constructor(private http: HttpClient, private env: EnvService) {
@@ -23,21 +21,7 @@ export class ResultTypeService {
 
   updateResultType(name: string){
     this.resultType = ResultType.getResultType(name);
-    // load facets here before we trigger the next
-    this.facets = [];
-    this.loadFacets().subscribe((facets:string) => {
-      this.facets = JSON.parse(facets).facet_list;
-      this._resultType.next(this.resultType);
-    });
+    this._resultType.next(this.resultType);
   }
-
-  loadFacets(){
-    return this.http.get(this.serverAddress + this.resultType.facetsEndPoint, {responseType: "json"});
-  }
-
-  getFacets(){
-    return this.facets;
-  }
-
 
 }

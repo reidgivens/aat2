@@ -26,6 +26,7 @@ import { SelectedFiltersComponent } from './selected-filters/selected-filters.co
 import { SaveFiltersComponent } from './selected-filters/save-filters/save-filters.component';
 import { LoadFiltersComponent } from './selected-filters/load-filters/load-filters.component';
 import { ProjectComponent } from './filters/project/project.component';
+import { FileSizePipe } from './file-size.pipe';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ProjectComponent } from './filters/project/project.component';
     SelectedFiltersComponent,
     SaveFiltersComponent,
     LoadFiltersComponent,
-    ProjectComponent
+    ProjectComponent,
+    FileSizePipe
   ],
   providers: [ ResultTypeService, FilterService ],
   entryComponents: [

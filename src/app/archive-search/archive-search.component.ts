@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from "rxjs";
+import { AppConfigService } from "../env/app-config.service";
+import { FacetsService } from "./services/facets.service";
 import {ResultTypeService} from "./services/result-type.service";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {ResultType} from "./model/result-type";
@@ -17,11 +19,15 @@ export class ArchiveSearchComponent implements OnInit {
   public showFilterList = true;
   public expandItems = false;
   public spinner: boolean = true;
+  public spinnerText: string = 'Loading';
 
   public resultType: ResultType; // the active result type
   private resultTypeSub: Subscription; // subscribtion to the active result type
 
-  private facets: any;
+  public config: any;
+  private configSub: Subscription;
+  public facets: any;
+  private facetSub: Subscription;
 
   public allowedResultsPerPage: Array<number> = [25,50,100,200];
   public resultsPerPage: number = 25;
@@ -31,42 +37,62 @@ export class ArchiveSearchComponent implements OnInit {
   public pages: number = 1;
 
   constructor(
+    private appConfig: AppConfigService,
+    private facetService: FacetsService,
     private resultTypeService: ResultTypeService,
     private selectedFilterService: SelectedFilterService,
     private router: Router,
     private route: ActivatedRoute,
     private searchResultsService: SearchResultsService){
+
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
         // swap the result type to the one in the path
         let resultType = this.route.snapshot.firstChild.url[0].path;
         if (!this.resultType || resultType !== this.resultType.name) {
           this.spinner = true;
+          this.spinnerText = 'Loading Search Type';
           this.resultTypeService.updateResultType(resultType);
-        } else {
-          this.loadUrlParams();
         }
       }
     });
-
-    this.resultTypeSub = this.resultTypeService.resultType$.subscribe( resultType => {
-      this.resultType = resultType;
-      this.spinner = false;
-      if(this.resultType) {
-        this.facets = this.resultTypeService.getFacets();
-        this.loadUrlParams();
-      }
-    });
+    this.spinnerText = 'Configuring';
+    this.loadConfig();
 
   }
 
   ngOnInit(): void {
   }
 
+  loadConfig(){
+    this.configSub = this.appConfig.getConfig().subscribe((config:string) => {
+      this.config = JSON.parse(config);
+      this.spinnerText = 'Getting Filter Options';
+      this.loadFacets();
+    });
+  }
+
+  loadFacets(){
+    this.facetSub = this.appConfig.getFacets().subscribe((facets:string) => {
+      this.facets = JSON.parse(facets).facet_list;
+      this.facetService.setFacets(this.facets);
+      this.spinnerText = 'Loading Search Type';
+      this.loadResultType();
+    });
+  }
+
+  loadResultType(){
+    this.resultTypeSub = this.resultTypeService.resultType$.subscribe( resultType => {
+      this.resultType = resultType;
+      this.spinner = false;
+      this.spinnerText = 'Loading';
+      this.loadUrlParams();
+    });
+  }
+
   loadUrlParams(){
     // check the queryParams
     let queryParams = this.route.snapshot.queryParamMap;
-    console.log(queryParams);
     let fields = Field.getFields();
     // iterate over the queryParams
     for (let qp of queryParams.keys) {
@@ -129,18 +155,24 @@ export class ArchiveSearchComponent implements OnInit {
   getSearchResults(){
     this.searchResults = [];
     this.pages = 1;
+    this.spinnerText = 'Getting Search Results';
     this.spinner = true;
     this.searchResultsService.getResults(this.resultType.resultsEndPoint, this.resultsPerPage * (this.currentPage - 1), this.resultsPerPage).subscribe((searchResults) => {
       const keys = searchResults.headers.keys();
       let headers = keys.map(key => `${key}: ${searchResults.headers.get(key)}`);
-      console.log(headers);
       let jsonSearchResults = JSON.parse(searchResults.body);
-      console.log(jsonSearchResults);
       this.searchResults = jsonSearchResults.data;
       this.numResults = jsonSearchResults.n_results;
       this.pages = Math.ceil(this.numResults / this.resultsPerPage);
       this.spinner = false;
+      this.spinnerText = 'Loading';
     });
+  }
+
+  ngOnDestroy(){
+    if(this.configSub){ this.configSub.unsubscribe(); }
+    if(this.facetSub){ this.configSub.unsubscribe(); }
+    if(this.resultTypeSub){ this.resultTypeSub.unsubscribe(); }
   }
 
 }

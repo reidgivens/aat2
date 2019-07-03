@@ -6,6 +6,7 @@ import {Subscription} from "rxjs";
 import {FilterFormService} from "../../services/filter-form.service";
 import {SelectedFilter} from "../../model/selected-filter";
 import {ResultTypeService} from "../../services/result-type.service";
+import { FacetsService } from "../../services/facets.service";
 
 @Component({
   selector: 'app-telescopes',
@@ -25,10 +26,11 @@ export class TelescopesComponent implements OnInit {
 
 
   constructor(
+    private facetService: FacetsService,
     private selectedFilterService: SelectedFilterService,
     private filterFormService: FilterFormService,
     private resultTypeService: ResultTypeService) {
-    this.validTelescopes = this.resultTypeService.getFacets().instrument_name;
+    this.validTelescopes = this.facetService.getFacet('instrument_name');
   }
 
   ngOnInit() {

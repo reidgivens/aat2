@@ -1,5 +1,6 @@
 <div *ngIf="spinner" id="spinner">
   <img src="../../assets/images/draft_spinner200x200_50fps.gif" alt="Loading" />
+  <h4>{{ spinnerText }}</h4>
 </div>
 <div class="container-fluid" *ngIf="resultType">
     <div class="row">
@@ -31,19 +32,12 @@
       <!-- // filter side rail -->
 
       <div class="col">
-
-        <!--<div class="row">
-          <div class="col">
-            <pre>{{ globals.resultType | json }}</pre>
-          </div>
-        </div>-->
-
         <app-selected-filters></app-selected-filters>
 
         <!-- results list control -->
         <div class="row bg-dark text-light py-3 align-items-baseline">
           <div class="col-xs-12 col-md">
-            <p class="mb-2 mb-md-0">{{numResults}} {{resultType.name}}</p>
+            <p class="mb-2 mb-md-0">{{numResults | number:'1.0-0'}} {{resultType.name}}</p>
           </div>
           <div class="col-auto">
             <div class="form-group m-0">

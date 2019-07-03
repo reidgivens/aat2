@@ -6,6 +6,7 @@ import {Subscription} from "rxjs";
 import {FilterFormService} from "../../services/filter-form.service";
 import {SelectedFilter} from "../../model/selected-filter";
 import {ResultTypeService} from "../../services/result-type.service";
+import {FacetsService} from "../../services/facets.service";
 
 @Component({
   selector: 'app-polarizations',
@@ -24,10 +25,11 @@ export class PolarizationsComponent implements OnInit {
   public selectedFiltersSub: Subscription;
 
   constructor(
+    private facetService: FacetsService,
     private selectedFilterService: SelectedFilterService,
     private filterFormService: FilterFormService,
     private resultTypeService: ResultTypeService) {
-    this.validPolarizations = this.resultTypeService.getFacets().polarizations;
+    this.validPolarizations = this.facetService.getFacet('polarizations');
   }
 
   ngOnInit() {

@@ -6,6 +6,7 @@ import {Subscription} from "rxjs";
 import {FilterFormService} from "../../services/filter-form.service";
 import {SelectedFilter} from "../../model/selected-filter";
 import {ResultTypeService} from "../../services/result-type.service";
+import {FacetsService} from "../../services/facets.service";
 
 @Component({
   selector: 'app-receivers',
@@ -24,10 +25,11 @@ export class ReceiversComponent implements OnInit {
   public selectedFiltersSub: Subscription;
 
   constructor(
+    private facetService: FacetsService,
     private selectedFilterService: SelectedFilterService,
     private filterFormService: FilterFormService,
     private resultTypeService: ResultTypeService) {
-    this.validReceivers = this.resultTypeService.getFacets().obs_band;
+    this.validReceivers = this.facetService.getFacet('obs_band');
   }
 
   ngOnInit() {
