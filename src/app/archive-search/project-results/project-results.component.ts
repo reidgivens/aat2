@@ -8,9 +8,14 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ProjectResultsComponent implements OnInit {
 
   @Input() searchResults: Array<any>;
-  constructor() { }
+  constructor() {
+    console.log('construct results');
+    console.log(this.searchResults);
+  }
 
   ngOnInit() {
+    console.log('init results');
+    console.log(this.searchResults);
   }
 
 }

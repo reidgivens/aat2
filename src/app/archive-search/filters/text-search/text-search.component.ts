@@ -8,14 +8,13 @@ import {SelectedFilter} from "../../model/selected-filter";
 
 @Component({
   selector: 'app-project',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.scss'],
+  templateUrl: './text-search.component.html',
+  styleUrls: ['./text-search.component.scss'],
   animations: [verticleSlide]
 })
-export class ProjectComponent implements OnInit {
-
+export class TextSearchComponent implements OnInit {
   public isCollapsed: boolean = true;
-  public projectGroup: FormGroup; // the form group for controls in this component
+  public textSearchGroup: FormGroup; // the form group for controls in this component
   public filterForm: FormGroup; // the reference to our parent form
   public filterFormSub: Subscription; // the subscription to keep our filterForm updated
   public selectedFilters: Array<SelectedFilter>;
@@ -28,21 +27,15 @@ export class ProjectComponent implements OnInit {
       this.filterForm = filterForm;
     });
 
-    this.projectGroup = new FormGroup({
-      pi: new FormControl(''),
-      title: new FormControl(''),
-      abstract: new FormControl(''),
-      project_code: new FormControl(''),
+    this.textSearchGroup = new FormGroup({
+      text_search_str: new FormControl('')
     });
 
-    this.filterFormService.addFilter(this.projectGroup);
+    this.filterFormService.addFilter(this.textSearchGroup);
 
     this.selectedFiltersSub = this.selectedFilterService.selectedFilters$.subscribe( selectedFilters => {
       this.selectedFilters = selectedFilters;
-      this.projectGroup.get('pi').reset();
-      this.projectGroup.get('title').reset();
-      this.projectGroup.get('abstract').reset();
-      this.projectGroup.get('project_code').reset();
+      this.textSearchGroup.get('text_search_str').reset();
       this.loadFilters();
     });
 
@@ -50,19 +43,14 @@ export class ProjectComponent implements OnInit {
 
   loadFilters(): void {
     for(let filter of this.selectedFilters){
-      switch (filter.name) {
-        case 'pi':
-        case 'title':
-        case 'abstract':
-        case 'project_code':
-          this.projectGroup.get(filter.name).setValue(filter.value);
-          break;
+      if (filter.name == 'text_search_str') {
+        this.textSearchGroup.get(filter.name).setValue(filter.value);
       }
     }
   }
 
   ngOnDestroy(){
-    this.filterFormService.deleteFilterByHasKey('pi');
+    this.filterFormService.deleteFilterByHasKey('text_search_str');
     if (this.selectedFiltersSub) { this.selectedFiltersSub.unsubscribe(); }
     if (this.filterFormSub) { this.filterFormSub.unsubscribe(); }
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from "rxjs";
+import { verticleSlide } from "../animations";
 import { AppConfigService } from "../env/app-config.service";
 import { FacetsService } from "./services/facets.service";
 import {ResultTypeService} from "./services/result-type.service";
@@ -8,21 +9,22 @@ import {ResultType} from "./model/result-type";
 import {SearchResultsService} from "./services/search-results.service";
 import {SelectedFilterService} from "./services/selected-filter.service";
 import {Field} from "./model/field";
+import {WebAnalyticsService} from "../web-analytics/web-analytics.service";
 
 @Component({
   selector: 'app-archive-search',
   templateUrl: './archive-search.component.html',
-  styleUrls: ['./archive-search.component.scss']
+  styleUrls: ['./archive-search.component.scss'],
+  animations: [verticleSlide]
 })
 export class ArchiveSearchComponent implements OnInit {
 
   public showFilterList = true;
-  public expandItems = false;
   public spinner: boolean = true;
   public spinnerText: string = 'Loading';
 
   public resultType: ResultType; // the active result type
-  private resultTypeSub: Subscription; // subscribtion to the active result type
+  private resultTypeSub: Subscription; // subscription to the active result type
 
   public config: any;
   private configSub: Subscription;
@@ -43,7 +45,8 @@ export class ArchiveSearchComponent implements OnInit {
     private selectedFilterService: SelectedFilterService,
     private router: Router,
     private route: ActivatedRoute,
-    private searchResultsService: SearchResultsService){
+    private searchResultsService: SearchResultsService,
+    private analytics: WebAnalyticsService){
 
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
@@ -55,6 +58,7 @@ export class ArchiveSearchComponent implements OnInit {
         } else if (this.resultType){
           this.loadUrlParams();
         }
+        this.analytics.sendBeacon();
       }
     });
     this.spinnerText = 'Configuring';
@@ -159,9 +163,11 @@ export class ArchiveSearchComponent implements OnInit {
     this.spinnerText = 'Getting Search Results';
     this.spinner = true;
     this.searchResultsService.getResults(this.resultType.resultsEndPoint, this.resultsPerPage * (this.currentPage - 1), this.resultsPerPage).subscribe((searchResults) => {
+      console.log(searchResults);
       const keys = searchResults.headers.keys();
       let headers = keys.map(key => `${key}: ${searchResults.headers.get(key)}`);
       let jsonSearchResults = JSON.parse(searchResults.body);
+      console.log(jsonSearchResults.data[0]);
       this.searchResults = jsonSearchResults.data;
       this.numResults = jsonSearchResults.n_results;
       this.pages = Math.ceil(this.numResults / this.resultsPerPage);

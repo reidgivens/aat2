@@ -8,13 +8,15 @@ header { color: #fff; background: rgb(0,95,115); background: linear-gradient(0de
 @-webkit-keyframes Gradient { 0% { background-position: 100% 100%; } 100% { background-position: 100% 0; } }
 @-moz-keyframes Gradient    { 0% { background-position: 100% 100%; } 100% { background-position: 100% 0; } }
 
-header h1 { font-weight: 300; }
-header h1 span { display: block; float: left; margin: 0 2% 0 0; width: 75px; height: 95px; background: url('../../assets/images/NRAO_logo_white_border.png') no-repeat center center; background-size: contain; }
-header nav#tool_nav { border-top: 1px solid rgba(255,255,255,0.25); }
-header nav#tool_nav a { font-size: 1.25em; padding: 0.25em 1em; color: rgba(255,255,255,0.7); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.5); }
-header nav#tool_nav a:hover { background: rgba(2,0,36,1); color: rgba(255,255,255,1); }
+header h1 { font-weight: 300; font-size: 2rem; }
+header h1 span { display: block; float: left; margin: 0 2% 0 0; width: 63px; height: 85px; background: url('../../assets/images/NRAO_logo_white_border.png') no-repeat center center; background-size: contain; }
+header .dataIncluded { color: rgba(255,255,255,0.6);}
+header nav#tool_nav a { font-size: 1.25em; padding: 0.25em 1em; color: rgba(255,255,255,0.7); text-decoration: none; }
+header nav#tool_nav a:hover { color: rgba(255,255,255,1); }
 
-@media only screen and (max-width: 768px) {
-  header h1 { font-size: 2rem; }
-  header h1 span { width: 60px; height: 75px; }
+@media only screen and (max-width: 992px) {
+  header h1 span { width: 50px; height: 70px; }
+  header .dataIncluded { display: none;}
+  header nav#tool_nav { border-top: 1px solid rgba(255,255,255,0.25); }
+  header nav#tool_nav a { border-bottom: 1px solid rgba(255,255,255,0.5); }
 }

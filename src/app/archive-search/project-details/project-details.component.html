@@ -1,0 +1,62 @@
+<div *ngIf="spinner" class="container-fluid text-center">
+  <img src="../../../assets/images/draft_spinner200x200_50fps.gif" alt="Loading"/>
+  <h4>Getting Details</h4>
+</div>
+
+<div *ngIf="!spinner" class="container-fluid">
+  <div class="row bg-light border-bottom py-2">
+    <div class="col">
+      <h2 class="pt-1">Project: {{ project_code }}</h2>
+    </div>
+    <div class="col-auto">
+      <button type="button" *ngIf="showBack" (click)="goBack()" class="btn btn-lg btn-outline-secondary"><i class="fas fa-arrow-circle-left"></i> Back</button>
+    </div>
+  </div>
+  <div class="row pt-2">
+    <div class="col col-md-9">
+      <h3 class="py-2">{{title}}</h3>
+      <p class="bg-light border-bottom pl-2 p-1 mt-2">
+        <span *ngIf="coIs.length > 1"><b>Investigators</b>: {{ coIs.join(', ') }} <br/></span>
+        <b>Principal Investigator:</b> {{pi}}
+      </p>
+
+      <div class="row">
+        <div class="col">
+          <b>Project</b>:
+          <span class="badge badge-light border">Start</span> {{proj_start | date:'mediumDate' }}
+          <span class="badge badge-light border">End</span> {{proj_stop | date:'mediumDate' }}
+        </div>
+        <div class="col">
+          <p class="m-0">
+            <b>Observations</b>:
+            <span class="badge badge-light border">Start</span> {{obs_start | date:'mediumDate' }}
+            <span class="badge badge-light border">End</span> {{obs_stop | date:'mediumDate' }}
+          </p>
+        </div>
+      </div>
+
+      <hr/>
+      <h5>Abstract</h5>
+      <p>
+        {{getAbstract()}}
+        <a href="javascript: void(0);" (click)="expandedAbstract = !expandedAbstract"
+           *ngIf="expandedAbstract && abstract.length > 100">Less</a>
+        <a href="javascript: void(0);" (click)="expandedAbstract = !expandedAbstract"
+           *ngIf="!expandedAbstract && abstract.length > 100">More</a>
+      </p>
+
+    </div>
+    <div class="col col-md-3">
+      <h3>{{ instrument_name }}</h3>
+      <p>
+        <span class="badge badge-light border">Bands</span> {{obs_band.join(', ') }} <br/>
+        <span class="badge badge-light border">Type</span> {{dataproduct_type | titlecase}} <br/>
+        <span class="badge badge-light border">Scans</span> {{ n_execution_blocks | number:'1.0-0'}}
+      </p>
+      <button type="button" class="btn btn-lg btn-primary" (click)="addToCart()">Add to Project</button>
+      <p><b>Estimated Size</b>: {{access_estsize | fileSize }}</p>
+    </div>
+  </div>
+
+</div>
+

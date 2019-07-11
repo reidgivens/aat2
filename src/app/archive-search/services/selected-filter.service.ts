@@ -171,7 +171,7 @@ export class SelectedFilterService {
         this.router.navigate([], { relativeTo: this.route, queryParams: paramsForUrl, queryParamsHandling: "" }).then((result) => {
           this._selectedFilters.next(this.selectedFilters);
         }, (reason) => {
-          //
+          if(console){ console.log(reason); }
         });
         this.selectedFilters = savedFilter.filters;
 

@@ -14,7 +14,12 @@ export class FileSizePipe implements PipeTransform {
     const emptyDot: string = '○';
     const i = Math.floor(Math.log(value) / Math.log(k));
 
-    return parseFloat((value / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i] + ' ' + filledDot.repeat(i) + emptyDot.repeat(4-i);
+    if(args && args == 'withDots') {
+      return parseFloat((value / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i] + ' ' + filledDot.repeat(i) + emptyDot.repeat(4 - i);
+    } else {
+      return parseFloat((value / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+
+    }
   }
 
 }

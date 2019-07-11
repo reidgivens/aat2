@@ -12,6 +12,7 @@ import { ConfigurationsComponent } from '../filters/configurations/configuration
 import { ReceiversComponent } from '../filters/receivers/receivers.component';
 import { PolarizationsComponent } from '../filters/polarizations/polarizations.component';
 import { ProjectComponent} from "../filters/project/project.component";
+import { TextSearchComponent} from "../filters/text-search/text-search.component";
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,8 @@ export class FilterService {
     'configurations': ConfigurationsComponent,
     'receivers': ReceiversComponent,
     'polarizations': PolarizationsComponent,
-    'project': ProjectComponent
+    'project': ProjectComponent,
+    'text-search': TextSearchComponent
   };
 
   constructor(private factoryResolver: ComponentFactoryResolver) {}

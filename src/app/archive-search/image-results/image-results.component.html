@@ -28,8 +28,6 @@
         class="img-fluid img-thumbnail float-right mr-2" width="80px" alt="thumbnail"/>
       <h3>
         {{searchResult.project_code}}
-        <span class="badge badge-light text-muted mr-2"><i class="fas fa-unlock"></i></span>
-        <span class="badge badge-dark mr-2"><i class="fas fa-lock"></i></span>
       </h3>
       <a href=""><i class="fas fa-plus-circle"></i>{{searchResult.file_name}}</a><br/>
       {{searchResult.type}}
@@ -43,7 +41,7 @@
     <div class="col-6 col-md-3 py-3">
       <h4>VLASS </h4>
       <span class="badge badge-light border">Sp Resolution</span> {{searchResult.sp_resolution}} <br/>
-      <span class="badge badge-light border">Beam Axis Ration</span> {{searchResult.bean_axis_ratio}}<br/>
+      <span class="badge badge-light border">Beam Axis Ration</span> {{searchResult.beam_axis_ratio}}<br/>
       <span class="badge badge-light border">Latitude</span> <span class="p-1">{{searchResult.target_post_equatorial}}</span>
     </div>
   </div>

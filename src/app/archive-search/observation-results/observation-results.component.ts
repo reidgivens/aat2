@@ -9,10 +9,9 @@ export class ObservationResultsComponent implements OnInit {
 
   @Input() searchResults: Array<any> = [];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
   }
-
 
 }

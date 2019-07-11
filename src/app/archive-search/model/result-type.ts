@@ -12,44 +12,23 @@ export class ResultType {
   static RESULT_TYPES = {
     'Observations': new ResultType(
       'Observations',
-      ['dates', 'frequencies', 'source-position', 'telescopes', 'configurations'],
+      ['text-search', 'dates', 'frequencies', 'source-position', 'telescopes', 'configurations'],
       [ 'polarizations', 'receivers','project'],
       'restapi_get_paged_exec_blocks',
       'restapi_get_execution_block_facets'
     ),
     'Images': new ResultType(
       'Images',
-      ['source-position', 'dates', 'frequencies', 'project'],
+      ['text-search', 'source-position', 'dates', 'frequencies', 'project'],
       ['telescopes', 'configurations', 'polarizations', 'receivers'],
       'restapi_get_paged_images',
       'restapi_get_image_facets'
     ),
     'Projects': new ResultType(
       'Projects',
-      ['dates', 'frequencies'],
+      ['text-search', 'dates', 'frequencies'],
       ['source-position', 'telescopes', 'configurations', 'polarizations', 'receivers'],
-      'restapi_get_paged_exec_blocks',
-      'restapi_get_execution_block_facets'
-    ),
-    'VLASS': new ResultType(
-      'VLASS',
-      ['dates', 'frequencies', 'source-position'],
-      ['telescopes', 'configurations', 'polarizations', 'receivers'],
-      'restapi_get_paged_exec_blocks',
-      'restapi_get_execution_block_facets'
-    ),
-    'RealFast': new ResultType(
-      'RealFast',
-      ['dates', 'frequencies', 'source-position'],
-      ['telescopes', 'configurations', 'polarizations', 'receivers'],
-      'restapi_get_paged_exec_blocks',
-      'restapi_get_execution_block_facets'
-    ),
-    'Pulsars': new ResultType(
-      'Pulsars',
-      ['dates', 'frequencies', 'source-position'],
-      ['telescopes', 'configurations', 'polarizations', 'receivers'],
-      'restapi_get_paged_exec_blocks',
+      'restapi_get_eb_project_view',
       'restapi_get_execution_block_facets'
     )
   };

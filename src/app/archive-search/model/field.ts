@@ -19,7 +19,7 @@ export class Field {
     'pi': new Field('PI Name', 'pi', 'Principal investigator name or ID', false),
     'title': new Field('Project Title', 'title', 'Enter words or phrases found in the title of the project', false),
     'abstract': new Field('Abstract Text', 'abstract', 'Enter words or phrases found in the title of the project', false),
-    'text_search_str': new Field('Search', 'text_search_str', 'Search for Project Code, Title, Abstract, PI Name, or File Name', false),
+    'text_search_str': new Field('Keyword', 'text_search_str', 'Search for Project Code, Title, Abstract, PI Name, or File Name', false),
     'project_code': new Field('Project Code', 'project_code', 'E.g. for VLBA: AB123; for VLA: 12A-256; for ALMA: 2015.1.00006.S', false),
     'collection_names': new Field('Collection Names', 'collection_names', 'The name of the collection', false),
     'coordsys': new Field('Sourse Position', 'coordsys', 'Select Source position coordinate system.', false),

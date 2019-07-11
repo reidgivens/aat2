@@ -6,20 +6,23 @@ import {ObservationResultsComponent} from "./observation-results/observation-res
 import {ImageResultsComponent} from "./image-results/image-results.component";
 import {ProjectResultsComponent} from "./project-results/project-results.component";
 
+import {ObservationDetailsComponent} from "./observation-details/observation-details.component";
+import {ProjectDetailsComponent} from "./project-details/project-details.component";
+
 const routes: Routes = [
   {
-    path: '', component: ArchiveSearchComponent, children: [
+    path: 'Search', component: ArchiveSearchComponent, children: [
       {path: 'Observations', component: ObservationResultsComponent},
       {path: 'Images', component: ImageResultsComponent},
       {path: 'Projects', component: ProjectResultsComponent},
-      {path: 'VLASS', component: ObservationResultsComponent},
-      {path: 'RealFast', component: ObservationResultsComponent},
-      {path: 'Pulsars', component: ObservationResultsComponent},
       {path: '', redirectTo: 'Observations', pathMatch: 'full'},
       {path: '**', redirectTo: 'Observations', pathMatch: 'full'}
     ]
   },
-  {path: '**', redirectTo: '', pathMatch: 'full'}
+  {path: 'Observation/:objectId', component: ObservationDetailsComponent},
+  {path: 'Project/:objectId', component: ProjectDetailsComponent},
+  {path: '', redirectTo: 'Search', pathMatch: 'full'},
+  {path: '**', redirectTo: 'Search', pathMatch: 'full'}
 ];
 
 @NgModule({

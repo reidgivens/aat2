@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable, Subscription} from "rxjs";
 import {SelectedFilter} from "../model/selected-filter";
 import {SelectedFilterService} from "./selected-filter.service";
@@ -36,6 +36,22 @@ export class SearchResultsService {
       }
     }
     return this.http.get(this.serverAddress + endPoint, {observe: 'response', params: params});
+  }
+
+  getObservationDetails(id: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('solr_id', id);
+    console.warn('Obs Details Query');
+    console.log(params);
+    return this.http.get(this.serverAddress + 'restapi_get_full_exec_block_details', {observe: "response", params: params});
+  }
+
+  getProjectDetails(id: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('project_code', id);
+    console.warn('Project Details Query');
+    console.log(params);
+    return this.http.get(this.serverAddress + 'restapi_get_paged_exec_blocks', {observe: "response", params: params});
   }
 
 }
