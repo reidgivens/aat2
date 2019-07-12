@@ -27,7 +27,8 @@ export class Field {
     'equinox': new Field('Equinox', 'equinox', 'Select the equinox the coordinates will reference. (J2000 or B1950)', false),
     'longitude': new Field('Galactic Longitude', 'longitude', 'Right Ascension', false),
     'latitude': new Field('Galactic Latitude', 'latitude', 'Declination', false),
-    'column_filters': new Field('Column Filters', 'column_filters', 'Sort the results', false)
+    'column_filters': new Field('Column Filters', 'column_filters', 'Sort the results', false),
+    'sort': new Field('Sort','sort','Sort the results', false)
   };
 
   /*

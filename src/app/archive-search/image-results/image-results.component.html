@@ -1,48 +1,45 @@
 <div class="results">
   <div class="row bg-info text-light border-bottom table-header">
-    <div class="col-12 col-md-6 py-3">
-      <h3>Project <i class="text-dark small fas fa-sort-alpha-down"></i></h3>
-      File Name<br/>
-      Type
+    <div class="col-12 col-lg-6 py-3">
+      <h3>Image ID <i class="text-dark small fas fa-sort-alpha-down"></i></h3>
+      Project<br/>
+      Type<br />
+      Longitude, Latitude
     </div>
-    <div class="col-6 col-md-3 py-3">
+    <div class="col-5 col-lg-2 py-3">
       <h4>Instrument</h4>
       Configuration<br/>
-      Bands<br/>
-      Longitude
+      Bands
     </div>
-    <div class="col-6 col-md-3 py-3">
+    <div class="col-7 col-lg-4 py-3">
       <h4>Collection</h4>
       Sp Resolution<br/>
-      Beam Axis Ratio<br/>
-      Latitude
+      Beam Axis Ratio
     </div>
   </div>
 
 
   <div class="row border-bottom" *ngFor="let searchResult of searchResults">
-    <div class="col-12 col-md-6 py-3">
+    <div class="col-12 col-lg-6 py-3">
       <!-- TODO: where do thumbnails come from -->
       <img
         src="https://archive-new.nrao.edu/thumbnails/02/49/c3/VLASS1.1.ql.T17t17.J122012_273000.10.2048.v1.I.iter1.image.pbcor.tt0.rms.subim.sky.png"
         class="img-fluid img-thumbnail float-right mr-2" width="80px" alt="thumbnail"/>
-      <h3>
-        {{searchResult.project_code}}
-      </h3>
-      <a href=""><i class="fas fa-plus-circle"></i>{{searchResult.file_name}}</a><br/>
-      {{searchResult.type}}
+      <h3><a [routerLink]="['/aat/Image/', searchResult.id]"> {{searchResult.id}}</a></h3>
+      <span class="badge badge-light border">Project Code</span> <a [routerLink]="['/aat/Project/', searchResult.project_code]"> {{searchResult.project_code}}</a><br/>
+      <span class="badge badge-light border">Type</span> {{searchResult.type}}<br />
+      <span class="badge badge-light border">Longitude</span> <span class="p-1">{{getLng(searchResult.target_pos_equatorial) | coordFormat:'DMS'}}</span>
+      <span class="badge badge-light border">Latitude</span> <span class="p-1">{{getLat(searchResult.target_pos_equatorial) | coordFormat:'DMS'}}</span>
     </div>
-    <div class="col-6 col-md-3 py-3">
+    <div class="col-5 col-lg-2 py-3">
       <h4>{{searchResult.instrument_name}}</h4>
       <span class="badge badge-light border">Config</span> {{searchResult.configuration}}<br/>
       <span class="badge badge-light border">Bands</span> {{searchResult.band_code}}<br/>
-      <span class="badge badge-light border">Longitude</span> <span class="p-1">{{searchResult.target_post_equatorial}}</span>
     </div>
-    <div class="col-6 col-md-3 py-3">
+    <div class="col-7 col-lg-4 py-3">
       <h4>VLASS </h4>
-      <span class="badge badge-light border">Sp Resolution</span> {{searchResult.sp_resolution}} <br/>
-      <span class="badge badge-light border">Beam Axis Ration</span> {{searchResult.beam_axis_ratio}}<br/>
-      <span class="badge badge-light border">Latitude</span> <span class="p-1">{{searchResult.target_post_equatorial}}</span>
+      <span class="badge badge-light border">Sp Resolution</span> {{searchResult.sp_resolution | number:'1.7-7'}} <br/>
+      <span class="badge badge-light border">Beam Axis Ration</span> {{searchResult.beam_axis_ratio | number:'1.7-7'}}<br/>
     </div>
   </div>
 

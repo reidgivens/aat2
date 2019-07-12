@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Image} from "../model/image";
 
 @Component({
   selector: 'app-image-results',
@@ -7,11 +8,21 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class ImageResultsComponent implements OnInit {
 
-  @Input() searchResults: Array<any> = [];
+  @Input() searchResults: Array<Image> = [];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  getLat(latLng: string){
+    let coords = latLng.split(',');
+    return parseFloat(coords[0]);
+  }
+
+  getLng(latLng: string){
+    let coords = latLng.split(',');
+    return parseFloat(coords[1]) + 180;
   }
 
 }

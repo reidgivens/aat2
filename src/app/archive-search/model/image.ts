@@ -1,0 +1,31 @@
+export class Image {
+  access_estsize: number;
+  band_code: string;
+  beam_axis_ratio: number;
+  cal_level: string;
+  collection_name: string;
+  configuration: string;
+  file_id: string;
+  file_name: string;
+  filegroup_id: string;
+  id: string;
+  image_id: string;
+  image_product_id: string;
+  instrument_name: string;
+  max_frequency: number;
+  max_intensity: number;
+  min_frequency: number;
+  min_intensity: number;
+  polarization: Array<string>;
+  products_file: string;
+  project_code: string;
+  rms_noise: number;
+  sp_resolution: number;
+  spatial_region: string;
+  target_name: string;
+  target_pos_ecliptic: string;
+  target_pos_equatorial: string;
+  target_pos_galactic: string;
+  thumbnail: string;
+  type: string;
+}

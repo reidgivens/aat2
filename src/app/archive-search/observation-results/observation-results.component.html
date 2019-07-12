@@ -1,17 +1,47 @@
 <div class="results">
   <div class="row bg-info text-light border-bottom table-header">
     <div class="col-12 col-12 col-md-6 py-3">
-      <h3>Observation ID <i class="text-dark small fas fa-sort-alpha-down"></i></h3>
-      Project <br/>
-      Observation Dates
+      <h3>
+        <a href="javascript: void(0);" (click)="setSort('obs_id')" class="text-white">Observation ID</a>
+        <span *ngIf="sortCol == 'obs_id'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      </h3>
+
+      <a href="javascript: void(0);" (click)="setSort('project_code')" class="text-white">Project</a>
+      <span *ngIf="sortCol == 'project_code'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      <br/>
+
+      <a href="javascript: void(0);" (click)="setSort('obs_start')" class="text-white">Observation Dates</a>
+      <span *ngIf="sortCol == 'obs_start'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
     </div>
     <div class="col-6 col-6 col-md-3 py-3">
-      <h4>Instrument</h4>
+      <h4>
+        <a href="javascript: void(0);" (click)="setSort('instrument_name')" class="text-white">Instrument</a>
+        <span *ngIf="sortCol == 'instrument_name'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      </h4>
+
       Configuration<br/>
       Bands
     </div>
     <div class="col-6 col-6 col-md-3 py-3">
-      <h4>File Size</h4>
+      <h4>
+        <a href="javascript: void(0);" (click)="setSort('access_estsize')" class="text-white">File Size</a>
+        <span *ngIf="sortCol == 'access_estsize'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      </h4>
       Type<br/>
       Scans
     </div>
@@ -19,13 +49,16 @@
   <div class="row border-bottom" *ngFor="let searchResult of searchResults">
     <div class="col-12 col-md-6 py-3">
       <h3>
-        <a [routerLink]="['/aat/Observation/', searchResult.id]"> {{searchResult.id}}</a>
-        <span class="badge badge-light text-muted" *ngIf="searchResult.data_rights == 'PUBLIC'"><i class="fas fa-unlock"></i></span>
+        <a [routerLink]="['/aat/Observation/', searchResult.id]"> {{searchResult.id}} </a>
+        <span class="badge badge-light text-muted" *ngIf="searchResult.data_rights == 'PUBLIC'"><i
+          class="fas fa-unlock"></i></span>
         <span class="badge badge-dark" *ngIf="searchResult.data_rights != 'PUBLIC'"><i class="fas fa-lock"></i></span>
       </h3>
       <a [routerLink]="['/aat/Project/', searchResult.project_code]"> {{searchResult.title}}</a><br/>
-      <span class="badge badge-light border">Start</span> <span class="p-1">{{searchResult.obs_start | date:'mediumDate'}}</span>
-      <span class="badge badge-light border ml-2">End</span> <span class="p-1">{{searchResult.obs_stop | date:'mediumDate'}}</span>
+      <span class="badge badge-light border">Start</span> <span
+      class="p-1">{{searchResult.obs_start | date:'mediumDate'}}</span>
+      <span class="badge badge-light border ml-2">End</span> <span
+      class="p-1">{{searchResult.obs_stop | date:'mediumDate'}}</span>
     </div>
     <div class="col-6 col-md-3 py-3">
       <h4>{{searchResult.instrument_name}}</h4>
