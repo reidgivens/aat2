@@ -1,20 +1,60 @@
 <div class="results">
   <div class="row bg-info text-light border-bottom table-header">
     <div class="col-12 col-lg-6 py-3">
-      <h3>Image ID <i class="text-dark small fas fa-sort-alpha-down"></i></h3>
-      Project<br/>
-      Type<br />
+      <h3>Image ID</h3>
+      <a href="javascript: void(0);" (click)="setSort('project_code')" class="text-white">Project</a>
+      <span *ngIf="sortCol == 'project_code'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      <br/>
+      <a href="javascript: void(0);" (click)="setSort('type')" class="text-white">Type</a>
+      <span *ngIf="sortCol == 'type'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      <br />
       Longitude, Latitude
     </div>
     <div class="col-5 col-lg-2 py-3">
-      <h4>Instrument</h4>
-      Configuration<br/>
-      Bands
+      <h4>
+        <a href="javascript: void(0);" (click)="setSort('instrument_name')" class="text-white">Instrument</a>
+        <span *ngIf="sortCol == 'instrument_name'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      </h4>
+      <a href="javascript: void(0);" (click)="setSort('configuration')" class="text-white">Configuration</a>
+      <span *ngIf="sortCol == 'configuration'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      <br />
+      <a href="javascript: void(0);" (click)="setSort('band_code')" class="text-white">Band</a>
+      <span *ngIf="sortCol == 'band_code'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
     </div>
     <div class="col-7 col-lg-4 py-3">
-      <h4>Collection</h4>
-      Sp Resolution<br/>
-      Beam Axis Ratio
+      <h4>
+        <a href="javascript: void(0);" (click)="setSort('collection_name')" class="text-white">Collection</a>
+        <span *ngIf="sortCol == 'collection_name'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      </h4>
+      <a href="javascript: void(0);" (click)="setSort('sp_resolution')" class="text-white">Sp Resolution</a>
+      <span *ngIf="sortCol == 'sp_resolution'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      <br />
+      <a href="javascript: void(0);" (click)="setSort('beam_axis_ratio')" class="text-white">Beam Axis Ratio</a>
+      <span *ngIf="sortCol == 'beam_axis_ratio'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
     </div>
   </div>
 

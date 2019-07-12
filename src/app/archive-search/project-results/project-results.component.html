@@ -1,12 +1,26 @@
 <div class="results">
   <div class="row bg-info text-light border-bottom table-header">
     <div class="col-12 col-md-9 py-3">
-      <h3>Project <i class="text-dark small fas fa-sort-alpha-down"></i></h3>
+      <h3><a href="javascript: void(0);" (click)="setSort('project_code')" class="text-white">Project</a>
+        <span *ngIf="sortCol == 'project_code'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span></h3>
       Title<br/>
-      Observation Dates
+      <a href="javascript: void(0);" (click)="setSort('proj_start')" class="text-white">Project Dates</a>
+      <span *ngIf="sortCol == 'proj_start'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
     </div>
     <div class="col-12 col-md-3 py-3">
-      <h4>Instrument</h4>
+      <h4>
+        <a href="javascript: void(0);" (click)="setSort('instrument_name')" class="text-white">Instrument</a>
+        <span *ngIf="sortCol == 'instrument_name'" class="ml-2">
+          <span *ngIf="sortAsc"><i class="text-dark small fas fa-arrow-down"></i></span>
+          <span *ngIf="!sortAsc"><i class="text-dark small fas fa-arrow-up"></i></span>
+        </span>
+      </h4>
       Execution Blocks<br/>
       Images
     </div>
