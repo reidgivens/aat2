@@ -18,7 +18,7 @@
         <span class="badge badge-light text-muted" *ngIf="searchResult.data_rights == 'PUBLIC'"><i class="fas fa-unlock"></i></span>
         <span class="badge badge-dark" *ngIf="searchResult.data_rights != 'PUBLIC'"><i class="fas fa-lock"></i></span>
       </h3>
-      <a [routerLink]="['/aat/Project/', searchResult.project_code]"><i class="fas fa-plus-circle"></i> {{searchResult.title}}</a><br/>
+      <a [routerLink]="['/aat/Project/', searchResult.project_code]"> {{searchResult.title}}</a><br/>
       <span class="badge badge-light border">Start</span> <span class="p-1">{{searchResult.proj_start | date:'mediumDate'}}</span>
       <span class="badge badge-light border ml-2">End</span> <span class="p-1">{{searchResult.proj_stop | date:'mediumDate'}}</span>
     </div>

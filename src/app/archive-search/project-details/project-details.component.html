@@ -4,59 +4,59 @@
 </div>
 
 <div *ngIf="!spinner" class="container-fluid">
-  <div class="row bg-light border-bottom py-2">
-    <div class="col">
-      <h2 class="pt-1">Project: {{ project_code }}</h2>
+  <div class="row bg-light border-bottom p-2">
+    <div class="col-12 col-lg-10">
+      <h2 class="pt-1">
+        Project: {{ project.project_code }}
+        <span class="badge badge-light text-muted" *ngIf="project.data_rights == 'PUBLIC'"><i class="fas fa-unlock"></i></span>
+        <span class="badge badge-dark" *ngIf="project.data_rights != 'PUBLIC'"><i class="fas fa-lock"></i></span>
+      </h2>
     </div>
-    <div class="col-auto">
-      <button type="button" *ngIf="showBack" (click)="goBack()" class="btn btn-lg btn-outline-secondary"><i class="fas fa-arrow-circle-left"></i> Back</button>
+    <div class="col-12 col-lg-2 text-right">
+      <button type="button" *ngIf="showBack" (click)="goBack()" class="btn btn-lg btn-outline-secondary"><i
+        class="fas fa-arrow-circle-left"></i> Back
+      </button>
     </div>
   </div>
-  <div class="row pt-2">
-    <div class="col col-md-9">
-      <h3 class="py-2">{{title}}</h3>
-      <p class="bg-light border-bottom pl-2 p-1 mt-2">
-        <span *ngIf="coIs.length > 1"><b>Investigators</b>: {{ coIs.join(', ') }} <br/></span>
-        <b>Principal Investigator:</b> {{pi}}
+
+  <div class="row p-2 border-bottom bg-light">
+    <div class="col-12 col-lg-9">
+      <h3 class="py-2">{{project.title}}</h3>
+
+      <p class="py-2">
+        <span *ngIf="project.coIs.length > 1"><b>Investigators</b>: {{ project.coIs.join(', ') }} <br/></span>
+        <b>Principal Investigator:</b> {{project.pi}}
       </p>
+    </div>
+    <div class="col-12 col-lg-3">
+      <h3>{{ project.instrument_name }}</h3>
+      <p>
+        <span class="badge badge-light border">Observations</span> {{ observations.length | number:'1.0-0'}}<br/>
+        <span class="badge badge-light border">Release Date</span> {{project.obs_release_date | date:'mediumDate' }}
+        <br/>
+        <span class="badge badge-light border">Start</span> {{project.obs_start | date:'mediumDate' }}<br/>
+        <span class="badge badge-light border">End</span> {{project.obs_stop | date:'mediumDate' }}
+      </p>
+    </div>
+  </div>
 
-      <div class="row">
-        <div class="col">
-          <b>Project</b>:
-          <span class="badge badge-light border">Start</span> {{proj_start | date:'mediumDate' }}
-          <span class="badge badge-light border">End</span> {{proj_stop | date:'mediumDate' }}
-        </div>
-        <div class="col">
-          <p class="m-0">
-            <b>Observations</b>:
-            <span class="badge badge-light border">Start</span> {{obs_start | date:'mediumDate' }}
-            <span class="badge badge-light border">End</span> {{obs_stop | date:'mediumDate' }}
-          </p>
-        </div>
-      </div>
-
-      <hr/>
-      <h5>Abstract</h5>
+  <div class="row">
+    <div class="col-12 col-lg-4 col-xl-3 bg-light py-2 border-right">
+      <h4>Abstract</h4>
       <p>
         {{getAbstract()}}
         <a href="javascript: void(0);" (click)="expandedAbstract = !expandedAbstract"
-           *ngIf="expandedAbstract && abstract.length > 100">Less</a>
+           *ngIf="expandedAbstract && project.abstract.length > 100">Less</a>
         <a href="javascript: void(0);" (click)="expandedAbstract = !expandedAbstract"
-           *ngIf="!expandedAbstract && abstract.length > 100">More</a>
+           *ngIf="!expandedAbstract && project.abstract.length > 100">More</a>
       </p>
-
     </div>
-    <div class="col col-md-3">
-      <h3>{{ instrument_name }}</h3>
-      <p>
-        <span class="badge badge-light border">Bands</span> {{obs_band.join(', ') }} <br/>
-        <span class="badge badge-light border">Type</span> {{dataproduct_type | titlecase}} <br/>
-        <span class="badge badge-light border">Scans</span> {{ n_execution_blocks | number:'1.0-0'}}
-      </p>
-      <button type="button" class="btn btn-lg btn-primary" (click)="addToCart()">Add to Project</button>
-      <p><b>Estimated Size</b>: {{access_estsize | fileSize }}</p>
+
+    <div class="col-12 col-lg-8 col-xl-9">
+      <app-observation-results [searchResults]="observations"></app-observation-results>
     </div>
   </div>
+
 
 </div>
 

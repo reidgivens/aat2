@@ -1,8 +1,8 @@
 <div class="results">
   <div class="row bg-info text-light border-bottom table-header">
     <div class="col-12 col-12 col-md-6 py-3">
-      <h3>Project <i class="text-dark small fas fa-sort-alpha-down"></i></h3>
-      Archive File<br/>
+      <h3>Observation ID <i class="text-dark small fas fa-sort-alpha-down"></i></h3>
+      Project <br/>
       Observation Dates
     </div>
     <div class="col-6 col-6 col-md-3 py-3">
@@ -19,18 +19,18 @@
   <div class="row border-bottom" *ngFor="let searchResult of searchResults">
     <div class="col-12 col-md-6 py-3">
       <h3>
-        {{searchResult.project_code}}
+        <a [routerLink]="['/aat/Observation/', searchResult.id]"> {{searchResult.id}}</a>
         <span class="badge badge-light text-muted" *ngIf="searchResult.data_rights == 'PUBLIC'"><i class="fas fa-unlock"></i></span>
         <span class="badge badge-dark" *ngIf="searchResult.data_rights != 'PUBLIC'"><i class="fas fa-lock"></i></span>
       </h3>
-      <a [routerLink]="['/aat/Observation/', searchResult.id]"><i class="fas fa-plus-circle"></i> {{searchResult.sci_prod_locator}}</a><br/>
+      <a [routerLink]="['/aat/Project/', searchResult.project_code]"> {{searchResult.title}}</a><br/>
       <span class="badge badge-light border">Start</span> <span class="p-1">{{searchResult.obs_start | date:'mediumDate'}}</span>
       <span class="badge badge-light border ml-2">End</span> <span class="p-1">{{searchResult.obs_stop | date:'mediumDate'}}</span>
     </div>
     <div class="col-6 col-md-3 py-3">
       <h4>{{searchResult.instrument_name}}</h4>
       <span class="badge badge-light border">Config</span> {{searchResult.vla_configuration}}<br/>
-      <span class="badge badge-light border">Bands</span> {{searchResult.obs_bands}}
+      <span class="badge badge-light border">Bands</span> {{searchResult.obs_band}}
     </div>
     <div class="col-6 col-md-3 py-3">
       <h4>{{searchResult.access_estsize | fileSize:'withDots'}}</h4>

@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Observation} from "../model/observation";
 
 @Component({
   selector: 'app-observation-results',
@@ -7,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class ObservationResultsComponent implements OnInit {
 
-  @Input() searchResults: Array<any> = [];
+  @Input() searchResults: Array<Observation> = [];
 
   constructor() {}
 

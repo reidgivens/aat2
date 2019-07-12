@@ -48,7 +48,7 @@ export class SearchResultsService {
 
   getProjectDetails(id: string): Observable<any> {
     let params = new HttpParams();
-    params = params.append('project_code', id);
+    params = params.append('project_code', '"' + id + '"');
     console.warn('Project Details Query');
     console.log(params);
     return this.http.get(this.serverAddress + 'restapi_get_paged_exec_blocks', {observe: "response", params: params});
